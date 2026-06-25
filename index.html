@@ -25,15 +25,15 @@
             </div>
             <div class="space-y-2">
                 <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
-                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome completo (mínimo de 2 nomes).</p>
+                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome completo.</p>
             </div>
             <button onclick="validaLogin()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition">Acessar Plataforma</button>
         </div>
     </div>
 
-    <div id="main-content" class="blur-sm pointer-events-none transition-all duration-500 max-w-6xl mx-auto px-4 py-8 space-y-8">
+    <div id="main-content" class="blur-sm pointer-events-none transition-all duration-500 max-w-7xl mx-auto px-4 py-6 space-y-6">
         
-        <header class="flex flex-col md:flex-row justify-between items-center bg-neutral-900 p-6 rounded-2xl border border-neutral-800 gap-4 shadow-xl">
+        <header class="flex justify-between items-center bg-neutral-900 p-5 rounded-2xl border border-neutral-800 shadow-xl">
             <div class="flex items-center gap-4">
                 <div class="bg-red-600 text-white px-4 py-2 rounded-xl font-black text-xl tracking-wider">AMPERNET</div>
                 <div>
@@ -41,118 +41,139 @@
                     <p class="text-xs text-neutral-400">Técnico Autenticado: <span id="user-display" class="text-red-500 font-bold">---</span></p>
                 </div>
             </div>
-            <div class="text-xs bg-neutral-950 border border-neutral-800 px-4 py-2 rounded-lg text-neutral-400">
-                Protocolo Padrão: <span class="text-white font-mono font-bold">AMP20252325306</span>
-            </div>
         </header>
 
         <section class="space-y-4">
-            <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fas fa-info-circle text-red-500"></i> Diretrizes Iniciais da Plataforma</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-2">
-                    <h3 class="font-bold text-red-500 text-sm uppercase tracking-wide">Agendamento</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
+            <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-info-circle text-red-500"></i> Diretrizes Iniciais da Plataforma</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 space-y-1">
+                    <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">Agendamento</h3>
+                    <p class="text-[11px] text-neutral-400 leading-relaxed">Responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
                 </div>
-                <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-2">
-                    <h3 class="font-bold text-red-500 text-sm uppercase tracking-wide">TAC</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 space-y-1">
+                    <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">TAC</h3>
+                    <p class="text-[11px] text-neutral-400 leading-relaxed">Suporte para liberação de equipamentos ou auxílio em configurações.</p>
                 </div>
-                <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-2">
-                    <h3 class="font-bold text-red-500 text-sm uppercase tracking-wide">Inmap</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 space-y-1">
+                    <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">Inmap</h3>
+                    <p class="text-[11px] text-neutral-400 leading-relaxed">Atendimento de falhas e suporte relacionados ao aplicativo.</p>
                 </div>
-                <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-2">
-                    <h3 class="font-bold text-red-500 text-sm uppercase tracking-wide">Comercial</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 space-y-1">
+                    <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">Comercial</h3>
+                    <p class="text-[11px] text-neutral-400 leading-relaxed">Verificação de informações relacionadas a planos e contratos dos clientes.</p>
                 </div>
-                <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-2 md:col-span-2">
-                    <h3 class="font-bold text-red-500 text-sm uppercase tracking-wide">NOC</h3>
-                    <p class="text-xs text-neutral-400 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800 space-y-1">
+                    <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">NOC</h3>
+                    <p class="text-[11px] text-neutral-400 leading-relaxed">Suporte avançado. O acionamento deve ser realizado inicialmente via TAC.</p>
                 </div>
             </div>
         </section>
 
-        <section class="bg-neutral-900 p-5 rounded-2xl border border-neutral-800 space-y-2 shadow-lg">
+        <section class="bg-neutral-900 p-4 rounded-2xl border border-neutral-800 space-y-2 shadow-lg">
             <div class="flex justify-between items-center text-xs font-bold uppercase tracking-wider">
-                <span class="text-neutral-400">Progresso Geral do Treinamento</span>
+                <span class="text-neutral-400">Progresso do Treinamento</span>
                 <span id="progress-text" class="text-red-500">0% Concluído</span>
             </div>
-            <div class="w-full bg-neutral-950 rounded-full h-3 overflow-hidden p-0.5 border border-neutral-800">
-                <div id="progress-bar" class="bg-red-600 h-2 rounded-full w-0 transition-all duration-500"></div>
+            <div class="w-full bg-neutral-950 rounded-full h-2.5 overflow-hidden p-0.5 border border-neutral-800">
+                <div id="progress-bar" class="bg-red-600 h-1.5 rounded-full w-0 transition-all duration-500"></div>
             </div>
         </section>
 
-        <hr class="border-neutral-800">
-
-        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <div id="card-m1" class="bg-neutral-900 rounded-2xl border border-neutral-800 p-5 flex flex-col justify-between transition-all duration-300">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 1</span>
-                        <span id="status-m1" class="text-xs text-amber-500 font-bold"><i class="fas fa-play-circle"></i> Disponível</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white">Suporte & Agendamento</h3>
-                    
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-900">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div>
-                                <p class="text-xs font-bold text-white leading-tight">Ampernet Interno</p>
-                                <p class="text-[10px] text-sky-400">bot</p>
-                            </div>
+            <aside class="lg:col-span-4 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 space-y-3 shadow-xl">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 px-2 mb-2"><i class="fas fa-list mr-1"></i> Módulos do Treinamento</h2>
+                <nav class="space-y-2 flex flex-col">
+                    <button id="menu-m1" onclick="switchTab('m1')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/60 hover:bg-neutral-800/50 transition flex flex-col gap-1 border-l-4 border-l-amber-500">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-white">Módulo 1: Suporte & Agendamento</span>
+                            <span id="status-m1" class="text-[10px] text-amber-500 font-bold"><i class="fas fa-play-circle"></i> Atual</span>
                         </div>
-                        <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
-                            
+                        <p class="text-[11px] text-neutral-400 leading-tight">Interação inicial com o bot escolhendo suporte avançado para serviços de agendamento.</p>
+                    </button>
+
+                    <button id="menu-m2" onclick="switchTab('m2')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-neutral-300">Módulo 2: Suporte & TAC</span>
+                            <span id="status-m2" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-500 leading-tight">Abertura de chamados internos para o TAC contendo avisos e descrições obrigatórias.</p>
+                    </button>
+
+                    <button id="menu-m3" onclick="switchTab('m3')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-neutral-300">Módulo 3: Suporte & Inmap</span>
+                            <span id="status-m3" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-500 leading-tight">Entendimento e tratativas relacionadas ao aplicativo e erros comuns de acesso.</p>
+                    </button>
+
+                    <button id="menu-m4" onclick="switchTab('m4')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-neutral-300">Módulo 4: Comercial</span>
+                            <span id="status-m4" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-500 leading-tight">Direcionamento correto para atendimento com BackOffice e verificação de planos.</p>
+                    </button>
+
+                    <button id="menu-m5" onclick="switchTab('m5')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-neutral-300">Módulo 5: Bot de Pedidos</span>
+                            <span id="status-m5" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-500 leading-tight">Simulação de requisição de materiais direto pelas regionais da empresa.</p>
+                    </button>
+
+                    <button id="menu-m6" onclick="switchTab('m6')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
+                        <div class="flex justify-between items-center w-full">
+                            <span class="text-xs font-bold text-neutral-300">Módulo 6: Fluxo e Conduta</span>
+                            <span id="status-m6" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
+                        </div>
+                        <p class="text-[11px] text-neutral-500 leading-tight">Regras fundamentais de uso da plataforma e arquivamento em banco de dados.</p>
+                    </button>
+                </nav>
+            </aside>
+
+            <main class="lg:col-span-8 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 shadow-xl min-h-[460px] flex flex-col justify-between">
+                
+                <div id="content-m1" class="tab-content space-y-4">
+                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
+                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
+                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
+                        </div>
+                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                            <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
                             <div id="chat-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p class="font-bold text-sky-400 mb-1">Ampernet Interno</p>
+                                <p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p>
                                 <p>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.</p>
-                                <span class="text-[9px] text-neutral-400 block text-right mt-1">15:00</span>
                             </div>
-                            <div id="chat-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Seu protocolo de atendimento é AMP20252325306</p>
-                                <span class="text-[9px] text-neutral-400 block text-right mt-1">15:00</span>
-                            </div>
+                            <div id="chat-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu protocolo de atendimento é AMP20252325306</p></div>
                             <div id="chat-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços</p>
-                                <span class="text-[9px] text-neutral-400 block text-right mt-1">15:01</span>
                                 <button onclick="advanceModule('m1', 2)" id="btn-m1-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
                             </div>
                             <div id="chat-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p class="font-bold text-sky-400 mb-1">Ampernet Interno</p>
+                                <p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p>
                                 <p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>4 - Suporte Inmap</p>
-                                <span class="text-[9px] text-neutral-400 block text-right mt-1">15:01</span>
                                 <button onclick="advanceModule('m1', 3)" id="btn-m1-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Agendamento</button>
                             </div>
                             <div id="chat-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?<br>Exemplos: Cliente ausente, Não Localizando Endereço...</p>
-                                <span class="text-[9px] text-neutral-400 block text-right mt-1">15:02</span>
                                 <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="card-m2" class="bg-neutral-900 rounded-2xl border border-neutral-800 p-5 flex flex-col justify-between opacity-40 pointer-events-none transition-all duration-300">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 2</span>
-                        <span id="status-m2" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white">Suporte & TAC</h3>
-                    
+                <div id="content-m2" class="tab-content hidden space-y-4">
                     <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-900">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
                             <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div>
-                                <p class="text-xs font-bold text-white leading-tight">Ampernet Interno</p>
-                                <p class="text-[10px] text-sky-400">bot</p>
-                            </div>
+                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
                         </div>
-                        <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
+                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
                             <div id="chat-m2-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
                                 <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
@@ -168,26 +189,15 @@
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div id="card-m3" class="bg-neutral-900 rounded-2xl border border-neutral-800 p-5 flex flex-col justify-between opacity-40 pointer-events-none transition-all duration-300">
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 3</span>
-                        <span id="status-m3" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                    </div>
-                    <h3 class="text-base font-bold text-white">Suporte & Inmap</h3>
-                    
+                <div id="content-m3" class="tab-content hidden space-y-4">
                     <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-900">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
                             <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div>
-                                <p class="text-xs font-bold text-white leading-tight">Ampernet Interno</p>
-                                <p class="text-[10px] text-sky-400">bot</p>
-                            </div>
+                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
                         </div>
-                        <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
+                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
                             <div id="chat-m3-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
                                 <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
@@ -203,184 +213,132 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="card-m4" class="bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-4 opacity-40 pointer-events-none transition-all duration-300">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 4</span>
-                    <h3 class="text-base font-bold text-white">Atendimento Setor Comercial</h3>
-                </div>
-                <span id="status-m4" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-            </div>
-            <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl max-w-2xl mx-auto">
-                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2 border-b border-neutral-900">
-                    <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                    <div>
-                        <p class="text-xs font-bold text-white">Ampernet Interno</p>
-                        <p class="text-[10px] text-sky-400">bot</p>
-                    </div>
-                </div>
-                <div class="telegram-bg p-4 h-72 overflow-y-auto space-y-3 text-xs flex flex-col">
-                    <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
-                    <div id="chat-m4-1" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p>
-                        <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Comercial</button>
-                    </div>
-                    <div id="chat-m4-2" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p>
-                        <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - Analista</button>
-                    </div>
-                    <div id="chat-m4-3" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p>
-                        <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Edilaine</button>
-                    </div>
-                    <div id="chat-m4-4" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p>
-                        <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="card-m5" class="bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-4 opacity-40 pointer-events-none transition-all duration-300">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 5</span>
-                    <h3 class="text-base font-bold text-white">Bot de Pedidos de Materiais</h3>
-                </div>
-                <span id="status-m5" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-            </div>
-            <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl max-w-2xl mx-auto">
-                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2 border-b border-neutral-900">
-                    <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">BP</div>
-                    <div>
-                        <p class="text-xs font-bold text-white">Bot de Pedidos</p>
-                        <p class="text-[10px] text-sky-400">bot</p>
-                    </div>
-                </div>
-                <div class="telegram-bg p-4 space-y-4 text-xs flex flex-col min-h-[300px]">
-                    <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">Iniciar</button>
-                    
-                    <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                        <p>Bem-vindo ao Bot de Pedidos!</p>
-                        <p>Qual e o seu nome e cidade (Colaborador)?</p>
-                        <input type="text" id="order-colab" placeholder="Ex: Sulivan Ampére - Ampére" class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-xs text-white w-full focus:outline-none focus:border-sky-500">
-                        <button onclick="saveOrderColab()" class="bg-[#2481cc] text-white px-3 py-1.5 rounded font-bold text-[11px]">Enviar</button>
-                    </div>
-
-                    <div id="order-step-2" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                        <p>Selecione a regional correspondente:</p>
-                        <div class="grid grid-cols-2 gap-1.5 font-sans">
-                            <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional PG</button>
-                            <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional FB</button>
-                            <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional PB</button>
-                            <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional Ampere</button>
+                <div id="content-m4" class="tab-content hidden space-y-4">
+                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
+                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
+                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
                         </div>
-                    </div>
-
-                    <div id="order-step-3" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-3 chat-bubble">
-                        <p class="text-sky-400 font-bold">Regional selecionada: <span id="selected-reg-txt" class="text-white"></span></p>
-                        <div class="space-y-2">
-                            <div>
-                                <label class="block text-neutral-400 text-[10px] mb-0.5">Qual e o pedido?</label>
-                                <input type="text" id="order-item" class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-white">
+                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                            <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
+                            <div id="chat-m4-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
+                                <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p>
+                                <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Comercial</button>
                             </div>
-                            <div>
-                                <label class="block text-neutral-400 text-[10px] mb-0.5">Qual e a quantidade?</label>
-                                <input type="text" id="order-qty" class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-white">
+                            <div id="chat-m4-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
+                                <p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p>
+                                <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - Analista</button>
                             </div>
-                            <div>
-                                <label class="block text-neutral-400 text-[10px] mb-0.5">Qual e o motivo do pedido?</label>
-                                <input type="text" id="order-reason" class="w-full bg-neutral-950 border border-neutral-800 rounded p-2 text-white">
+                            <div id="chat-m4-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
+                                <p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p>
+                                <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Edilaine</button>
+                            </div>
+                            <div id="chat-m4-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
+                                <p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p>
+                                <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
                             </div>
                         </div>
-                        <button onclick="generateSummary()" class="bg-[#2481cc] text-white px-3 py-1.5 rounded font-bold text-[11px]">Enviar Dados</button>
                     </div>
+                </div>
 
-                    <div id="order-step-4" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-3 chat-bubble">
-                        <p class="font-bold border-b border-neutral-800 pb-1 text-sky-400">Confirme os dados do pedido:</p>
-                        <div class="space-y-0.5 font-mono text-[11px]">
-                            <p>Colaborador: <span id="sum-colab" class="text-white"></span></p>
-                            <p>Regional: <span id="sum-reg" class="text-white"></span></p>
-                            <p>Pedido: <span id="sum-item" class="text-white"></span></p>
-                            <p>Quantidade: <span id="sum-qty" class="text-white"></span></p>
-                            <p>Motivo: <span id="sum-reason" class="text-white"></span></p>
+                <div id="content-m5" class="tab-content hidden space-y-4">
+                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
+                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">BP</div>
+                            <div><p class="text-xs font-bold text-white">Bot de Pedidos</p><p class="text-[10px] text-sky-400">bot</p></div>
                         </div>
-                        <p class="font-bold">Confirme os dados acima:</p>
-                        <div class="flex gap-2">
-                            <button onclick="confirmOrder(true)" class="bg-emerald-600 px-4 py-1.5 rounded font-bold text-white text-[11px]">Sim</button>
-                            <button onclick="confirmOrder(false)" class="bg-neutral-700 px-4 py-1.5 rounded font-bold text-neutral-300 text-[11px]">Não</button>
+                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                            <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">Iniciar</button>
+                            
+                            <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
+                                <p>Bem-vindo ao Bot de Pedidos!<br>Qual e o seu nome e cidade (Colaborador)?</p>
+                                <input type="text" id="order-colab" placeholder="Ex: Sulivan Ampére - Ampére" class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-xs text-white w-full focus:outline-none focus:border-sky-500">
+                                <button onclick="saveOrderColab()" class="bg-[#2481cc] text-white px-3 py-1 rounded font-bold text-[10px]">Enviar</button>
+                            </div>
+
+                            <div id="order-step-2" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
+                                <p>Selecione a regional correspondente:</p>
+                                <div class="grid grid-cols-2 gap-1.5 font-sans">
+                                    <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional PG</button>
+                                    <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional FB</button>
+                                    <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional PB</button>
+                                    <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional Ampere</button>
+                                </div>
+                            </div>
+
+                            <div id="order-step-3" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
+                                <p class="text-sky-400 font-bold">Regional selecionada: <span id="selected-reg-txt" class="text-white"></span></p>
+                                <div class="space-y-1">
+                                    <input type="text" id="order-item" placeholder="Qual e o pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
+                                    <input type="text" id="order-qty" placeholder="Qual e a quantidade?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
+                                    <input type="text" id="order-reason" placeholder="Qual e o motivo do pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
+                                </div>
+                                <button onclick="generateSummary()" class="bg-[#2481cc] text-white px-3 py-1 rounded font-bold text-[10px]">Enviar Dados</button>
+                            </div>
+
+                            <div id="order-step-4" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
+                                <p class="font-bold text-sky-400 text-[11px]">Confirme os dados do pedido:</p>
+                                <p class="font-mono text-[10px] text-neutral-300">Colaborador: <span id="sum-colab"></span><br>Regional: <span id="sum-reg"></span><br>Pedido: <span id="sum-item"></span><br>Quantidade: <span id="sum-qty"></span><br>Motivo: <span id="sum-reason"></span></p>
+                                <p class="font-bold">Confirme os dados acima:</p>
+                                <div class="flex gap-2">
+                                    <button onclick="confirmOrder(true)" class="bg-emerald-600 px-3 py-1 rounded font-bold text-white text-[10px]">Sim</button>
+                                    <button onclick="confirmOrder(false)" class="bg-neutral-700 px-3 py-1 rounded font-bold text-neutral-300 text-[10px]">Não</button>
+                                </div>
+                            </div>
+
+                            <div id="order-success" class="hidden max-w-[85%] bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 p-3 rounded-xl self-start font-bold text-xs chat-bubble">Pedido Registrado com Sucesso!</div>
                         </div>
                     </div>
+                </div>
 
-                    <div id="order-success" class="hidden max-w-[85%] bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 p-3 rounded-xl self-start font-bold text-xs chat-bubble">
-                        Pedido Registrado com Sucesso!
+                <div id="content-m6" class="tab-content hidden space-y-4">
+                    <div class="bg-neutral-950 p-5 rounded-xl border border-neutral-800 space-y-3 text-xs leading-relaxed">
+                        <p class="font-bold text-white text-sm">Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
+                        <ul class="list-disc pl-5 space-y-1 text-neutral-400">
+                            <li>Acionar o BOT</li>
+                            <li>Selecionar o número correspondente ao setor desejado</li>
+                            <li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li>
+                        </ul>
+                        <p class="text-neutral-400"><strong class="text-red-500"><i class="fas fa-database"></i> Registro Inalterável:</strong> Todas as interações ficam registradas no banco de dados. Mantenha uma comunicação clara, objetiva e profissional, evitando o uso de gírias.</p>
+                        <button onclick="completeM6()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition uppercase tracking-wider text-[10px]">Li e compreendi o Fluxo Padrão</button>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <section id="card-m6" class="bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-4 opacity-40 pointer-events-none transition-all duration-300">
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2">
-                    <span class="text-[10px] bg-red-600/10 text-red-400 border border-red-500/20 px-2.5 py-1 rounded-full font-bold uppercase">Módulo 6</span>
-                    <h3 class="text-base font-bold text-white">Fluxo Padrão e Conduta</h3>
-                </div>
-                <span id="status-m6" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs leading-relaxed">
-                <div class="bg-neutral-950 p-5 rounded-xl border border-neutral-800 space-y-3">
-                    <p class="font-bold text-white text-sm">Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
-                    <ul class="list-disc pl-5 space-y-1.5 text-neutral-400">
-                        <li>Acionar o BOT</li>
-                        <li>Selecionar o número correspondente ao setor desejado</li>
-                        <li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li>
-                    </ul>
-                    <button onclick="completeM6()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition uppercase tracking-wider text-[10px]">Li e compreendi o Fluxo Padrão</button>
-                </div>
-                <div class="bg-neutral-950 p-5 rounded-xl border border-neutral-800 flex flex-col justify-center">
-                    <p class="text-neutral-400">
-                        <strong class="text-red-500 block mb-1 text-sm"><i class="fas fa-database"></i> Ressalta-se:</strong>
-                        que todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens. Portanto, é fundamental manter uma comunicação clara, objetiva e profissional, evitando o uso de gírias ou termos inadequados.
-                    </p>
-                </div>
-            </div>
-        </section>
+            </main>
+        </div>
 
-        <section id="card-quiz" class="bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-6 opacity-40 pointer-events-none transition-all duration-300">
-            <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fas fa-graduation-cap text-red-500"></i> Avaliação do Treinamento</h2>
-            <p class="text-xs text-neutral-400">Responda corretamente as questões abaixo para emitir o seu certificado de conclusão (Mínimo de 4 acertos).</p>
+        <section id="card-quiz" class="hidden bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-5 shadow-2xl transition-all duration-300">
+            <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-graduation-cap text-red-500"></i> Avaliação Completa do Treinamento</h2>
+            <p class="text-xs text-neutral-400">Responda corretamente as questões regulamentares para emitir o seu certificado.</p>
             
             <div id="quiz-form" class="space-y-4 text-xs">
                 <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">1. Como deve ser feito o acionamento inicial ao NOC?</p>
+                    <p class="font-bold text-white">1. Como deve ser feito o acionamento inicial ao NOC?</p>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q1" value="err"> Diretamente via canais externos do NOC</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q1" value="correct"> O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
+                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q1" value="correct"> Inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
                 </div>
                 <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">2. O que a diretriz do TAC explicitamente pede para EVITAR no canal?</p>
+                    <p class="font-bold text-white">2. O que a diretriz do TAC pede expressamente para EVITAR?</p>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q2" value="correct"> Pedimos que evitem enviar fotos e áudios neste canal</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q2" value="err"> Evitar digitar textos longos e usar gírias</label>
+                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q2" value="err"> Informar o modelo da ONU e VLAN</label>
                 </div>
                 <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">3. Qual setor deve ser procurado para verificação de informações de planos e contratos?</p>
+                    <p class="font-bold text-white">3. Qual setor verifica informações de planos e contratos?</p>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q3" value="err"> Suporte e Serviços</label>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q3" value="correct"> Comercial</label>
                 </div>
                 <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">4. É possível alterar ou excluir mensagens enviadas no BOT de atendimento?</p>
+                    <p class="font-bold text-white">4. É possível alterar ou excluir mensagens enviadas ao BOT?</p>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q4" value="correct"> Não, todas ficam registradas no banco de dados e não podem ser excluídas ou editadas</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q4" value="err"> Sim, desde que solicitado ao setor de TI</label>
+                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q4" value="err"> Sim, bastando reabrir o chamado técnico</label>
                 </div>
                 <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">5. No módulo 3 (Inmap), quais exemplos de falhas são informados para descrição do problema?</p>
+                    <p class="font-bold text-white">5. No módulo 3 (Inmap), quais exemplos de falhas são reportados?</p>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q5" value="correct"> Aplicativo Offline, Erro ao colocar as credenciais de acesso</label>
                     <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q5" value="err"> Cliente ausente, Não localizando endereço</label>
                 </div>
-
-                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 px-6 rounded-xl text-[11px] uppercase tracking-wider transition shadow-lg">Enviar Respostas e Emitir Certificado</button>
+                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl text-[11px] uppercase tracking-wider transition shadow-lg">Enviar Respostas e Emitir Certificado</button>
             </div>
         </section>
     </div>
@@ -403,6 +361,7 @@
     <script>
         let tecnicoNome = "";
         let progressoTotal = 0;
+        let activeTab = 'm1';
 
         function validaLogin() {
             const input = document.getElementById('tech-name-input').value.trim();
@@ -419,6 +378,18 @@
             }, 300);
         }
 
+        function switchTab(modId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`content-${modId}`).classList.remove('hidden');
+            
+            document.querySelectorAll('nav button').forEach(btn => {
+                btn.classList.remove('bg-neutral-800/50');
+                btn.classList.add('bg-neutral-950/60');
+            });
+            document.getElementById(`menu-${modId}`).classList.add('bg-neutral-800/50');
+            activeTab = modId;
+        }
+
         function updateProgress(porcentagem) {
             if (porcentagem > progressoTotal) {
                 progressoTotal = porcentagem;
@@ -428,14 +399,28 @@
         }
 
         function unlockCard(id, proximo) {
-            const card = document.getElementById(id);
+            const card = document.getElementById(`menu-${id}`);
             if (card) {
                 card.classList.remove('opacity-40', 'pointer-events-none');
+                card.classList.replace('bg-neutral-950/30', 'bg-neutral-950/60');
+                card.classList.replace('border-l-neutral-700', 'border-l-amber-500');
                 const status = document.getElementById(`status-${proximo}`);
                 if (status) {
                     status.innerHTML = `<i class="fas fa-play-circle"></i> Disponível`;
                     status.className = "text-xs text-amber-500 font-bold";
                 }
+            }
+        }
+
+        function markAsComplete(mod, nextMod, progress) {
+            const status = document.getElementById(`status-${mod}`);
+            status.innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
+            status.className = "text-xs text-emerald-500 font-bold";
+            document.getElementById(`menu-${mod}`).classList.replace('border-l-amber-500', 'border-l-emerald-500');
+            updateProgress(progress);
+            if(nextMod) {
+                unlockCard(nextMod, nextMod);
+                switchTab(nextMod);
             }
         }
 
@@ -452,10 +437,7 @@
                 } else if (step === 3) {
                     document.getElementById('btn-m1-opt1').classList.add('hidden');
                     document.getElementById('chat-m1-5').classList.remove('hidden');
-                    document.getElementById('status-m1').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-                    document.getElementById('status-m1').className = "text-xs text-emerald-500 font-bold";
-                    updateProgress(16);
-                    unlockCard('card-m2', 'm2');
+                    markAsComplete('m1', 'm2', 16);
                 }
             } else if (mod === 'm2') {
                 if (step === 1) {
@@ -467,10 +449,7 @@
                 } else if (step === 3) {
                     document.getElementById('btn-m2-opt2').classList.add('hidden');
                     document.getElementById('chat-m2-3').classList.remove('hidden');
-                    document.getElementById('status-m2').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-                    document.getElementById('status-m2').className = "text-xs text-emerald-500 font-bold";
-                    updateProgress(32);
-                    unlockCard('card-m3', 'm3');
+                    markAsComplete('m2', 'm3', 32);
                 }
             } else if (mod === 'm3') {
                 if (step === 1) {
@@ -482,10 +461,7 @@
                 } else if (step === 3) {
                     document.getElementById('btn-m3-opt4').classList.add('hidden');
                     document.getElementById('chat-m3-3').classList.remove('hidden');
-                    document.getElementById('status-m3').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-                    document.getElementById('status-m3').className = "text-xs text-emerald-500 font-bold";
-                    updateProgress(48);
-                    unlockCard('card-m4', 'm4');
+                    markAsComplete('m3', 'm4', 48);
                 }
             } else if (mod === 'm4') {
                 if (step === 1) {
@@ -500,10 +476,7 @@
                 } else if (step === 4) {
                     document.getElementById('btn-m4-opt1').classList.add('hidden');
                     document.getElementById('chat-m4-4').classList.remove('hidden');
-                    document.getElementById('status-m4').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-                    document.getElementById('status-m4').className = "text-xs text-emerald-500 font-bold";
-                    updateProgress(64);
-                    unlockCard('card-m5', 'm5');
+                    markAsComplete('m4', 'm5', 64);
                 }
             }
         }
@@ -515,9 +488,7 @@
 
         function saveOrderColab() {
             const val = document.getElementById('order-colab').value.trim();
-            if(val !== "") {
-                document.getElementById('order-step-2').classList.remove('hidden');
-            }
+            if(val !== "") document.getElementById('order-step-2').classList.remove('hidden');
         }
 
         function selectRegional(reg) {
@@ -529,9 +500,9 @@
         function generateSummary() {
             document.getElementById('sum-colab').innerText = document.getElementById('order-colab').value || "Técnico";
             document.getElementById('sum-reg').innerText = document.getElementById('selected-reg-txt').innerText;
-            document.getElementById('sum-item').innerText = document.getElementById('order-item').value || "Material";
-            document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "1";
-            document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "Uso em OS";
+            document.getElementById('sum-item').innerText = document.getElementById('order-item').value || "teste";
+            document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "01";
+            document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "teste";
             
             document.getElementById('order-step-3').classList.add('hidden');
             document.getElementById('order-step-4').classList.remove('hidden');
@@ -541,20 +512,16 @@
             document.getElementById('order-step-4').classList.add('hidden');
             if(isSim) {
                 document.getElementById('order-success').classList.remove('hidden');
-                document.getElementById('status-m5').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-                document.getElementById('status-m5').className = "text-xs text-emerald-500 font-bold";
-                updateProgress(80);
-                unlockCard('card-m6', 'm6');
+                markAsComplete('m5', 'm6', 80);
             } else {
                 document.getElementById('order-step-1').classList.remove('hidden');
             }
         }
 
         function completeM6() {
-            document.getElementById('status-m6').innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-            document.getElementById('status-m6').className = "text-xs text-emerald-500 font-bold";
-            updateProgress(100);
-            document.getElementById('card-quiz').classList.remove('opacity-40', 'pointer-events-none');
+            markAsComplete('m6', null, 100);
+            document.getElementById('card-quiz').classList.remove('hidden');
+            document.getElementById('card-quiz').scrollIntoView({ behavior: 'smooth' });
         }
 
         function verificarQuiz() {
