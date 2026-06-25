@@ -13,13 +13,18 @@
 </head>
 <body class="bg-neutral-900 text-slate-100 min-h-screen font-sans">
 
-    <div id="name-entry-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-        <div class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 space-y-4">
-            <h3 class="text-lg font-bold text-white">Identificação do Técnico</h3>
-            <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
-            <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-600">
-            <p id="name-error" class="text-red-500 text-[11px] hidden">Por favor, insira um nome válido (mínimo 5 caracteres).</p>
-            <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
+    <div id="name-entry-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50">
+        <div class="bg-neutral-950 p-8 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 space-y-5 text-center">
+            <div class="w-16 h-16 rounded-full bg-red-600/10 text-red-500 flex items-center justify-center text-2xl mx-auto border border-red-500/20">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-white">Identificação do Técnico</h3>
+                <p class="text-xs text-neutral-400 mt-1">Insira seu nome completo para acessar a plataforma principal.</p>
+            </div>
+            <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3.5 text-sm text-white focus:outline-none focus:border-red-600 transition">
+            <p id="name-error" class="text-red-500 text-[11px] hidden text-left"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira um nome válido (mínimo 5 caracteres).</p>
+            <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl text-xs tracking-wider uppercase transition">Entrar na Plataforma</button>
         </div>
     </div>
 
@@ -66,7 +71,7 @@
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Inmap</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Inmap – Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Inmap – Responsible pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Comercial</h3>
@@ -126,7 +131,7 @@
 
                 <div id="sim-content" class="flex-1 p-4 overflow-y-auto space-y-4 bg-neutral-950/50"></div>
 
-                <div id="sim-actions" class="p-4 bg-neutral-900 border-t border-neutral-800 flex flex-wrap gap-2 justify-center items-center"></div>
+                <div id="sim-actions" class="p-4 bg-neutral-900 border-t border-neutral-800 flex flex-wrap gap-2 justify-center items-center" translate="no"></div>
             </div>
         </div>
     </div>
@@ -199,7 +204,7 @@
             if (num >= 1 && num <= 4) {
                 const titulos = {1: "Agendamento", 2: "Suporte TAC", 3: "Suporte Inmap", 4: "Comercial"};
                 document.getElementById('sim-title').innerText = `Módulo ${num}: ${titulos[num]}`;
-                addBotBubble("Deixe somente a opção /start para iniciar a interação.");
+                addBotBubble("Envie /start para iniciar a interação.");
                 addActionButton("/start", () => executarFluxoComum() );
             } else if (num === 5) {
                 document.getElementById('sim-title').innerText = "Módulo 5: Bot de Pedidos";
@@ -210,7 +215,7 @@
                 simContent.innerHTML = `
                     <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-4 text-xs leading-relaxed max-w-xl mx-auto mt-4">
                         <h4 class="font-bold text-red-400 text-sm flex items-center gap-2"><i class="fas fa-file-alt"></i> Fluxo Padrão de Atendimento</h4>
-                        <p>Dessa forma, deve-se seguir the fluxo padrão de atendimento:</p>
+                        <p>Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
                         <ul class="list-disc list-inside space-y-1 text-neutral-300 pl-2">
                             <li>Acionar o BOT</li>
                             <li>Selecionar o número correspondente ao setor desejado</li>
@@ -279,7 +284,7 @@
         function addInputField(placeholder, onSubmitFn) {
             const actions = document.getElementById('sim-actions');
             actions.innerHTML = `
-                <div class="flex gap-2 w-full max-w-md">
+                <div class="flex gap-2 w-full max-w-md" translate="no">
                     <input type="text" id="chat-text-input" placeholder="${placeholder}" class="flex-1 bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-600">
                     <button id="chat-submit-btn" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition">Enviar</button>
                 </div>
@@ -300,7 +305,7 @@
             input.focus();
         }
 
-        // CONTROLADOR DE FLUXOS PARA MÓDULOS 1, 2, 3 E 4
+        // CONTROLADOR DE FLUXOS OPERACIONAIS (MÓDULOS 1, 2, 3 e 4)
         function executarFluxoComum() {
             if(chatStep === 0) {
                 addBotBubble("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
@@ -335,8 +340,8 @@
             } 
             else if(chatStep === 2) {
                 if(moduloAtual === 1) {
-                    addBotBubble("Por favor, poderiaFlorescer descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\n\nExemplos: Cliente ausente, Não Localizando Endereço...");
-                    addInputField("Excreva seu assunto prático...", (val) => fecharTarefaModulos());
+                    addBotBubble("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\n\nExemplos: Cliente ausente, Não Localizando Endereço...");
+                    addInputField("Escreva seu assunto prático...", (val) => fecharTarefaModulos());
                 } else if(moduloAtual === 2) {
                     addBotBubble("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !\nLiberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
                     addInputField("Descreva aqui sua solicitação...", (val) => fecharTarefaModulos());
@@ -365,7 +370,7 @@
         // LÓGICA DO MÓDULO 5 (BOT DE PEDIDOS)
         function iniciarModulo5() {
             addBotBubble("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
-            addInputField("Deixe o Técnico Preencher com os dados necessários.", (val) => {
+            addInputField("Ex: Nome - Cidade", (val) => {
                 respostasPedido.colaborador = val;
                 exibirRegionaisM5();
             });
@@ -396,13 +401,13 @@
         }
 
         function prosseguirComPerguntasM5() {
-            addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido? (deixe o técnico preencher o que corresponde a pergunta)`);
+            addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido?`);
             addInputField("Qual é o pedido...", (pedido) => {
                 respostasPedido.item = pedido;
-                addBotBubble("Qual e a quantidade? (deixe o técnico preencher o que corresponde a pergunta)");
+                addBotBubble("Qual e a quantidade?");
                 addInputField("Qual é a quantidade...", (qtd) => {
                     respostasPedido.qtd = qtd;
-                    addBotBubble("Qual e o motivo do pedido? (deixe o técnico preencher o que corresponde a pergunta)");
+                    addBotBubble("Qual e o motivo do pedido?");
                     addInputField("Qual é o motivo...", (motivo) => {
                         respostasPedido.motivo = motivo;
                         exibirConfirmacaoFinalM5();
