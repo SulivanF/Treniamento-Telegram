@@ -20,7 +20,7 @@
     
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
     
-    <div class="max-w-6xl mx-auto px-4 py-6 space-y-6">
+    <div class="max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-950 p-4 rounded-2xl border border-neutral-800">
             <div>
                 <h1 class="text-xl font-bold text-white tracking-tight">Portal de Capacitação Ampernet</h1>
@@ -47,6 +47,7 @@
             <button id="btn-tab-modulo3" onclick="switchTab('modulo3')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 3: TAC</button>
             <button id="btn-tab-modulo4" onclick="switchTab('modulo4')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 4: INMAP</button>
             <button id="btn-tab-modulo5" onclick="switchTab('modulo5')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 5: Comercial</button>
+            <button id="btn-tab-modulo6" onclick="switchTab('modulo6')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 6: Ferramentas</button>
             <button id="btn-tab-quiz" onclick="switchTab('quiz')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-slate-500 cursor-not-allowed flex items-center gap-2">
                 <span>Avaliação Final</span>
                 <span id="badge-quiz" class="text-[9px] bg-neutral-900 text-neutral-600 px-1.5 py-0.5 rounded border border-neutral-800">Bloqueado</span>
@@ -57,14 +58,12 @@
             <section id="tab-modulo1" class="tab-content block space-y-4">
                 <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-network-wired text-red-500"></i> Módulo 1: Quando Acionar Cada Setor</h2>
                 <div class="prose prose-sm prose-invert max-w-none text-xs text-neutral-300 space-y-4">
-                    <p>Compreender os canais e o momento exato de acionamento de cada setor é crucial para otimizar os atendimentos em campo e garantir agilidade operacional.</p>
-                    
-                    <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800 space-y-3">
-                        <h4 class="font-bold text-white text-xs uppercase tracking-wider text-red-400">Regras e Responsabilidades:</h4>
+                    <p>Compreender as atribuições e o momento correto de acionar cada setor é vital para a fluidez do serviço em campo.</p>
+                    <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800 space-y-2.5">
                         <ul class="list-none space-y-2.5 text-[11px] text-neutral-300 p-0">
                             <li class="flex items-start gap-2 border-b border-neutral-800 pb-2">
                                 <i class="fas fa-calendar-alt text-red-500 mt-0.5"></i>
-                                <span><strong>Agendamento:</strong> A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</span>
+                                <span><strong>Agendamento:</strong> Essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</span>
                             </li>
                             <li class="flex items-start gap-2 border-b border-neutral-800 pb-2">
                                 <i class="fas fa-headset text-red-500 mt-0.5"></i>
@@ -80,13 +79,13 @@
                             </li>
                             <li class="flex items-start gap-2">
                                 <i class="fas fa-server text-red-500 mt-0.5"></i>
-                                <span><strong>NOC:</strong> Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. <em>O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</em></span>
+                                <span><strong>NOC:</strong> Suporte avançado (configurações complexas e monitoramento). O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</span>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="pt-4 border-t border-neutral-900 flex justify-end">
-                    <button onclick="completarModulo1()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">Iniciar Simuladores <i class="fas fa-arrow-right"></i></button>
+                    <button onclick="completarModulo1()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Avançar <i class="fas fa-arrow-right"></i></button>
                 </div>
             </section>
             
@@ -99,15 +98,13 @@
                     <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
                         <div class="bg-[#17212b] p-3 flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">A</div>
-                            <div><h4 class="text-xs font-bold text-white">Setor de Agendamento</h4></div>
+                            <h4 class="text-xs font-bold text-white">Setor de Agendamento</h4>
                         </div>
                         <div id="m2-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
                         <div id="m2-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
                     </div>
                     <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                            <p>Simule a interação correta com o setor responsável por direcionar ordens de serviço (OS) e contatar assinantes.</p>
-                        </div>
+                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Simule o envio e direcionamento de Ordens de Serviço por região de atendimento.</p></div>
                         <button id="btn-next-m2" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
                     </div>
                 </div>
@@ -115,22 +112,20 @@
             
             <section id="tab-modulo3" class="tab-content hidden space-y-4">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-headset text-red-500"></i> Módulo 3: Simulador - TAC & NOC</h2>
+                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-headset text-red-500"></i> Módulo 3: Simulador - TAC</h2>
                     <span id="badge-m2" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
                 </div>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
                         <div class="bg-[#17212b] p-3 flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">T</div>
-                            <div><h4 class="text-xs font-bold text-white">Suporte Técnico (TAC)</h4></div>
+                            <h4 class="text-xs font-bold text-white">Suporte Técnico (TAC)</h4>
                         </div>
                         <div id="m3-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
                         <div id="m3-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
                     </div>
                     <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-2">
-                            <p><strong>Lembre-se:</strong> Suporte avançado do NOC só deve ser solicitado após a triagem inicial do TAC.</p>
-                        </div>
+                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Preencha os dados e relate as necessidades de configuração de equipamentos em campo.</p></div>
                         <button id="btn-next-m3" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
                     </div>
                 </div>
@@ -145,15 +140,13 @@
                     <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
                         <div class="bg-[#17212b] p-3 flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">I</div>
-                            <div><h4 class="text-xs font-bold text-white">Suporte Aplicativo INMAP</h4></div>
+                            <h4 class="text-xs font-bold text-white">Suporte Aplicativo INMAP</h4>
                         </div>
                         <div id="m4-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
                         <div id="m4-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
                     </div>
                     <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                            <p>Acione este canal apenas para reportar falhas de sincronização, erros de login ou travamentos no APP.</p>
-                        </div>
+                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Canal focado em mitigar falhas técnicas de acesso e operação interna do APP de ordens.</p></div>
                         <button id="btn-next-m4" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
                     </div>
                 </div>
@@ -168,16 +161,35 @@
                     <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
                         <div class="bg-[#17212b] p-3 flex items-center gap-3">
                             <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">C</div>
-                            <div><h4 class="text-xs font-bold text-white">BackOffice Comercial</h4></div>
+                            <h4 class="text-xs font-bold text-white">BackOffice Comercial</h4>
                         </div>
                         <div id="m5-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
                         <div id="m5-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
                     </div>
                     <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl">
-                            <p>Utilizado para sanar dúvidas contratuais de clientes ou checagem de velocidade/planos ativos.</p>
-                        </div>
+                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Verificações ágeis de alterações de planos e upgrades contratuais requisitados por clientes.</p></div>
                         <button id="btn-next-m5" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-modulo6" class="tab-content hidden space-y-4">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-tools text-red-500"></i> Módulo 6: Solicitação de Ferramentas e Materiais</h2>
+                    <span id="badge-m5" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
+                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">F</div>
+                            <h4 class="text-xs font-bold text-white">Almoxarifado & Insumos</h4>
+                        </div>
+                        <div id="m6-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
+                        <div id="m6-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
+                    </div>
+                    <div class="space-y-3 text-xs text-neutral-400">
+                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Canal direto para requisições de EPIs, reposição de maquinários, ferramentas e insumos para as frotas técnicas.</p></div>
+                        <button id="btn-next-m6" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
                     </div>
                 </div>
             </section>
@@ -185,12 +197,12 @@
             <section id="tab-quiz" class="tab-content hidden space-y-4">
                 <div class="flex justify-between items-center">
                     <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-clipboard-check text-red-500"></i> Avaliação de Conhecimento Operacional</h2>
-                    <span id="badge-m5" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Aguardando</span>
+                    <span id="badge-m6" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Aguardando</span>
                 </div>
                 <div id="quiz-locked" class="p-8 text-center bg-neutral-900 border border-neutral-800 rounded-2xl space-y-3">
                     <i class="fas fa-lock text-3xl text-neutral-600"></i>
                     <h3 class="font-bold text-white text-sm">Avaliação Bloqueada</h3>
-                    <p class="text-xs text-neutral-400 max-w-sm mx-auto">Você precisa passar por todos os módulos teóricos e simuladores práticos antes de realizar o teste final de proficiência.</p>
+                    <p class="text-xs text-neutral-400 max-w-sm mx-auto">Você precisa passar por todos os 6 módulos teóricos e simuladores práticos antes de realizar o teste final.</p>
                 </div>
                 <div id="quiz-active" class="hidden space-y-6">
                     <div id="quiz-questions-container" class="space-y-4"></div>
@@ -244,7 +256,7 @@
     <script>
         let userXP = 0;
         let technicianName = '';
-        let moduleStatus = {m1: false, m2: false, m3: false, m4: false, m5: false};
+        let moduleStatus = {m1: false, m2: false, m3: false, m4: false, m5: false, m6: false};
         
         function appendMsg(chatId, sender, text) {
             const chat = document.getElementById(chatId);
@@ -261,7 +273,7 @@
             technicianName = name;
             document.getElementById('name-entry-modal').remove();
             addXP(100, "Identificação registrada");
-            initM2(); initM3(); initM4(); initM5();
+            initM2(); initM3(); initM4(); initM5(); initM6();
         }
         
         function addXP(amount, reason) {
@@ -290,15 +302,15 @@
         
         function updateProgress() {
             let done = Object.values(moduleStatus).filter(Boolean).length;
-            let percent = Math.round((done / 5) * 100);
+            let percent = Math.round((done / 6) * 100);
             document.getElementById('progress-bar').style.width = percent + '%';
             document.getElementById('progress-text').innerText = percent + '%';
-            for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 6; i++) {
                 const b = document.getElementById(`badge-m${i}`);
                 if(b) b.innerHTML = moduleStatus[`m${i}`] ? "Concluído" : "Pendente";
                 if(b && moduleStatus[`m${i}`]) b.className = "text-[10px] bg-red-950/40 text-red-400 border border-red-500/20 px-2 py-1 rounded-lg font-semibold";
             }
-            if (done === 5) {
+            if (done === 6) {
                 const bq = document.getElementById('btn-tab-quiz');
                 bq.classList.remove('text-slate-500', 'cursor-not-allowed'); bq.classList.add('text-red-400', 'font-bold');
                 document.getElementById('badge-quiz').className = "text-[9px] bg-red-950/40 text-red-400 border border-red-500/20 px-1.5 py-0.5 rounded font-semibold";
@@ -319,7 +331,7 @@
             appendMsg('m2-chat', 'user', 'Solicito suporte ao Agendamento');
             document.getElementById('m2-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m2-chat', 'bot', '<strong>Setor de Agendamento</strong><br>Olá! Para qual cidade polo você deseja direcionar ou verificar a Ordem de Serviço (OS)?');
+                appendMsg('m2-chat', 'bot', '<strong>Setor de Agendamento</strong><br>Selecione a cidade polo correspondente para o direcionamento da OS:');
                 document.getElementById('m2-actions').innerHTML = `
                     <div class="grid grid-cols-2 gap-2 w-full max-w-sm">
                         ${['Ampére', 'Cascavel', 'Francisco Beltrão', 'Pato Branco'].map(c => `<button onclick="finishM2('${c}')" class="bg-neutral-800 text-slate-200 hover:bg-neutral-700 py-1.5 px-2 rounded-xl text-[11px] font-semibold border border-neutral-700">${c}</button>`).join('')}
@@ -339,32 +351,23 @@
             }, 600);
         }
         
-        // M3: TAC
+        // M3: TAC (ATUALIZADO SEM NOC E COM AVISO DE MIDIAS)
         function initM3() {
             document.getElementById('m3-actions').innerHTML = `<button onclick="startM3()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar TAC</button>`;
         }
         function startM3() {
-            appendMsg('m3-chat', 'user', 'Solicito suporte técnico ao TAC');
+            appendMsg('m3-chat', 'user', 'Solicito suporte ao TAC');
             document.getElementById('m3-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m3-chat', 'bot', '<strong>Central TAC Ampernet</strong><br>Informe os dados ou a complexidade do problema em campo. Caso necessite de alterações avançadas ou monitoramento crítico do <strong>NOC</strong>, realize o escalonamento através dos botões abaixo:');
-                document.getElementById('m3-actions').innerHTML = `
-                    <button onclick="finishM3('Liberação padrão')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">Resolver via TAC (Configurações/Liberações)</button>
-                    <button onclick="triggerNoc()" class="bg-amber-600 hover:bg-amber-500 text-white px-3 py-1.5 rounded-xl text-xs font-semibold transition">Escalonar para o NOC (Suporte Avançado)</button>`;
+                appendMsg('m3-chat', 'bot', 'Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><br>🚨<strong>PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL!</strong>🚨');
+                document.getElementById('m3-actions').innerHTML = `<button onclick="finishM3()" class="bg-red-600 hover:bg-red-500 text-white px-5 py-1.5 rounded-xl text-xs font-bold transition">Confirmar Envio da Descrição</button>`;
             }, 600);
         }
-        function triggerNoc() {
-            appendMsg('m3-chat', 'user', 'Requisito direcionamento avançado ao NOC');
+        function finishM3() {
+            appendMsg('m3-chat', 'user', 'Solicito auxílio em configuração de equipamento em campo.');
             document.getElementById('m3-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m3-chat', 'bot', '⚡ <strong>Direcionamento TAC ➔ NOC</strong><br>A triagem de nível 1 validou sua infraestrutura. O NOC assumiu o monitoramento direto da sua rota técnica.');
-                finishM3('Escalonado ao NOC');
-            }, 800);
-        }
-        function finishM3(tipo) {
-            document.getElementById('m3-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m3-chat', 'bot', `✓ Sucesso! Chamado finalizado no TAC [Procedimento: ${tipo}].`);
+                appendMsg('m3-chat', 'bot', '✓ Descrição técnica inserida com sucesso. Aguarde o retorno do analista TAC.');
                 const btn = document.getElementById('btn-next-m3');
                 btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
                 btn.disabled = false; btn.innerText = "Ir para Módulo 4";
@@ -373,7 +376,7 @@
             }, 600);
         }
         
-        // M4: INMAP
+        // M4: INMAP (ATUALIZADO COM INMAP OFFLINE)
         function initM4() {
             document.getElementById('m4-actions').innerHTML = `<button onclick="startM4()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar Suporte INMAP</button>`;
         }
@@ -381,9 +384,9 @@
             appendMsg('m4-chat', 'user', 'Reportar falha no APP INMAP');
             document.getElementById('m4-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m4-chat', 'bot', '<strong>Suporte Ferramental - INMAP</strong><br>Por favor, selecione qual o erro apresentado na sincronia de ordens de serviço do seu smartphone:');
+                appendMsg('m4-chat', 'bot', '<strong>Suporte Ferramental - INMAP</strong><br>Selecione a falha que está enfrentando no momento:');
                 document.getElementById('m4-actions').innerHTML = `
-                    <button onclick="finishM4('Erro de Sincronismo')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Erro de Geolocalização / Sincronia</button>
+                    <button onclick="finishM4('INMAP Offline')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">INMAP Offline / Sem Conexão</button>
                     <button onclick="finishM4('Falha de Autenticação')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Falha de login e credenciais</button>`;
             }, 600);
         }
@@ -391,7 +394,7 @@
             appendMsg('m4-chat', 'user', erro);
             document.getElementById('m4-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m4-chat', 'bot', '✓ Canal de desenvolvimento notificado. O token do aplicativo foi reiniciado para correção em campo.');
+                appendMsg('m4-chat', 'bot', '✓ Reporte encaminhado. O servidor operacional foi alertado sobre a instabilidade de rede.');
                 const btn = document.getElementById('btn-next-m4');
                 btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
                 btn.disabled = false; btn.innerText = "Ir para Módulo 5";
@@ -400,38 +403,67 @@
             }, 600);
         }
         
-        // M5: COMERCIAL
+        // M5: COMERCIAL (UPGRADE E ALTERAÇÃO DE PLANO)
         function initM5() {
             document.getElementById('m5-actions').innerHTML = `<button onclick="startM5()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar Comercial</button>`;
         }
         function startM5() {
-            appendMsg('m5-chat', 'user', 'Verificar planos e dados de assinante');
+            appendMsg('m5-chat', 'user', 'Verificar dados de faturamento/planos');
             document.getElementById('m5-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m5-chat', 'bot', '<strong>BackOffice Comercial</strong><br>Olá, Técnico. Insira ou confirme a checagem que deseja executar sobre o contrato ativo do cliente:');
-                document.getElementById('m5-actions').innerHTML = `<button onclick="finishM5()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-xs font-bold transition">Validar Velocidade e Contrato Contratado</button>`;
+                appendMsg('m5-chat', 'bot', '<strong>BackOffice Comercial</strong><br>Selecione o tipo de tratativa comercial necessária para o contrato do assinante:');
+                document.getElementById('m5-actions').innerHTML = `
+                    <button onclick="finishM5('Upgrade de Plano')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">Upgrade de Plano</button>
+                    <button onclick="finishM5('Alteração de Plano')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">Alteração de Plano</button>`;
             }, 600);
         }
-        function finishM5() {
-            appendMsg('m5-chat', 'user', 'Validar contrato');
+        function finishM5(tipo) {
+            appendMsg('m5-chat', 'user', tipo);
             document.getElementById('m5-actions').innerHTML = '';
             setTimeout(() => {
-                appendMsg('m5-chat', 'bot', '✓ Retorno do BackOffice Comercial: Contrato ativo, aditivo verificado e sem pendências financeiras.');
+                appendMsg('m5-chat', 'bot', `✓ Sucesso! Solicitação de <strong>${tipo}</strong> encaminhada para validação de viabilidade contratual.`);
                 const btn = document.getElementById('btn-next-m5');
                 btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Avaliação Final";
-                btn.onclick = () => { moduleStatus.m5 = true; updateProgress(); switchTab('quiz'); };
+                btn.disabled = false; btn.innerText = "Ir para Módulo 6";
+                btn.onclick = () => { moduleStatus.m5 = true; updateProgress(); switchTab('modulo6'); };
                 addXP(100, "Módulo Comercial completo");
+            }, 600);
+        }
+
+        // M6: SOLICITAÇÃO DE FERRAMENTAS E MATERIAIS
+        function initM6() {
+            document.getElementById('m6-actions').innerHTML = `<button onclick="startM6()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Solicitar Insumos</button>`;
+        }
+        function startM6() {
+            appendMsg('m6-chat', 'user', 'Iniciar pedido de materiais de infraestrutura');
+            document.getElementById('m6-actions').innerHTML = '';
+            setTimeout(() => {
+                appendMsg('m6-chat', 'bot', '<strong>Almoxarifado Geral Ampernet</strong><br>Selecione a categoria dos itens para reposição da frota técnica:');
+                document.getElementById('m6-actions').innerHTML = `
+                    <button onclick="finishM6('Ferramentas')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Ferramentas (Maquinários/EPIs)</button>
+                    <button onclick="finishM6('Materiais')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Materiais (Cabos/Conectores)</button>`;
+            }, 600);
+        }
+        function finishM6(categoria) {
+            appendMsg('m6-chat', 'user', `Pedido de: ${categoria}`);
+            document.getElementById('m6-actions').innerHTML = '';
+            setTimeout(() => {
+                appendMsg('m6-chat', 'bot', `✓ Ticket de Requisição gerado. Dirija-se ao polo regional para retirada dos seus ${categoria.toLowerCase()}.`);
+                const btn = document.getElementById('btn-next-m6');
+                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
+                btn.disabled = false; btn.innerText = "Ir para Avaliação Final";
+                btn.onclick = () => { moduleStatus.m6 = true; updateProgress(); switchTab('quiz'); };
+                addXP(100, "Módulo Ferramentas completo");
             }, 600);
         }
         
         // AVALIAÇÃO FINAL
         const quizData = [
-            { id: 1, question: "1. Qual setor é responsável exclusivo por direcionar as ordens de serviço e realizar o contato inicial com os clientes?", options: ["A) TAC", "B) Comercial", "C) Agendamento", "D) NOC"], correct: 2 },
-            { id: 2, question: "2. Em qual das seguintes situações operacionais o suporte do TAC deve ser acionado pelo técnico?", options: ["A) Apenas se houver problemas de lentidão no app Inmap.", "B) Quando necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.", "C) Para alteração no valor da fatura ou plano contratado do cliente.", "D) Diretamente para solicitar a troca de veículos da frota."], correct: 1 },
-            { id: 3, question: "3. Qual é o fluxo correto estipulado para acionamento do suporte avançado (NOC)?", options: ["A) Abrir uma solicitação diretamente com o Comercial.", "B) Acionar diretamente o NOC por ligação de vídeo externa.", "C) O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.", "D) Postar o problema no grupo geral do aplicativo Inmap."], correct: 2 },
-            { id: 4, question: "4. Se houver falhas técnicas associadas estritamente ao funcionamento e sincronia do aplicativo de campo do técnico, qual canal deve ser acionado?", options: ["A) Inmap", "B) Comercial", "C) Agendamento", "D) NOC"], correct: 0 },
-            { id: 5, question: "5. Quando o setor Comercial deve ser acionado pela equipe de campo?", options: ["A) Para suporte avançado de servidores de rede.", "B) Para liberação emergencial de portas PON.", "C) Para verificação de informações relacionadas a planos e contratos dos clientes.", "D) Para alteração do roteamento OSPF central."], correct: 2 }
+            { id: 1, question: "1. Qual setor detém a responsabilidade de contatar clientes e direcionar as ordens de serviço diárias?", options: ["A) TAC", "B) Comercial", "C) Agendamento", "D) INMAP"], correct: 2 },
+            { id: 2, question: "2. Qual o aviso oficial exibido ao técnico ao abrir um chamado para o TAC?", options: ["A) Obrigatório envio de áudios detalhados.", "B) Pedimos que evitem enviar fotos e áudios neste canal para agilizar o suporte.", "C) Anexar fotos de todos os ângulos da instalação antes de falar.", "D) Entrar em contato via videoconferência obrigatória."], correct: 1 },
+            { id: 3, question: "3. Se o aplicativo de OS em campo apresentar status de 'INMAP Offline', qual setor deve ser acionado?", options: ["A) Comercial", "B) Inmap", "C) Agendamento", "D) NOC"], correct: 1 },
+            { id: 4, question: "4. No canal Comercial, quais tratativas contratuais e de planos o técnico pode consultar?", options: ["A) Liberação de portas lógicas PON.", "B) Upgrade de Plano e Alteração de Plano.", "C) Reset físico de roteador corporativo.", "D) Sincronização de geolocalização móvel."], correct: 1 },
+            { id: 5, question: "5. Para solicitar a reposição de insumos técnicos, EPIs e conectores, o profissional deve acessar qual canal?", options: ["A) Canal de Agendamento Regional", "B) Suporte Avançado do NOC", "C) Solicitação de Ferramentas e Materiais (Almoxarifado)", "D) Ouvidoria do Comercial"], correct: 2 }
         ];
         
         function buildQuiz() {
@@ -483,7 +515,7 @@
                 icon.className = "h-20 w-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-md bg-emerald-950/50 border border-emerald-500/30 text-emerald-400";
                 icon.innerHTML = `<i class="fas fa-graduation-cap"></i>`;
                 title.innerText = "Aprovado!";
-                subtitle.innerText = "Você domina perfeitamente os fluxos de acionamento das centrais Ampernet.";
+                subtitle.innerText = "Você obteve a proficiência nos fluxos internos Ampernet.";
                 txtStatus.innerText = "APROVADO";
                 txtStatus.className = "text-sm font-bold text-emerald-400 block mt-1";
                 btnRetry.classList.add('hidden'); btnCert.classList.remove('hidden');
