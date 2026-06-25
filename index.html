@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-neutral-900 text-slate-100 min-h-screen font-sans">
+
     <div id="name-entry-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300">
         <div class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 space-y-4">
             <h3 class="text-lg font-bold text-white">Identificação do Técnico</h3>
@@ -17,9 +18,9 @@
             <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Acessar Portal</button>
         </div>
     </div>
-    
+
     <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
-    
+
     <div class="max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-950 p-4 rounded-2xl border border-neutral-800">
             <div>
@@ -30,572 +31,55 @@
                 <i class="fas fa-fire mr-1"></i> 0 XP
             </div>
         </header>
-        
-        <div class="bg-neutral-950 p-4 rounded-2xl border border-neutral-800 space-y-2">
+
+        <section class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 space-y-4">
+            <div>
+                <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-info-circle text-red-500"></i> Diretrizes de Comunicação Interna
+                </h2>
+                <p class="text-xs text-neutral-400">Entenda o papel de cada setor antes de iniciar as atividades.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Agendamento</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
+                </div>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">TAC</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
+                </div>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Inmap</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
+                </div>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Comercial</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
+                </div>
+                <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5 md:col-span-2 lg:col-span-1">
+                    <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">NOC</h3>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-neutral-950 p-4 rounded-2xl border border-neutral-800 space-y-4">
             <div class="flex justify-between text-xs font-semibold">
                 <span>Progresso do Treinamento</span>
-                <span id="progress-text">0%</span>
+                <span id="progress-percentage">0%</span>
             </div>
-            <div class="w-full bg-neutral-900 h-2.5 rounded-full overflow-hidden border border-neutral-800">
+            
+            <div class="w-full bg-neutral-900 h-2 rounded-full overflow-hidden border border-neutral-800">
                 <div id="progress-bar" class="bg-red-600 h-full w-0 transition-all duration-500"></div>
             </div>
-        </div>
-        
-        <nav class="flex flex-wrap gap-2 border-b border-neutral-800 pb-2">
-            <button id="btn-tab-modulo1" onclick="switchTab('modulo1')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition bg-red-600/10 text-red-500 border border-red-500/20 shadow-sm">Módulo 1: Diretrizes</button>
-            <button id="btn-tab-modulo2" onclick="switchTab('modulo2')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 2: Agendamento</button>
-            <button id="btn-tab-modulo3" onclick="switchTab('modulo3')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 3: TAC</button>
-            <button id="btn-tab-modulo4" onclick="switchTab('modulo4')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 4: INMAP</button>
-            <button id="btn-tab-modulo5" onclick="switchTab('modulo5')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 5: Comercial</button>
-            <button id="btn-tab-modulo6" onclick="switchTab('modulo6')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 6: Ferramentas</button>
-            <button id="btn-tab-quiz" onclick="switchTab('quiz')" class="tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-slate-500 cursor-not-allowed flex items-center gap-2">
-                <span>Avaliação Final</span>
-                <span id="badge-quiz" class="text-[9px] bg-neutral-900 text-neutral-600 px-1.5 py-0.5 rounded border border-neutral-800">Bloqueado</span>
-            </button>
-        </nav>
-        
-        <main class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 min-h-[425px]">
-            <section id="tab-modulo1" class="tab-content block space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-network-wired text-red-500"></i> Módulo 1: Diretrizes de Atendimento</h2>
-                    <span id="badge-m1" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[400px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">AI</div>
-                            <h4 class="text-xs font-bold text-white">Ampernet Interno</h4>
-                        </div>
-                        <div id="m1-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]">
-                            <div class="bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800 p-3 rounded-2xl max-w-[85%]">
-                                Envie a opção **/start** para iniciar a simulação da árvore de atendimento.
-                            </div>
-                        </div>
-                        <div id="m1-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center">
-                            <button onclick="startM1()" class="bg-red-600 hover:bg-red-500 text-white px-5 py-2 rounded-xl font-bold text-xs transition shadow-md">/start</button>
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-2">
-                            <h4 class="font-bold text-white text-[11px] uppercase tracking-wider text-red-400">Instruções do Módulo</h4>
-                            <p>Siga o roteiro do bot selecionando sequencialmente os setores corretos para a abertura de ordens de serviço e suporte.</p>
-                        </div>
-                        <button id="btn-next-m1" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo2" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-calendar-alt text-red-500"></i> Módulo 2: Simulador - Agendamento</h2>
-                    <span id="badge-m2" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">A</div>
-                            <h4 class="text-xs font-bold text-white">Setor de Agendamento</h4>
-                        </div>
-                        <div id="m2-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
-                        <div id="m2-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Simule o envio e direcionamento de Ordens de Serviço por região de atendimento.</p></div>
-                        <button id="btn-next-m2" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo3" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-headset text-red-500"></i> Módulo 3: Simulador - TAC</h2>
-                    <span id="badge-m3" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">T</div>
-                            <h4 class="text-xs font-bold text-white">Suporte Técnico (TAC)</h4>
-                        </div>
-                        <div id="m3-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
-                        <div id="m3-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Preencha os dados e relate as necessidades de configuração de equipamentos em campo.</p></div>
-                        <button id="btn-next-m3" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo4" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-mobile-alt text-red-500"></i> Módulo 4: Simulador - Suporte INMAP</h2>
-                    <span id="badge-m4" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">I</div>
-                            <h4 class="text-xs font-bold text-white">Suporte Aplicativo INMAP</h4>
-                        </div>
-                        <div id="m4-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
-                        <div id="m4-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Canal focado em mitigar falhas técnicas de acesso e operação interna do APP de ordens.</p></div>
-                        <button id="btn-next-m4" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo5" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-file-contract text-red-500"></i> Módulo 5: Simulador - Comercial</h2>
-                    <span id="badge-m5" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">C</div>
-                            <h4 class="text-xs font-bold text-white">BackOffice Comercial</h4>
-                        </div>
-                        <div id="m5-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
-                        <div id="m5-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Verificações ágeis de alterações de planos e upgrades contratuais requisitados por clientes.</p></div>
-                        <button id="btn-next-m5" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
 
-            <section id="tab-modulo6" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-tools text-red-500"></i> Módulo 6: Solicitação de Ferramentas e Materiais</h2>
-                    <span id="badge-m6" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
+            <div class="mt-6 border-t border-neutral-800 pt-4">
+                <h2 class="text-base font-bold text-white mb-2">Agendamento</h2>
+                <p class="text-xs text-neutral-400">Inicie os testes e fluxos práticos deste módulo abaixo.</p>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">F</div>
-                            <h4 class="text-xs font-bold text-white">Almoxarifado & Insumos</h4>
-                        </div>
-                        <div id="m6-chat" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]"></div>
-                        <div id="m6-actions" class="p-2.5 bg-[#17212b] flex flex-wrap gap-2 justify-center"></div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl"><p>Canal direto para requisições de EPIs, reposição de maquinários, ferramentas e insumos para as frotas técnicas.</p></div>
-                        <button id="btn-next-m6" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-quiz" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-clipboard-check text-red-500"></i> Avaliação de Conhecimento Operacional</h2>
-                    <span id="badge-quiz-status" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Aguardando</span>
-                </div>
-                <div id="quiz-locked" class="p-8 text-center bg-neutral-900 border border-neutral-800 rounded-2xl space-y-3">
-                    <i class="fas fa-lock text-3xl text-neutral-600"></i>
-                    <h3 class="font-bold text-white text-sm">Avaliação Bloqueada</h3>
-                    <p class="text-xs text-neutral-400 max-w-sm mx-auto">Você precisa passar por todos os 6 módulos teóricos e simuladores práticos antes de realizar o teste final.</p>
-                </div>
-                <div id="quiz-active" class="hidden space-y-6">
-                    <div id="quiz-questions-container" class="space-y-4"></div>
-                    <div id="quiz-alert" class="p-3 bg-red-950/40 border border-red-500/20 rounded-xl text-red-400 text-xs hidden font-medium">Por favor, selecione uma alternativa para cada uma das questões acima.</div>
-                    <div class="flex gap-3 justify-end">
-                        <button onclick="resetarQuiz()" class="bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 px-4 py-2 rounded-xl text-xs font-bold transition">Reiniciar Opções</button>
-                        <button onclick="corrigirQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-red-900/20">Finalizar e Corrigir</button>
-                    </div>
-                </div>
-                <div id="quiz-results" class="hidden text-center p-8 bg-neutral-900 border border-neutral-800 rounded-2xl space-y-4 max-w-md mx-auto">
-                    <div id="result-icon-container"></div>
-                    <div class="space-y-1">
-                        <h3 id="result-title" class="text-base font-bold text-white"></h3>
-                        <p id="result-subtitle" class="text-xs text-neutral-400 px-4"></p>
-                    </div>
-                    <div class="bg-neutral-950 p-4 rounded-xl border border-neutral-800 inline-block min-w-[120px]">
-                        <p class="text-[10px] uppercase text-neutral-500 tracking-wider">Pontuação</p>
-                        <h2 id="result-score-text" class="text-xl font-black text-white mt-0.5"></h2>
-                        <span id="result-status-text"></span>
-                    </div>
-                    <div class="pt-2 flex justify-center gap-3">
-                        <button id="btn-quiz-retry" onclick="reiniciarProva()" class="bg-neutral-950 border border-neutral-800 hover:bg-neutral-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Tentar Novamente</button>
-                        <button id="btn-generate-cert" onclick="abrirCertificado()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-md"><i class="fas fa-award"></i> Emitir Certificado</button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-    
-    <div id="cert-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
-        <div class="bg-white text-neutral-900 p-8 rounded-none border-[12px] border-neutral-200 max-w-2xl w-full text-center space-y-6 relative shadow-2xl">
-            <div class="absolute inset-4 border-2 border-amber-600/30 pointer-events-none p-6"></div>
-            <div class="text-amber-600 text-4xl"><i class="fas fa-graduation-cap"></i></div>
-            <div class="space-y-1">
-                <h1 class="font-serif text-2xl font-bold tracking-wide uppercase text-neutral-800">Certificado de Conclusão</h1>
-                <p class="text-[10px] text-neutral-500 uppercase font-sans tracking-widest">Capacitação Operacional Ampernet</p>
-            </div>
-            <p class="text-sm leading-relaxed max-w-md mx-auto text-neutral-600 font-sans"> 
-                Certificamos para os devidos fins que o colaborador <strong id="cert-name-placeholder" class="text-neutral-950 underline decoration-red-600"></strong> concluiu com aproveitamento regulamentar o treinamento de <strong class="text-neutral-900">Fluxos de Atendimento e Canais Automatizados de Comunicação Interna</strong>. 
-            </p>
-            <div class="pt-4 border-t border-neutral-200 max-w-xs mx-auto">
-                <p id="cert-date" class="text-xs font-mono font-bold text-neutral-700"></p>
-                <p class="text-[9px] uppercase tracking-wider text-neutral-400 mt-0.5">Data de Emissão</p>
-            </div>
-            <div class="pt-2">
-                <button onclick="fecharCertificado()" class="bg-neutral-900 hover:bg-neutral-800 text-white font-bold px-4 py-2 rounded-lg text-xs transition font-sans">Fechar Visualização</button>
-            </div>
         </div>
     </div>
-    
-    <script>
-        let userXP = 0;
-        let technicianName = '';
-        let moduleStatus = {m1: false, m2: false, m3: false, m4: false, m5: false, m6: false};
-        
-        function appendMsg(chatId, sender, text) {
-            const chat = document.getElementById(chatId);
-            const msg = document.createElement('div');
-            msg.className = `p-2.5 rounded-2xl max-w-[85%] text-xs leading-relaxed ${sender === 'user' ? 'bg-[#2b5278] text-white ml-auto rounded-tr-none' : sender === 'bot' ? 'bg-neutral-950 border border-neutral-800 text-slate-200 mr-auto rounded-tl-none' : 'bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800'}`;
-            msg.innerHTML = text;
-            chat.appendChild(msg);
-            chat.scrollTop = chat.scrollHeight;
-        }
-        
-        function submitTechnicianName() {
-            const name = document.getElementById('tech-name-input').value.trim();
-            if (name.length < 5) { document.getElementById('name-error').classList.remove('hidden'); return; }
-            technicianName = name;
-            document.getElementById('name-entry-modal').remove();
-            addXP(100, "Identificação registrada");
-            initM2(); initM3(); initM4(); initM5(); initM6();
-        }
-        
-        function addXP(amount, reason) {
-            userXP += amount;
-            document.getElementById('user-points').innerHTML = `<i class="fas fa-fire mr-1"></i> ${userXP} XP`;
-            showToast(`+${amount} XP: ${reason}`, 'success');
-        }
-        
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `p-4 rounded-xl shadow-lg text-xs font-semibold text-white flex items-center gap-3 border border-neutral-800`;
-            toast.classList.add(type === 'success' ? 'bg-red-950' : 'bg-neutral-900', type === 'success' ? 'text-red-400' : 'text-neutral-300');
-            toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle text-red-500' : 'fa-info-circle text-red-500'} text-lg"></i> <span>${message}</span>`;
-            container.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 3500);
-        }
-        
-        function switchTab(tabId) {
-            if (document.getElementById(`btn-tab-${tabId}`).classList.contains('cursor-not-allowed')) return;
-            document.querySelectorAll('.tab-content').forEach(s => s.classList.replace('block', 'hidden'));
-            document.getElementById(`tab-${tabId}`).classList.replace('hidden', 'block');
-            document.querySelectorAll('.tab-btn').forEach(b => b.className = "tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800");
-            document.getElementById(`btn-tab-${tabId}`).className = "tab-btn px-3 py-2 rounded-xl text-xs font-semibold transition bg-red-600/10 text-red-500 border border-red-500/20 shadow-sm";
-        }
-        
-        function updateProgress() {
-            let done = Object.values(moduleStatus).filter(Boolean).length;
-            let percent = Math.round((done / 6) * 100);
-            document.getElementById('progress-bar').style.width = percent + '%';
-            document.getElementById('progress-text').innerText = percent + '%';
-            for (let i = 1; i <= 6; i++) {
-                const b = document.getElementById(`badge-m${i}`);
-                if(b) b.innerHTML = moduleStatus[`m${i}`] ? "Concluído" : "Pendente";
-                if(b && moduleStatus[`m${i}`]) b.className = "text-[10px] bg-red-950/40 text-red-400 border border-red-500/20 px-2 py-1 rounded-lg font-semibold";
-            }
-            if (done === 6) {
-                const bq = document.getElementById('btn-tab-quiz');
-                bq.classList.remove('text-slate-500', 'cursor-not-allowed'); bq.classList.add('text-red-400', 'font-bold');
-                document.getElementById('badge-quiz').className = "text-[9px] bg-red-950/40 text-red-400 border border-red-500/20 px-1.5 py-0.5 rounded font-semibold";
-                document.getElementById('badge-quiz').innerText = "Liberado";
-                document.getElementById('quiz-locked').classList.add('hidden');
-                document.getElementById('quiz-active').classList.remove('hidden');
-            }
-        }
-        
-        // M1: FLUXO EXATO SOLICITADO
-        function startM1() {
-            const chat = document.getElementById('m1-chat');
-            chat.innerHTML = '';
-            appendMsg('m1-chat', 'user', '/start');
-            
-            setTimeout(() => {
-                appendMsg('m1-chat', 'bot', '<strong>Ampernet Interno:</strong><br>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.');
-                setTimeout(() => {
-                    appendMsg('m1-chat', 'bot', '<strong>Ampernet Interno:</strong><br>Seu protocolo de atendimento é AMP20252325306');
-                    setTimeout(() => {
-                        appendMsg('m1-chat', 'bot', '<strong>Ampernet Interno:</strong><br>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços<br>6 - Recursos Humanos<br>7 - Serviços e Tecnologia<br>8 - Noc<br>9 - Marketing<br>10 - Relacionamento<br>11 - Infraestrutura');
-                        
-                        document.getElementById('m1-actions').innerHTML = `<button onclick="routeM1Suporte()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-xs font-bold transition">5 - Suporte e Serviços</button>`;
-                    }, 500);
-                }, 500);
-            }, 500);
-        }
 
-        function routeM1Suporte() {
-            appendMsg('m1-chat', 'user', '5 - Suporte e Serviços');
-            document.getElementById('m1-actions').innerHTML = '';
-            
-            setTimeout(() => {
-                appendMsg('m1-chat', 'bot', '<strong>Ampernet Interno:</strong><br>Bem Vindo ao Suporte e Serviços');
-                setTimeout(() => {
-                    appendMsg('m1-chat', 'bot', '<strong>Ampernet Interno:</strong><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>3 - Erro de seleção<br>4 - Suporte Inmap<br>5 - STFC');
-                    
-                    document.getElementById('m1-actions').innerHTML = `<button onclick="routeM1Agendamento()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl text-xs font-bold transition">1 - Agendamento</button>`;
-                }, 500);
-            }, 500);
-        }
-
-        function routeM1Agendamento() {
-            appendMsg('m1-chat', 'user', '1 - Agendamento');
-            document.getElementById('m1-actions').innerHTML = '';
-            
-            setTimeout(() => {
-                appendMsg('m1-chat', 'bot', 'Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?');
-                
-                document.getElementById('m1-actions').innerHTML = `<button onclick="finishM1()" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-4 py-1.5 rounded-xl text-xs transition font-semibold">Confirmar Resposta</button>`;
-            }, 600);
-        }
-
-        function finishM1() {
-            appendMsg('m1-chat', 'user', 'Preciso de auxílio com a rota técnica de ordens de serviço.');
-            document.getElementById('m1-actions').innerHTML = '';
-            
-            setTimeout(() => {
-                appendMsg('m1-chat', 'bot', '✓ Fluxo de triagem do Módulo 1 concluído com sucesso!');
-                const btn = document.getElementById('btn-next-m1');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Módulo 2";
-                btn.onclick = () => { moduleStatus.m1 = true; updateProgress(); switchTab('modulo2'); };
-                addXP(100, "Módulo 1 completo");
-            }, 500);
-        }
-        
-        // M2: AGENDAMENTO
-        function initM2() {
-            const act = document.getElementById('m2-actions');
-            act.innerHTML = `<button onclick="startM2()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar Agendamento</button>`;
-        }
-        function startM2() {
-            appendMsg('m2-chat', 'user', 'Solicito suporte ao Agendamento');
-            document.getElementById('m2-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m2-chat', 'bot', '<strong>Setor de Agendamento</strong><br>Selecione a cidade polo correspondente para o direcionamento da OS:');
-                document.getElementById('m2-actions').innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 w-full max-w-sm">
-                        ${['Ampére', 'Cascavel', 'Francisco Beltrão', 'Pato Branco'].map(c => `<button onclick="finishM2('${c}')" class="bg-neutral-800 text-slate-200 hover:bg-neutral-700 py-1.5 px-2 rounded-xl text-[11px] font-semibold border border-neutral-700">${c}</button>`).join('')}
-                    </div>`;
-            }, 600);
-        }
-        function finishM2(cidade) {
-            appendMsg('m2-chat', 'user', cidade);
-            document.getElementById('m2-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m2-chat', 'bot', `✓ Sucesso! Atendimento de agendamento fixado na fila da regional <strong>${cidade}</strong>.`);
-                const btn = document.getElementById('btn-next-m2');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Módulo 3";
-                btn.onclick = () => { moduleStatus.m2 = true; updateProgress(); switchTab('modulo3'); };
-                addXP(100, "Módulo Agendamento completo");
-            }, 600);
-        }
-        
-        // M3: TAC
-        function initM3() {
-            document.getElementById('m3-actions').innerHTML = `<button onclick="startM3()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar TAC</button>`;
-        }
-        function startM3() {
-            appendMsg('m3-chat', 'user', 'Solicito suporte ao TAC');
-            document.getElementById('m3-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m3-chat', 'bot', 'Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><br>🚨<strong>PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL!</strong>🚨');
-                document.getElementById('m3-actions').innerHTML = `<button onclick="finishM3()" class="bg-red-600 hover:bg-red-500 text-white px-5 py-1.5 rounded-xl text-xs font-bold transition">Confirmar Envio da Descrição</button>`;
-            }, 600);
-        }
-        function finishM3() {
-            appendMsg('m3-chat', 'user', 'Solicito auxílio em configuração de equipamento em campo.');
-            document.getElementById('m3-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m3-chat', 'bot', '✓ Descrição técnica inserida com sucesso. Aguarde o retorno do analista TAC.');
-                const btn = document.getElementById('btn-next-m3');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Módulo 4";
-                btn.onclick = () => { moduleStatus.m3 = true; updateProgress(); switchTab('modulo4'); };
-                addXP(100, "Módulo TAC completo");
-            }, 600);
-        }
-        
-        // M4: INMAP
-        function initM4() {
-            document.getElementById('m4-actions').innerHTML = `<button onclick="startM4()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar Suporte INMAP</button>`;
-        }
-        function startM4() {
-            appendMsg('m4-chat', 'user', 'Reportar falha no APP INMAP');
-            document.getElementById('m4-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m4-chat', 'bot', '<strong>Suporte Ferramental - INMAP</strong><br>Selecione a falha que está enfrentando no momento:');
-                document.getElementById('m4-actions').innerHTML = `
-                    <button onclick="finishM4('INMAP Offline')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">INMAP Offline / Sem Conexão</button>
-                    <button onclick="finishM4('Falha de Autenticação')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Falha de login e credenciais</button>`;
-            }, 600);
-        }
-        function finishM4(erro) {
-            appendMsg('m4-chat', 'user', erro);
-            document.getElementById('m4-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m4-chat', 'bot', '✓ Reporte encaminhado. O servidor operacional foi alertado sobre a instabilidade de rede.');
-                const btn = document.getElementById('btn-next-m4');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Módulo 5";
-                btn.onclick = () => { moduleStatus.m4 = true; updateProgress(); switchTab('modulo5'); };
-                addXP(100, "Módulo INMAP completo");
-            }, 600);
-        }
-        
-        // M5: COMERCIAL
-        function initM5() {
-            document.getElementById('m5-actions').innerHTML = `<button onclick="startM5()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Acionar Comercial</button>`;
-        }
-        function startM5() {
-            appendMsg('m5-chat', 'user', 'Verificar dados de faturamento/planos');
-            document.getElementById('m5-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m5-chat', 'bot', '<strong>BackOffice Comercial</strong><br>Selecione o tipo de tratativa comercial necessária para o contrato do assinante:');
-                document.getElementById('m5-actions').innerHTML = `
-                    <button onclick="finishM5('Upgrade de Plano')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">Upgrade de Plano</button>
-                    <button onclick="finishM5('Alteração de Plano')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs font-semibold transition">Alteração de Plano</button>`;
-            }, 600);
-        }
-        function finishM5(tipo) {
-            appendMsg('m5-chat', 'user', tipo);
-            document.getElementById('m5-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m5-chat', 'bot', `✓ Sucesso! Solicitação de <strong>${tipo}</strong> encaminhada para validação de viabilidade contratual.`);
-                const btn = document.getElementById('btn-next-m5');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Módulo 6";
-                btn.onclick = () => { moduleStatus.m5 = true; updateProgress(); switchTab('modulo6'); };
-                addXP(100, "Módulo Comercial completo");
-            }, 600);
-        }
-
-        // M6: FERRAMENTAS E MATERIAIS
-        function initM6() {
-            document.getElementById('m6-actions').innerHTML = `<button onclick="startM6()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition">Solicitar Insumos</button>`;
-        }
-        function startM6() {
-            appendMsg('m6-chat', 'user', 'Iniciar pedido de materiais de infraestrutura');
-            document.getElementById('m6-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m6-chat', 'bot', '<strong>Almoxarifado Geral Ampernet</strong><br>Selecione a categoria dos itens para reposição da frota técnica:');
-                document.getElementById('m6-actions').innerHTML = `
-                    <button onclick="finishM6('Ferramentas')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Ferramentas (Maquinários/EPIs)</button>
-                    <button onclick="finishM6('Materiais')" class="bg-neutral-800 text-slate-200 border border-neutral-700 px-3 py-1.5 rounded-xl text-xs transition">Materiais (Cabos/Conectores)</button>`;
-            }, 600);
-        }
-        function finishM6(categoria) {
-            appendMsg('m6-chat', 'user', `Pedido de: ${categoria}`);
-            document.getElementById('m6-actions').innerHTML = '';
-            setTimeout(() => {
-                appendMsg('m6-chat', 'bot', `✓ Ticket de Requisição gerado. Dirija-se ao polo regional para retirada dos seus ${categoria.toLowerCase()}.`);
-                const btn = document.getElementById('btn-next-m6');
-                btn.className = "w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-bold text-xs transition";
-                btn.disabled = false; btn.innerText = "Ir para Avaliação Final";
-                btn.onclick = () => { moduleStatus.m6 = true; updateProgress(); switchTab('quiz'); };
-                addXP(100, "Módulo Ferramentas completo");
-            }, 600);
-        }
-        
-        // AVALIAÇÃO FINAL
-        const quizData = [
-            { id: 1, question: "1. No menu principal de atendimento do bot interno, qual número corresponde ao setor de 'Suporte e Serviços'?", options: ["A) Opção 2", "B) Opção 4", "C) Opção 5", "D) Opção 8"], correct: 2 },
-            { id: 2, question: "2. Qual o aviso oficial exibido ao técnico ao abrir um chamado para o TAC?", options: ["A) Obrigatório envio de áudios detalhados.", "B) Pedimos que evitem enviar fotos e áudios neste canal para agilizar o suporte.", "C) Anexar fotos de todos os ângulos da instalação antes de falar.", "D) Entrar em contato via videoconferência obrigatória."], correct: 1 },
-            { id: 3, question: "3. Se o aplicativo de OS em campo apresentar status de 'INMAP Offline', qual setor deve ser acionado?", options: ["A) Comercial", "B) Inmap", "C) Agendamento", "D) NOC"], correct: 1 },
-            { id: 4, question: "4. No canal Comercial, quais tratativas contratuais e de planos o técnico pode consultar?", options: ["A) Liberação de portas lógicas PON.", "B) Upgrade de Plano e Alteração de Plano.", "C) Reset físico de roteador corporativo.", "D) Sincronização de geolocalização móvel."], correct: 1 },
-            { id: 5, question: "5. Para solicitar a reposição de insumos técnicos, EPIs e conectores, o profissional deve acessar qual canal?", options: ["A) Canal de Agendamento Regional", "B) Suporte Avançado do NOC", "C) Solicitação de Ferramentas e Materiais (Almoxarifado)", "D) Ouvidoria do Comercial"], correct: 2 }
-        ];
-        
-        function buildQuiz() {
-            const container = document.getElementById('quiz-questions-container');
-            if(!container) return;
-            container.innerHTML = '';
-            quizData.forEach((q) => {
-                const qDiv = document.createElement('div');
-                qDiv.className = "bg-neutral-950 p-5 rounded-2xl border border-neutral-800 space-y-3";
-                qDiv.innerHTML = `
-                    <h4 class="font-bold text-white text-sm">${q.question}</h4>
-                    <div class="grid grid-cols-1 gap-2.5 mt-2">
-                        ${q.options.map((opt, optIndex) => `
-                            <label class="flex items-start gap-3 p-3 rounded-xl border border-neutral-800 hover:border-red-500 bg-neutral-900 cursor-pointer transition select-none">
-                                <input type="radio" name="q-${q.id}" value="${optIndex}" class="mt-1 h-4 w-4 text-red-600 border-neutral-700 focus:ring-red-500 bg-neutral-950">
-                                <span class="text-xs text-neutral-300 font-medium">${opt}</span>
-                            </label>
-                        `).join('')}
-                    </div>`;
-                container.appendChild(qDiv);
-            });
-        }
-        
-        function resetarQuiz() { buildQuiz(); document.getElementById('quiz-alert').classList.add('hidden'); showToast("Quiz resetado!", "info"); }
-        
-        function corrigirQuiz() {
-            const alert = document.getElementById('quiz-alert');
-            let answered = 0, score = 0;
-            quizData.forEach(q => {
-                const checked = document.querySelector(`input[name="q-${q.id}"]:checked`);
-                if(checked) { answered++; if(parseInt(checked.value) === q.correct) score++; }
-            });
-            if (answered < quizData.length) { alert.classList.remove('hidden'); showToast("Responda todas as perguntas!", "error"); return; }
-            alert.classList.add('hidden');
-            document.getElementById('quiz-active').classList.add('hidden');
-            document.getElementById('quiz-results').classList.remove('hidden');
-            
-            const icon = document.getElementById('result-icon-container');
-            const title = document.getElementById('result-title');
-            const subtitle = document.getElementById('result-subtitle');
-            const txtScore = document.getElementById('result-score-text');
-            const txtStatus = document.getElementById('result-status-text');
-            const btnRetry = document.getElementById('btn-quiz-retry');
-            const btnCert = document.getElementById('btn-generate-cert');
-            
-            txtScore.innerText = `${score} / 5`;
-            
-            if(score >= 4) {
-                icon.className = "h-20 w-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-md bg-emerald-950/50 border border-emerald-500/30 text-emerald-400";
-                icon.innerHTML = `<i class="fas fa-graduation-cap"></i>`;
-                title.innerText = "Aprovado!";
-                subtitle.innerText = "Você obteve a proficiência nos fluxos internos Ampernet.";
-                txtStatus.innerText = "APROVADO";
-                txtStatus.className = "text-sm font-bold text-emerald-400 block mt-1";
-                btnRetry.classList.add('hidden'); btnCert.classList.remove('hidden');
-                addXP(400, "Avaliação com Aproveitamento");
-            } else {
-                icon.className = "h-20 w-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-md bg-red-950/50 border border-red-500/30 text-red-500";
-                icon.innerHTML = `<i class="fas fa-times"></i>`;
-                title.innerText = "Tente Novamente";
-                subtitle.innerText = "É necessário acertar no mínimo 4 questões (80%) para emitir o certificado.";
-                txtStatus.innerText = "REPROVADO";
-                txtStatus.className = "text-sm font-bold text-red-500 block mt-1";
-                btnRetry.classList.remove('hidden'); btnCert.classList.add('hidden');
-            }
-        }
-        
-        function reiniciarProva() { document.getElementById('quiz-results').classList.add('hidden'); document.getElementById('quiz-active').classList.remove('hidden'); resetarQuiz(); }
-        
-        function abrirCertificado() {
-            const hoje = new Date();
-            document.getElementById('cert-name-placeholder').innerText = technicianName || "Técnico de Campo";
-            document.getElementById('cert-date').innerText = `${String(hoje.getDate()).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}/${hoje.getFullYear()}`;
-            document.getElementById('cert-modal').classList.remove('hidden');
-        }
-        function fecharCertificado() { document.getElementById('cert-modal').classList.add('hidden'); }
-        
-        window.onload = function() { buildQuiz(); updateProgress(); };
-    </script>
 </body>
 </html>
