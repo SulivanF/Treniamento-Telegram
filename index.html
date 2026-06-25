@@ -19,7 +19,7 @@
             <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
             <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-600">
             <p id="name-error" class="text-red-500 text-[11px] hidden">Por favor, insira um nome válido (mínimo 5 caracteres).</p>
-            <button onclick="enviarNomeDoTecnico()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
+            <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
         </div>
     </div>
 
@@ -58,23 +58,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Agendamento</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Agendamento – A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">TAC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">TAC – Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Inmap</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Inmap – Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Comercial</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Comercial – Acicionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5 md:col-span-2 lg:col-span-1">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">NOC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">NOC – Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
                 </div>
             </div>
         </section>
@@ -106,11 +106,11 @@
                     </button>
                 </nav>
                 <div class="pt-3 border-t border-neutral-800 mt-2 text-[11px] text-neutral-400 flex justify-between px-1">
-                    <span>Módulos Feitos:</span> <span id="progress-text" class="text-red-500 font-bold">0/7</span>
+                    <span>Módulos Concluídos:</span> <span id="progress-text" class="text-red-500 font-bold">0/7</span>
                 </div>
             </div>
 
-            <div class="lg:col-span-2 bg-neutral-950 rounded-2xl border border-neutral-800 flex flex-col h-[560px] overflow-hidden">
+            <div class="lg:col-span-2 bg-neutral-950 rounded-2xl border border-neutral-800 flex flex-col h-[580px] overflow-hidden">
                 <div class="bg-neutral-900 p-4 border-b border-neutral-800 flex items-center justify-between">
                     <div class="flex items-center gap-3">
                         <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm">A</div>
@@ -139,7 +139,7 @@
         let chatStep = 0;
         let respostasPedido = { colaborador: "", regional: "", item: "", qtd: "", motivo: "" };
 
-        function enviarNomeDoTecnico() {
+        function submitTechnicianName() {
             const input = document.getElementById('tech-name-input');
             const errorElement = document.getElementById('name-error');
             const modal = document.getElementById('name-entry-modal');
@@ -199,7 +199,7 @@
             if (num >= 1 && num <= 4) {
                 const titulos = {1: "Agendamento", 2: "Suporte TAC", 3: "Suporte Inmap", 4: "Comercial"};
                 document.getElementById('sim-title').innerText = `Módulo ${num}: ${titulos[num]}`;
-                addBotBubble("Envie /start para iniciar a interação.");
+                addBotBubble("Deixe somente a opção /start para iniciar a interação.");
                 addActionButton("/start", () => executarFluxoComum() );
             } else if (num === 5) {
                 document.getElementById('sim-title').innerText = "Módulo 5: Bot de Pedidos";
@@ -310,9 +310,9 @@
                         addBotBubble("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
                         chatStep = 1;
                         if(moduloAtual === 4) {
-                            addActionButton("4 - Comercial", () => executarFluxoComum());
+                            addActionButton("5 - Disponibilize um botão para acionamento da opção 4", () => executarFluxoComum());
                         } else {
-                            addActionButton("5 - Suporte e Serviços", () => executarFluxoComum());
+                            addActionButton("5 - Disponibilize um botão para acionamento da opção 5", () => executarFluxoComum());
                         }
                     }, 300);
                 }, 300);
@@ -336,10 +336,10 @@
             else if(chatStep === 2) {
                 if(moduloAtual === 1) {
                     addBotBubble("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\n\nExemplos: Cliente ausente, Não Localizando Endereço...");
-                    addInputField("Ex: Cliente ausente...", (val) => fecharTarefaModulos());
+                    addInputField("Excreva seu assunto prático...", (val) => fecharTarefaModulos());
                 } else if(moduloAtual === 2) {
                     addBotBubble("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !\nLiberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
-                    addInputField("Descreva sua solicitação técnico...", (val) => fecharTarefaModulos());
+                    addInputField("Descreva aqui sua solicitação...", (val) => fecharTarefaModulos());
                 } else if(moduloAtual === 3) {
                     addBotBubble("Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!\n\nColoque exemplos como, Aplicativo Offline, Erro ao colocar as credenciais de acesso.");
                     addInputField("Ex: Aplicativo Offline...", (val) => fecharTarefaModulos());
@@ -356,7 +356,7 @@
         }
 
         function fecharTarefaModulos() {
-            addBotBubble("✓ Tarefa concluída!");
+            addBotBubble("✓ Conclua a tarefa.");
             marcarModuloConcluido(moduloAtual);
             let prox = moduloAtual + 1;
             addActionButton(`Avançar para Módulo ${prox}`, () => carregarModulo(prox));
@@ -365,14 +365,14 @@
         // LÓGICA DO MÓDULO 5 (BOT DE PEDIDOS)
         function iniciarModulo5() {
             addBotBubble("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
-            addInputField("Ex: Sulivan - Ampére", (val) => {
+            addInputField("Deixe o Técnico Preencher com os dados necessários.", (val) => {
                 respostasPedido.colaborador = val;
                 exibirRegionaisM5();
             });
         }
 
         function exibirRegionaisM5() {
-            addBotBubble("Selecione a regional correspondente:");
+            addBotBubble("Selecione a regional correspondente:\n\nRegional PG\n\nRegional FB\n\nRegional PB\n\nRegional Sao Lourenco\n\nRegional LJS\n\nCidade CSC\n\nRegional Guaira\n\nRegional Ampere\n\nRegional Fazenda");
             const regionais = [
                 "Regional PG", "Regional FB", "Regional PB", 
                 "Regional Sao Lourenco", "Regional LJS", "Cidade CSC", 
@@ -396,13 +396,13 @@
         }
 
         function prosseguirComPerguntasM5() {
-            addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido?`);
+            addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido? (deixe o técnico preencher o que corresponde a pergunta)`);
             addInputField("Item solicitado", (pedido) => {
                 respostasPedido.item = pedido;
-                addBotBubble("Qual e a quantidade?");
+                addBotBubble("Qual e a quantidade? (deixe o técnico preencher o que corresponde a pergunta)");
                 addInputField("Quantidade do item", (qtd) => {
                     respostasPedido.qtd = qtd;
-                    addBotBubble("Qual e o motivo do pedido?");
+                    addBotBubble("Qual e o motivo do pedido? (deixe o técnico preencher o que corresponde a pergunta)");
                     addInputField("Motivo do pedido", (motivo) => {
                         respostasPedido.motivo = motivo;
                         exibirConfirmacaoFinalM5();
@@ -437,7 +437,7 @@
                 actions.innerHTML = "";
                 addUserBubble("Não");
                 setTimeout(() => {
-                    addBotBubble("Pedido não confirmado. Vamos reiniciar.");
+                    addBotBubble("Pedido cancelado. Retornando ao início.");
                     setTimeout(() => iniciarModulo5(), 500);
                 }, 300);
             };
@@ -449,30 +449,30 @@
         // LÓGICA DO PROVÃO E AVALIAÇÃO FINAL (MÓDULO 7)
         let questaoIndex = 0;
         let acertosProva = 0;
-        constQuestoes = [
+        const constQuestoes = [
             {
-                q: "Qual setor realiza o direcionamento das ordens de serviço e o contato inicial com clientes de campo?",
+                q: "Qual o canal correto para tratar de Ordens de Serviço e contato com os clientes?",
                 o: ["TAC", "Agendamento", "NOC", "Comercial"],
                 c: 1
             },
             {
-                q: "O suporte para liberação de equipamentos e auxílio direto em configurações em campo deve ser acionado onde?",
+                q: "Quando necessitar de suporte para liberação de equipamentos ou auxílio em configurações, quem deve ser acionado?",
                 o: ["Inmap", "Comercial", "TAC", "NOC"],
                 c: 2
             },
             {
-                q: "Qual a regra correta para acionamento do suporte avançado (NOC)?",
-                o: ["Acionamento direto via WhatsApp", "Deve ser realizado inicialmente via TAC, que fará o direcionamento se necessário", "Deve ser feito via e-mail do supervisor", "O NOC não atende demandas técnicas de campo"],
+                q: "Qual a regra correta sobre o acionamento direto do suporte avançado (NOC)?",
+                o: ["Deve ser acionado diretamente via chat individual", "Deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário", "Deve ser feito via e-mail corporativo", "O NOC não atende chamados de campo"],
                 c: 1
             },
             {
-                q: "Se houver a necessidade de analisar informações contratuais e planos ativos do cliente, qual canal deve ser aberto?",
+                q: "Se houver a necessidade de validar informações relacionadas a Planos e Contratos, qual a opção correta?",
                 o: ["Comercial (Analista)", "Suporte Inmap", "Agendamento", "Financeiro"],
                 c: 0
             },
             {
-                q: "Em relação ao registro de mensagens nas ferramentas de comunicação interna da Ampernet, assinale a correta:",
-                o: ["Mensagens podem ser excluídas a qualquer momento pelo técnico", "É possível editar os dados após 24 horas", "Todas as interações ficam registradas no banco de dados, sem possibilidade de exclusão ou edição", "Gírias estão liberadas por ser um canal informal"],
+                q: "A respeito do histórico de mensagens enviadas nos canais automáticos da Ampernet, assinale o correto:",
+                o: ["Mensagens podem ser excluídas a qualquer momento pelo técnico", "É possível editar os dados se houver erro de digitação", "Todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens", "É permitido o uso moderado de gírias e jargões informais"],
                 c: 2
             }
         ];
@@ -480,7 +480,7 @@
         function iniciarAvaliacao() {
             questaoIndex = 0;
             acertosProva = 0;
-            addBotBubble("Iniciando avaliação de fluxo técnico. Responda às 5 perguntas com atenção. É necessário acertar 4.");
+            addBotBubble("Iniciando avaliação final. Responda com atenção às próximas 5 perguntas.");
             setTimeout(() => carregarQuestaoProva(), 600);
         }
 
@@ -513,24 +513,24 @@
         function processarResultadoProva() {
             addBotBubble(`Avaliação finalizada!\nVocê obteve: ${acertosProva} acertos de 5.`);
             if (acertosProva >= 4) {
-                addBotBubble("🎉 Excelente! Você foi aprovado no treinamento prático.");
+                addBotBubble("🎉 Excelente! Você foi aprovado e seu certificado está liberado.");
                 marcarModuloConcluido(7);
                 
                 const actions = document.getElementById('sim-actions');
                 const btnCert = document.createElement('button');
                 btnCert.className = "bg-green-600 hover:bg-green-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition";
-                btnCert.innerHTML = "<i class='fas fa-award mr-1'></i> Gerar Certificado";
+                btnCert.innerHTML = "<i class='fas fa-award mr-1'></i> Emitir Certificado";
                 btnCert.onclick = () => {
                     document.getElementById('cert-name').innerText = tecnicoNome;
                     document.getElementById('certificate-modal').classList.remove('hidden');
                 };
                 actions.appendChild(btnCert);
             } else {
-                addBotBubble("❌ Você não obteve a pontuação mínima de 4 acertos. Estude as diretrizes e tente novamente.");
+                addBotBubble("❌ Você não obteve a pontuação mínima de 4 acertos. Revise as diretrizes e tente novamente.");
                 const actions = document.getElementById('sim-actions');
                 const btnRefazer = document.createElement('button');
                 btnRefazer.className = "bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition";
-                btnRefazer.innerText = "Refazer Prova";
+                btnRefazer.innerText = "Refazer Avaliação";
                 btnRefazer.onclick = () => iniciarAvaliacao();
                 actions.appendChild(btnRefazer);
             }
