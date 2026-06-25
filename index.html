@@ -1,748 +1,178 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portal de Capacitação - Ampernet</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body class="bg-neutral-900 text-slate-100 min-h-screen font-sans">
-    <div id="name-entry-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300">
-        <div class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 space-y-4">
-            <h3 class="text-lg font-bold text-white">Identificação do Técnico</h3>
-            <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
-            <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-600">
-            <p id="name-error" class="text-red-500 text-[11px] hidden">Por favor, insira um nome válido (mínimo 5 caracteres).</p>
-            <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Acessar Portal</button>
+<div class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 space-y-6 max-w-4xl mx-auto my-6">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 border-b border-neutral-800 pb-4">
+        <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                <i class="fab fa-telegram text-red-500"></i> Central de Simulados: Acionamento de Setores
+            </h2>
+            <p class="text-xs text-neutral-400">Selecione um setor no menu do bot para testar a árvore de atendimento correto.</p>
+        </div>
+        <div class="flex gap-2 text-[11px]">
+            <span class="bg-neutral-900 border border-neutral-800 px-2.5 py-1 rounded-lg text-neutral-400">
+                Status: <strong class="text-red-500" id="sim-status">Aguardando /start</strong>
+            </span>
         </div>
     </div>
-    
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
-    
-    <div class="max-w-5xl mx-auto px-4 py-6 space-y-6">
-        <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-950 p-4 rounded-2xl border border-neutral-800">
-            <div>
-                <h1 class="text-xl font-bold text-white tracking-tight">Portal de Capacitação Ampernet</h1>
-                <p class="text-xs text-neutral-400">Treinamento de Fluxos e Canais de Comunicação Telegram</p>
-            </div>
-            <div id="user-points" class="bg-red-950/40 text-red-400 border border-red-500/20 px-4 py-2 rounded-xl text-sm font-bold flex items-center">
-                <i class="fas fa-fire mr-1"></i> 0 XP
-            </div>
-        </header>
-        
-        <div class="bg-neutral-950 p-4 rounded-2xl border border-neutral-800 space-y-2">
-            <div class="flex justify-between text-xs font-semibold">
-                <span>Progresso do Treinamento</span>
-                <span id="progress-text">0%</span>
-            </div>
-            <div class="w-full bg-neutral-900 h-2.5 rounded-full overflow-hidden border border-neutral-800">
-                <div id="progress-bar" class="bg-red-600 h-full w-0 transition-all duration-500"></div>
-            </div>
-        </div>
-        
-        <nav class="flex flex-wrap gap-2 border-b border-neutral-800 pb-2">
-            <button id="btn-tab-modulo1" onclick="switchTab('modulo1')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition bg-red-600/10 text-red-500 border border-red-500/20 shadow-sm">Módulo 1: Canais</button>
-            <button id="btn-tab-modulo2" onclick="switchTab('modulo2')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 2: Triagem Bot</button>
-            <button id="btn-tab-modulo3" onclick="switchTab('modulo3')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 3: Ferramentas</button>
-            <button id="btn-tab-modulo4" onclick="switchTab('modulo4')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition text-neutral-400 hover:bg-neutral-800">Módulo 4: CST/Indicações</button>
-            <button id="btn-tab-quiz" onclick="switchTab('quiz')" class="tab-btn px-4 py-2 rounded-xl text-xs font-semibold transition text-slate-500 cursor-not-allowed flex items-center gap-2">
-                <span>Avaliação Final</span>
-                <span id="badge-quiz" class="text-[9px] bg-neutral-900 text-neutral-600 px-1.5 py-0.5 rounded border border-neutral-800">Bloqueado</span>
-            </button>
-        </nav>
-        
-        <main class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 min-h-[400px]">
-            <section id="tab-modulo1" class="tab-content block space-y-4">
-                <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-network-wired text-red-500"></i> Módulo 1: Descrição e Estrutura de Canais</h2>
-                <div class="prose prose-sm prose-invert max-w-none text-xs text-neutral-300 space-y-4">
-                    <p>A Ampernet utiliza canais oficiais automatizados no Telegram para otimizar as interações internas, abertura de chamados e solicitações de infraestrutura.</p>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-2">
-                        <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
-                            <h4 class="font-bold text-red-400 mb-1">Ampernet Interno Bot</h4>
-                            <p class="text-neutral-400 text-[11px]">Destinado à triagem de chamados operacionais, suporte a OS, contato com BackOffice Comercial e TAC.</p>
-                        </div>
-                        <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800">
-                            <h4 class="font-bold text-red-400 mb-1">SuperAmpBot</h4>
-                            <p class="text-neutral-400 text-[11px]">Canal centralizado para solicitações automáticas de ferramentas, EPIs, insumos e logística de almoxarifado.</p>
-                        </div>
-                    </div>
 
-                    <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800 space-y-2">
-                        <h4 class="font-bold text-white text-xs uppercase tracking-wider text-red-400">Quando Acionar Cada Setor:</h4>
-                        <ul class="list-disc list-inside space-y-2 text-[11px] text-neutral-300">
-                            <li><strong>Agendamento:</strong> A comunicação com este setor é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</li>
-                            <li><strong>TAC:</strong> Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</li>
-                            <li><strong>Inmap:</strong> Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</li>
-                            <li><strong>Comercial:</strong> Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</li>
-                            <li><strong>NOC:</strong> Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. <em>Nota: O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</em></li>
-                        </ul>
-                    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[420px] overflow-hidden">
+            <div class="bg-[#17212b] p-3 border-b border-neutral-950 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">A</div>
+                <div>
+                    <h4 class="text-xs font-bold text-white">Ampernet Interno Bot</h4>
+                    <p class="text-[10px] text-neutral-400">Triagem Operacional Oficial</p>
                 </div>
-                <div class="pt-4 border-t border-neutral-900 flex justify-end">
-                    <button onclick="completarModulo1()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">Próximo Módulo <i class="fas fa-arrow-right"></i></button>
-                </div>
-            </section>
-            
-            <section id="tab-modulo2" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fab fa-telegram text-red-500"></i> Módulo 2: Simulador Ampernet Interno Bot</h2>
-                    <span id="badge-m1" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[380px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 border-b border-neutral-950 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">A</div>
-                            <div>
-                                <h4 class="text-xs font-bold text-white">Ampernet Interno Bot</h4>
-                                <p class="text-[10px] text-neutral-400">bot de triagem institucional</p>
-                            </div>
-                        </div>
-                        <div id="m2-chat-area" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]">
-                            <div class="bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800 p-2 rounded-2xl max-w-[85%]">Clique no botão abaixo para iniciar a simulação de atendimento.</div>
-                        </div>
-                        <div id="m2-actions-container" class="p-2 bg-[#17212b] border-t border-neutral-950 flex flex-wrap gap-2 justify-center">
-                            <button onclick="m2SendStart()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition shadow-md">Enviar /start</button>
-                        </div>
-                        <div class="p-2 bg-[#17212b] flex gap-2">
-                            <input type="text" id="m2-text-input" disabled placeholder="Inicie a simulação..." class="flex-1 bg-[#24313f] border border-transparent rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                            <button id="btn-m2-send" onclick="m2SubmitText()" disabled class="bg-[#24313f] text-neutral-400 disabled:opacity-50 px-3 rounded-xl hover:bg-neutral-800 transition"><i class="fas fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-2">
-                            <h4 class="font-bold text-white">Instruções do Exercício</h4>
-                            <p>Explore as opções do Bot para entender o fluxo de acionamento.</p>
-                            <p class="text-[11px] text-red-400">Você pode testar os fluxos de <strong>Agendamento</strong>, do suporte técnico do <strong>TAC</strong> ou do setor <strong>Comercial</strong> diretamente no menu interativo.</p>
-                        </div>
-                        <button id="btn-next-m2" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo3" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-tools text-red-500"></i> Módulo 3: Requisições com o SuperAmpbot</h2>
-                    <span id="badge-m2" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="md:col-span-2 bg-neutral-900 rounded-2xl border border-neutral-800 flex flex-col h-[350px] overflow-hidden">
-                        <div class="bg-[#17212b] p-3 border-b border-neutral-950 flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-xs">S</div>
-                            <div>
-                                <h4 class="text-xs font-bold text-white">SuperAmpbot</h4>
-                                <p class="text-[10px] text-neutral-400">Suprimentos e Ferramental</p>
-                            </div>
-                        </div>
-                        <div id="m3-chat-area" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]">
-                            <div class="bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800 p-2 rounded-2xl max-w-[85%]">Inicie o fluxo de requisição.</div>
-                        </div>
-                        <div id="m3-actions-container" class="p-2 bg-[#17212b] border-t border-neutral-950 flex flex-wrap gap-2 justify-center">
-                            <button onclick="m3StartFlow()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-1.5 rounded-xl font-bold text-xs transition shadow-md">Solicitar Ferramentas</button>
-                        </div>
-                        <div class="p-2 bg-[#17212b] flex gap-2">
-                            <input type="text" id="m3-text-input" disabled placeholder="Clique no botão acima..." class="flex-1 bg-[#24313f] border border-transparent rounded-xl px-3 py-2 text-xs text-white focus:outline-none">
-                            <button id="btn-m3-send" onclick="m3SubmitText()" disabled class="bg-[#24313f] text-neutral-400 px-3 rounded-xl hover:bg-neutral-800 transition"><i class="fas fa-paper-plane"></i></button>
-                        </div>
-                    </div>
-                    <div class="space-y-3 text-xs text-neutral-400">
-                        <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-2">
-                            <h4 class="font-bold text-white">Fluxo de Insumos</h4>
-                            <p>O bot coletará sequencialmente as informações necessárias para validar a entrega dos equipamentos junto ao almoxarifado.</p>
-                        </div>
-                        <button id="btn-next-m3" disabled class="w-full bg-neutral-850 text-neutral-600 cursor-not-allowed py-2.5 rounded-xl font-bold text-xs transition flex items-center justify-center gap-2">Aguardando Conclusão</button>
-                    </div>
-                </div>
-            </section>
-            
-            <section id="tab-modulo4" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-headset text-red-500"></i> Módulo 4: Central de Soluções (CST) e Indicações</h2>
-                    <span id="badge-m3" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Pendente</span>
-                </div>
-                <div class="prose prose-sm prose-invert max-w-none text-xs text-neutral-300 space-y-3">
-                    <p>O canal do CST atua diretamente no suporte a incidentes críticos e escalonamento de problemas técnicos complexos que não puderam ser resolvidos via triagem primária.</p>
-                    <div class="p-4 bg-neutral-900 rounded-xl border border-neutral-800 space-y-2">
-                        <h4 class="font-bold text-white text-xs">Diretrizes Importantes:</h4>
-                        <ul class="list-disc list-inside space-y-1 text-[11px] text-neutral-400">
-                            <li>Evite o envio de áudios longos no canal do CST.</li>
-                            <li>Sempre anexe o Protocolo gerado no Módulo 2 ao repassar um caso.</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="pt-4 border-t border-neutral-900 flex justify-between items-center">
-                    <span id="status-card-m4" class="text-[11px] text-red-500 font-semibold">Módulo pendente</span>
-                    <button onclick="completarModulo4()" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2">Concluir e Liberar Prova <i class="fas fa-check-double"></i></button>
-                </div>
-            </section>
-            
-            <section id="tab-quiz" class="tab-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-clipboard-check text-red-500"></i> Avaliação de Conhecimento Operacional</h2>
-                    <span id="badge-m4" class="text-[10px] bg-neutral-850 text-neutral-400 px-2 py-1 rounded-lg">Aguardando</span>
-                </div>
-                <div id="quiz-locked" class="p-8 text-center bg-neutral-900 border border-neutral-800 rounded-2xl space-y-3">
-                    <i class="fas fa-lock text-3xl text-neutral-600"></i>
-                    <h3 class="font-bold text-white text-sm">Avaliação Bloqueada</h3>
-                    <p class="text-xs text-neutral-400 max-w-sm mx-auto">Você precisa passar por todos os módulos teóricos e práticos do simulador antes de realizar o teste de proficiência.</p>
-                </div>
-                <div id="quiz-active" class="hidden space-y-6">
-                    <div id="quiz-questions-container" class="space-y-4"></div>
-                    <div id="quiz-alert" class="p-3 bg-red-950/40 border border-red-500/20 rounded-xl text-red-400 text-xs hidden font-medium">Por favor, selecione uma alternativa para cada uma das questões acima.</div>
-                    <div class="flex gap-3 justify-end">
-                        <button onclick="resetarQuiz()" class="bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 px-4 py-2 rounded-xl text-xs font-bold transition">Reiniciar Opções</button>
-                        <button onclick="corrigirQuiz()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl text-xs font-bold transition shadow-md shadow-red-900/20">Finalizar e Corrigir</button>
-                    </div>
-                </div>
-                <div id="quiz-results" class="hidden text-center p-8 bg-neutral-900 border border-neutral-800 rounded-2xl space-y-4 max-w-md mx-auto">
-                    <div id="result-icon-container"></div>
-                    <div class="space-y-1">
-                        <h3 id="result-title" class="text-base font-bold text-white"></h3>
-                        <p id="result-subtitle" class="text-xs text-neutral-400 px-4"></p>
-                    </div>
-                    <div class="bg-neutral-950 p-4 rounded-xl border border-neutral-800 inline-block min-w-[120px]">
-                        <p class="text-[10px] uppercase text-neutral-500 tracking-wider">Pontuação</p>
-                        <h2 id="result-score-text" class="text-xl font-black text-white mt-0.5"></h2>
-                        <span id="result-status-text"></span>
-                    </div>
-                    <div class="pt-2 flex justify-center gap-3">
-                        <button id="btn-quiz-retry" onclick="reiniciarProva()" class="bg-neutral-950 border border-neutral-800 hover:bg-neutral-800 text-white px-4 py-2 rounded-xl text-xs font-bold transition">Tentar Novamente</button>
-                        <button id="btn-generate-cert" onclick="abrirCertificado()" class="hidden bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-md"><i class="fas fa-award"></i> Emitir Certificado</button>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-    
-    <div id="cert-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 p-4 hidden">
-        <div class="bg-white text-neutral-900 p-8 rounded-none border-[12px] border-neutral-200 max-w-2xl w-full text-center space-y-6 relative shadow-2xl">
-            <div class="absolute inset-4 border-2 border-amber-600/30 pointer-events-none p-6"></div>
-            <div class="text-amber-600 text-4xl"><i class="fas fa-graduation-cap"></i></div>
-            <div class="space-y-1">
-                <h1 class="font-serif text-2xl font-bold tracking-wide uppercase text-neutral-800">Certificado de Conclusão</h1>
-                <p class="text-[10px] text-neutral-500 uppercase font-sans tracking-widest">Capacitação Operacional Ampernet</p>
             </div>
-            <p class="text-sm leading-relaxed max-w-md mx-auto text-neutral-600 font-sans"> 
-                Certificamos para os devidos fins que o colaborador <strong id="cert-name-placeholder" class="text-neutral-950 underline decoration-red-600"></strong> concluiu com aproveitamento regulamentar o treinamento de <strong class="text-neutral-900">Fluxos de Atendimento e Canais Automatizados do Telegram</strong>. 
-            </p>
-            <div class="pt-4 border-t border-neutral-200 max-w-xs mx-auto">
-                <p id="cert-date" class="text-xs font-mono font-bold text-neutral-700"></p>
-                <p class="text-[9px] uppercase tracking-wider text-neutral-400 mt-0.5">Data de Emissão</p>
+            
+            <div id="sim-chat-area" class="flex-1 p-4 overflow-y-auto space-y-3 flex flex-col text-xs bg-[#0e1621]">
+                <div class="bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800 p-3 rounded-2xl max-w-[85%]">
+                    Clique no botão **Iniciar Bot** para abrir o menu de canais.
+                </div>
             </div>
-            <div class="pt-2">
-                <button onclick="fecharCertificado()" class="bg-neutral-900 hover:bg-neutral-800 text-white font-bold px-4 py-2 rounded-lg text-xs transition font-sans">Fechar Visualização</button>
+            
+            <div id="sim-actions-container" class="p-3 bg-[#17212b] border-t border-neutral-950 flex flex-wrap gap-2 justify-center">
+                <button onclick="simStart()" class="bg-red-600 hover:bg-red-500 text-white px-5 py-2 rounded-xl font-bold text-xs transition shadow-md">
+                    Iniciar Bot (/start)
+                </button>
+            </div>
+            
+            <div class="p-2 bg-[#17212b] flex gap-2">
+                <input type="text" id="sim-text-input" disabled placeholder="Utilize os botões interativos acima..." class="flex-1 bg-[#24313f] border border-transparent rounded-xl px-3 py-2 text-xs text-white focus:outline-none opacity-50">
+                <button disabled class="bg-[#24313f] text-neutral-500 px-3 rounded-xl"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+
+        <div class="space-y-3 text-xs text-neutral-400">
+            <div class="p-4 bg-neutral-900 border border-neutral-800 rounded-xl space-y-3">
+                <h4 class="font-bold text-white border-b border-neutral-800 pb-1 uppercase tracking-wider text-[11px] text-red-400">Regras de Validação</h4>
+                <p>Cada setor possui uma finalidade restrita em campo:</p>
+                <ul class="space-y-2 text-[11px] list-none p-0">
+                    <li class="flex items-start gap-1.5"><i class="fas fa-calendar-alt text-red-500 mt-0.5"></i> <span><strong>Agendamento:</strong> Direcionamento de OS e contato externo.</span></li>
+                    <li class="flex items-start gap-1.5"><i class="fas fa-headset text-red-500 mt-0.5"></i> <span><strong>TAC:</strong> Suporte imediato e liberação de ONUs.</span></li>
+                    <li class="flex items-start gap-1.5"><i class="fas fa-mobile-alt text-red-500 mt-0.5"></i> <span><strong>Inmap:</strong> Erros de sincronismo e falhas do APP.</span></li>
+                    <li class="flex items-start gap-1.5"><i class="fas fa-file-contract text-red-500 mt-0.5"></i> <span><strong>Comercial:</strong> Planos e dados cadastrais.</span></li>
+                    <li class="flex items-start gap-1.5"><i class="fas fa-server text-red-500 mt-0.5"></i> <span><strong>NOC:</strong> Suporte Avançado. <em>(Bloqueado na triagem direta — requer passagem pelo TAC)</em>.</span></li>
+                </ul>
+            </div>
+            <div class="p-3 bg-red-950/20 border border-red-500/20 rounded-xl text-neutral-300 text-[11px]">
+                <strong>Dica Operacional:</strong> Teste selecionar a opção **NOC** diretamente para entender o fluxo de escalonamento correto via sistema.
             </div>
         </div>
     </div>
-    
-    <script>
-        let userXP = 0;
-        let technicianName = '';
-        let moduleStatus = {m1: false, m2: false, m3: false, m4: false};
+</div>
+
+<script>
+    let simStep = 0;
+
+    function simAppend(sender, text) {
+        const chat = document.getElementById('sim-chat-area');
+        const msg = document.createElement('div');
+        msg.className = `p-2.5 rounded-2xl max-w-[85%] text-xs leading-relaxed ${
+            sender === 'user' ? 'bg-[#2b5278] text-white ml-auto rounded-tr-none' : 
+            sender === 'bot' ? 'bg-[#182533] text-slate-200 mr-auto rounded-tl-none border border-[#202b36]' : 
+            'bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800'
+        }`;
+        msg.innerHTML = text;
+        chat.appendChild(msg);
+        chat.scrollTop = chat.scrollHeight;
+    }
+
+    function simStart() {
+        const chat = document.getElementById('sim-chat-area');
+        const actions = document.getElementById('sim-actions-container');
+        document.getElementById('sim-status').innerText = "Menu Principal";
+        chat.innerHTML = '';
         
-        let m2CurrentStep = 0;
-        let m2SelectedSector = null;
-        let m3CurrentStep = 0;
-        let m3Data = {colaborador: '', cidade: '', pedido: '', quantidade: '', motivo: ''};
+        simAppend('user', '/start');
         
-        function appendMessage(chatElement, sender, text) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `p-2.5 rounded-2xl max-w-[85%] text-xs leading-relaxed ${sender === 'user' ? 'bg-[#2b5278] text-white ml-auto rounded-tr-none' : sender === 'bot' ? 'bg-[#182533] text-slate-200 mr-auto rounded-tl-none border border-[#202b36]' : 'bg-neutral-950/60 text-neutral-400 text-center mx-auto border border-neutral-800'}`;
-            msgDiv.innerHTML = text;
-            chatElement.appendChild(msgDiv);
-            chatElement.scrollTop = chatElement.scrollHeight;
-        }
+        setTimeout(() => {
+            simAppend('bot', '<strong>Ampernet Telecom Bot</strong><br>Olá, Técnico! Selecione o setor com o qual deseja se comunicar para prosseguir com o atendimento:');
+            actions.innerHTML = `
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 w-full p-1">
+                    <button onclick="simRoute('agendamento')" class="bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 px-2 rounded-xl border border-neutral-700 text-[10px] transition font-semibold">1. Agendamento</button>
+                    <button onclick="simRoute('tac')" class="bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 px-2 rounded-xl border border-neutral-700 text-[10px] transition font-semibold">2. TAC</button>
+                    <button onclick="simRoute('inmap')" class="bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 px-2 rounded-xl border border-neutral-700 text-[10px] transition font-semibold">3. Inmap</button>
+                    <button onclick="simRoute('comercial')" class="bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 px-2 rounded-xl border border-neutral-700 text-[10px] transition font-semibold">4. Comercial</button>
+                    <button onclick="simRoute('noc')" class="bg-neutral-800 hover:bg-neutral-700 text-white py-1.5 px-2 rounded-xl border border-neutral-700 text-[10px] transition font-semibold col-span-2 sm:col-span-1">5. NOC (Avançado)</button>
+                </div>
+            `;
+        }, 600);
+    }
+
+    function simRoute(sector) {
+        const actions = document.getElementById('sim-actions-container');
+        document.getElementById('sim-status').innerText = `Fluxo: ${sector.toUpperCase()}`;
         
-        function submitTechnicianName() {
-            const inputName = document.getElementById('tech-name-input');
-            const nameValue = inputName.value.trim();
-            const errorElement = document.getElementById('name-error');
-            if (nameValue.length < 5) { errorElement.classList.remove('hidden'); return; }
-            errorElement.classList.add('hidden');
-            technicianName = nameValue;
-            
-            const modal = document.getElementById('name-entry-modal');
-            modal.classList.add('opacity-0', 'pointer-events-none');
-            setTimeout(() => { modal.remove(); }, 300);
-            addXP(100, "Identificação realizada com sucesso!");
-            showToast(`Bem-vindo, Técnico ${technicianName}!`, "success");
-        }
-        
-        function updateProgress() {
-            let completedCount = 0;
-            if(moduleStatus.m1) completedCount++;
-            if(moduleStatus.m2) completedCount++;
-            if(moduleStatus.m3) completedCount++;
-            if(moduleStatus.m4) completedCount++;
-            let percent = Math.round((completedCount / 4) * 100);
-            document.getElementById('progress-bar').style.width = percent + '%';
-            document.getElementById('progress-text').innerText = percent + '%';
-            updateBadge('badge-m1', moduleStatus.m1);
-            updateBadge('badge-m2', moduleStatus.m2);
-            updateBadge('badge-m3', moduleStatus.m3);
-            updateBadge('badge-m4', moduleStatus.m4);
-            
-            const btnQuiz = document.getElementById('btn-tab-quiz');
-            const badgeQuiz = document.getElementById('badge-quiz');
-            if (completedCount === 4) {
-                btnQuiz.classList.remove('text-slate-500', 'cursor-not-allowed');
-                btnQuiz.classList.add('text-red-400', 'font-bold');
-                badgeQuiz.innerText = "Liberado";
-                badgeQuiz.classList.remove('bg-neutral-900', 'text-neutral-600', 'border-neutral-800');
-                badgeQuiz.classList.add('bg-red-950/40', 'text-red-400', 'border-red-500/20', 'font-semibold');
-                document.getElementById('quiz-locked').classList.add('hidden');
-                document.getElementById('quiz-active').classList.remove('hidden');
-            }
-        }
-        
-        function updateBadge(id, completed) {
-            const badge = document.getElementById(id);
-            if(completed) {
-                badge.innerText = "Concluído";
-                badge.classList.remove('bg-neutral-850', 'text-neutral-400');
-                badge.classList.add('bg-red-950/40', 'text-red-400', 'border', 'border-red-500/20', 'font-semibold');
-            } else {
-                badge.innerText = "Pendente";
-                badge.classList.remove('bg-red-950/40', 'text-red-400', 'border', 'border-red-500/20');
-                badge.classList.add('bg-neutral-850', 'text-neutral-400');
-            }
-        }
-        
-        function addXP(amount, reason) {
-            userXP += amount;
-            document.getElementById('user-points').innerHTML = `<i class="fas fa-fire mr-1"></i> ${userXP} XP`;
-            showToast(`+${amount} XP: ${reason}`, 'success');
-        }
-        
-        function showToast(message, type = 'info') {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `p-4 rounded-xl shadow-lg text-xs font-semibold text-white flex items-center gap-3 transform transition duration-300 translate-y-2 opacity-0 border border-neutral-800`;
-            if (type === 'success') {
-                toast.classList.add('bg-red-950', 'text-red-400', 'border-red-500/30');
-                toast.innerHTML = `<i class="fas fa-check-circle text-lg text-red-500"></i> <span>${message}</span>`;
-            } else if (type === 'error') {
-                toast.classList.add('bg-red-950', 'text-red-400', 'border-red-500/30');
-                toast.innerHTML = `<i class="fas fa-times-circle text-lg text-red-500"></i> <span>${message}</span>`;
-            } else {
-                toast.classList.add('bg-neutral-900', 'text-neutral-300');
-                toast.innerHTML = `<i class="fas fa-info-circle text-lg text-red-500"></i> <span>${message}</span>`;
-            }
-            container.appendChild(toast);
-            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 50);
+        if (sector === 'agendamento') {
+            simAppend('user', 'Opção 1 - Agendamento');
+            actions.innerHTML = '';
             setTimeout(() => {
-                toast.classList.add('translate-y-2', 'opacity-0');
-                setTimeout(() => { toast.remove(); }, 300);
-            }, 3500);
-        }
-        
-        function switchTab(tabId) {
-            const targetBtn = document.getElementById(`btn-tab-${tabId}`);
-            if (targetBtn && targetBtn.classList.contains('cursor-not-allowed')) return;
-            document.querySelectorAll('.tab-content').forEach(section => { section.classList.add('hidden'); section.classList.remove('block'); });
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            document.getElementById(`tab-${tabId}`).classList.add('block');
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('bg-red-600/10', 'text-red-500', 'border', 'border-red-500/20', 'shadow-sm');
-                btn.classList.add('text-neutral-400', 'hover:bg-neutral-800');
-            });
-            const activeBtn = document.getElementById(`btn-tab-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.remove('text-neutral-400', 'hover:bg-neutral-800');
-                activeBtn.classList.add('bg-red-600/10', 'text-red-500', 'border', 'border-red-500/20', 'shadow-sm');
-            }
-        }
-        
-        function completarModulo1() { if(!moduleStatus.m1) { moduleStatus.m1 = true; addXP(100, "Descrição de Canais Lida"); updateProgress(); } switchTab('modulo2'); }
-        
-        // INTERAÇÕES DO MÓDULO 2
-        function m2SendStart() {
-            const chat = document.getElementById('m2-chat-area');
-            const actions = document.getElementById('m2-actions-container');
-            const input = document.getElementById('m2-text-input');
-            const btnSend = document.getElementById('btn-m2-send');
-            if (!chat || !actions || !input || !btnSend) return;
-            chat.innerHTML = '';
-            appendMessage(chat, 'user', '/start');
-            input.placeholder = 'Digitando...';
-            m2CurrentStep = 1;
+                simAppend('bot', '<strong>Setor de Agendamento Selecionado</strong><br>Selecione a cidade polo correspondente à Ordem de Serviço (OS) para direcionamento:');
+                actions.innerHTML = `
+                    <div class="grid grid-cols-2 gap-2 w-full">
+                        <button onclick="simFinish('Agendamento', 'Ampére')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-2 rounded-xl text-[10px] transition">Ampére</button>
+                        <button onclick="simFinish('Agendamento', 'Cascavel')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-2 rounded-xl text-[10px] transition">Cascavel</button>
+                        <button onclick="simFinish('Agendamento', 'Francisco Beltrão')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-2 rounded-xl text-[10px] transition">Francisco Beltrão</button>
+                        <button onclick="simFinish('Agendamento', 'Pato Branco')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-2 rounded-xl text-[10px] transition">Pato Branco</button>
+                    </div>
+                `;
+            }, 600);
+        } 
+        else if (sector === 'tac') {
+            simAppend('user', 'Opção 2 - TAC');
+            actions.innerHTML = '';
             setTimeout(() => {
-                appendMessage(chat, 'bot', 'Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.');
+                simAppend('bot', '<strong>Suporte Técnico (TAC) Ativado</strong><br>O TAC auxilia em configurações e liberações. Precisa de escalonamento complexo de infraestrutura para o **NOC**?');
+                actions.innerHTML = `
+                    <button onclick="simFinish('TAC', 'Configuração Básica / Liberação de Equipamento')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-3 rounded-xl text-[10px] transition font-bold">Não (Resolver no TAC)</button>
+                    <button onclick="simNocEscalation()" class="bg-amber-600 hover:bg-amber-500 text-white py-1.5 px-3 rounded-xl text-[10px] transition font-bold">Sim (Redirecionar ao NOC)</button>
+                `;
+            }, 600);
+        } 
+        else if (sector === 'inmap') {
+            simAppend('user', 'Opção 3 - Inmap');
+            actions.innerHTML = '';
+            setTimeout(() => {
+                simAppend('bot', '<strong>Suporte App Inmap</strong><br>Canal exclusivo para tratamento de bugs e falhas de sincronismo do aplicativo em campo. Confirme para abrir o chamado técnico do App:');
+                actions.innerHTML = `<button onclick="simFinish('Inmap', 'Reporte de falha no Aplicativo')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-4 rounded-xl text-[10px] transition font-bold">Confirmar Abertura</button>`;
+            }, 600);
+        } 
+        else if (sector === 'comercial') {
+            simAppend('user', 'Opção 4 - Comercial');
+            actions.innerHTML = '';
+            setTimeout(() => {
+                simAppend('bot', '<strong>Atendimento Comercial Interno</strong><br>Utilizado para checagem rápida de planos e status contratuais dos assinantes. Confirme os dados para entrar na fila do BackOffice:');
+                actions.innerHTML = `<button onclick="simFinish('Comercial', 'Verificação de Contratos e Planos')" class="bg-red-600 hover:bg-red-500 text-white py-1.5 px-4 rounded-xl text-[10px] transition font-bold">Acessar BackOffice</button> `;
+            }, 600);
+        } 
+        else if (sector === 'noc') {
+            simAppend('user', 'Opção 5 - NOC');
+            actions.innerHTML = '';
+            setTimeout(() => {
+                simAppend('bot', '❌ <strong>Acesso Direto Negado</strong><br>Configurações complexas e monitoramento avançado do **NOC** devem obrigatoriamente iniciar triagem via **TAC** primeiro.');
                 setTimeout(() => {
-                    const protocol = "AMP2026" + Math.floor(100000 + Math.random() * 900000);
-                    appendMessage(chat, 'bot', `Seu protocolo de atendimento é <strong>${protocol}</strong>.<br><br>Selecione, por favor, o setor responsável:<br><br><strong>1</strong> - Financeiro<br><strong>2</strong> - Suprimentos<br><strong>3</strong> - Administrativo<br><strong>4</strong> - Comercial<br><strong>5</strong> - Suporte e Serviços<br><strong>6</strong> - Recursos Humanos<br><strong>7</strong> - Serviços e Tecnologia<br><strong>8</strong> - NOC`);
-                    input.disabled = false;
-                    btnSend.disabled = false;
-                    input.placeholder = 'Digite ou selecione uma opção...';
-                    input.focus();
-                    actions.innerHTML = `
-                        <button onclick="m2SelectSector(5, 'Suporte e Serviços')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">5 - Suporte e Serviços</button>
-                        <button onclick="m2SelectSector(4, 'Comercial')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">4 - Comercial</button>
-                    `;
+                    simAppend('system', 'Retornando ao menu principal para correção do fluxo...');
+                    setTimeout(() => { simStart(); }, 1200);
                 }, 1000);
-            }, 800);
+            }, 600);
         }
-        
-        function m2SubmitText() {
-            const input = document.getElementById('m2-text-input');
-            const val = input.value.trim();
-            if(!val) return;
-            const chat = document.getElementById('m2-chat-area');
-            appendMessage(chat, 'user', val);
-            input.value = '';
-            input.disabled = true;
-            document.getElementById('btn-m2-send').disabled = true;
-            setTimeout(() => { processM2Input(val); }, 800);
-        }
-        
-        function processM2Input(val) {
-            const chat = document.getElementById('m2-chat-area');
-            const input = document.getElementById('m2-text-input');
-            const btnSend = document.getElementById('btn-m2-send');
-            
-            if (m2CurrentStep === 1) {
-                if (val === '5') m2SelectSector(5, 'Suporte e Serviços');
-                else if (val === '4') m2SelectSector(4, 'Comercial');
-                else {
-                    appendMessage(chat, 'bot', 'Opção indisponível na simulação. Escolha <strong>4</strong> (Comercial) ou <strong>5</strong> (Suporte e Serviços).');
-                    input.disabled = false; btnSend.disabled = false; input.focus();
-                }
-            } else if (m2CurrentStep === 2) {
-                if (m2SelectedSector === 5) {
-                    if (val === '1') m2SelectService(1, 'Agendamento');
-                    else if (val === '2') m2SelectService(2, 'TAC');
-                    else {
-                        appendMessage(chat, 'bot', 'Opção inválida. Selecione <strong>1</strong> (Agendamento) ou <strong>2</strong> (TAC).');
-                        input.disabled = false; btnSend.disabled = false; input.focus();
-                    }
-                } else if (m2SelectedSector === 4) {
-                    if (val === '1') m2SelectService(1, 'Planos e Contratos');
-                    else {
-                        appendMessage(chat, 'bot', 'Selecione <strong>1</strong> para prosseguir com Planos e Contratos.');
-                        input.disabled = false; btnSend.disabled = false; input.focus();
-                    }
-                }
-            } else if (m2CurrentStep === 3) {
-                // Mensagem customizada enviada pelo técnico para o TAC ou Comercial
-                appendMessage(chat, 'bot', 'Entendido! Seus dados foram validados e inseridos na fila de atendimento humano.');
-                concluirM2FluxoCompleto();
-            }
-        }
-        
-        function m2SelectSector(number, name) {
-            const chat = document.getElementById('m2-chat-area');
-            const actions = document.getElementById('m2-actions-container');
-            const input = document.getElementById('m2-text-input');
-            const btnSend = document.getElementById('btn-m2-send');
-            m2SelectedSector = number;
-            actions.innerHTML = '';
-            if (document.activeElement !== input) appendMessage(chat, 'user', `${number}`);
-            input.placeholder = 'Processando...';
-            
-            setTimeout(() => {
-                if (number === 5) {
-                    appendMessage(chat, 'bot', `Bem Vindo ao Suporte e Serviços.<br><br>Escolha o serviço necessário:<br><strong>1</strong> - Agendamento<br><strong>2</strong> - TAC<br><strong>3</strong> - Erro de seleção<br><strong>4</strong> - Suporte Inmap<br><strong>5</strong> - STFC`);
-                    actions.innerHTML = `
-                        <button onclick="m2SelectService(1, 'Agendamento')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">1 - Agendamento</button>
-                        <button onclick="m2SelectService(2, 'TAC')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">2 - TAC</button>
-                    `;
-                    input.placeholder = 'Digite 1 ou 2...';
-                } else if (number === 4) {
-                    appendMessage(chat, 'bot', `Bem vindo ao Comercial!<br><br>Selecione o serviço necessário:<br><strong>1</strong> - Verificação de Planos e Contratos<br><strong>2</strong> - Analista`);
-                    actions.innerHTML = `
-                        <button onclick="m2SelectService(1, 'Planos e Contratos')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">1 - Planos e Contratos</button>
-                    `;
-                    input.placeholder = 'Digite 1...';
-                }
-                input.disabled = false; btnSend.disabled = false; input.focus();
-                m2CurrentStep = 2;
-            }, 800);
-        }
-        
-        function m2SelectService(number, name) {
-            const chat = document.getElementById('m2-chat-area');
-            const actions = document.getElementById('m2-actions-container');
-            const input = document.getElementById('m2-text-input');
-            const btnSend = document.getElementById('btn-m2-send');
-            actions.innerHTML = '';
-            if (document.activeElement !== input) appendMessage(chat, 'user', `${number}`);
-            input.placeholder = 'Processando...';
-            
-            setTimeout(() => {
-                if (m2SelectedSector === 5 && number === 1) {
-                    // Fluxo de Agendamento (Cidades)
-                    appendMessage(chat, 'bot', 'Qual cidade deseja o Agendamento?');
-                    actions.innerHTML = `
-                        <div class="grid grid-cols-2 gap-2 w-full px-2">
-                            <button onclick="m2SelectCity('Ampére')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Ampére</button>
-                            <button onclick="m2SelectCity('Cascavel')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Cascavel</button>
-                            <button onclick="m2SelectCity('Francisco Beltrão')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Francisco Beltrão</button>
-                            <button onclick="m2SelectCity('Pato Branco')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Pato Branco</button>
-                        </div>
-                    `;
-                    input.placeholder = 'Selecione uma das cidades acima...';
-                } else if (m2SelectedSector === 5 && number === 2) {
-                    // Fluxo do TAC
-                    appendMessage(chat, 'bot', 'Para AGILIZAR seu suporte do TAC, descreva sua solicitação (Ex: Liberação de ONU ou Auxílio em Configuração).<br>⚠️ <strong>PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL!</strong>');
-                    actions.innerHTML = `
-                        <button onclick="m2AutoFill('tac')" class="bg-neutral-800 text-red-400 border border-neutral-700 px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">Preencher Modelo TAC</button>
-                    `;
-                    input.placeholder = 'Descreva a solicitação técnica...';
-                    m2CurrentStep = 3;
-                } else if (m2SelectedSector === 4) {
-                    // Fluxo do Comercial
-                    appendMessage(chat, 'bot', 'Você acessou a verificação de Planos e Contratos. Descreva o ID do cliente ou dados necessários para análise comercial do contrato.');
-                    actions.innerHTML = `
-                        <button onclick="m2AutoFill('comercial')" class="bg-neutral-800 text-red-400 border border-neutral-700 px-3 py-1.5 rounded-xl font-bold text-[10px] transition shadow-md">Preencher Dados Cliente</button>
-                    `;
-                    input.placeholder = 'Insira as informações do contrato...';
-                    m2CurrentStep = 3;
-                }
-                input.disabled = false; btnSend.disabled = false; input.focus();
-            }, 800);
-        }
-        
-        function m2AutoFill(tipo) {
-            const input = document.getElementById('m2-text-input');
-            if (tipo === 'tac') {
-                input.value = "Solicito suporte para liberação de equipamento. ID: 45432 - MAC: FHTT98765432.";
-            } else {
-                input.value = "Verificação de plano contratual pendente para o cliente ID: 88765.";
-            }
-            input.focus();
-        }
-        
-        function m2SelectCity(cityName) {
-            const chat = document.getElementById('m2-chat-area');
-            const actions = document.getElementById('m2-actions-container');
-            if(actions) actions.innerHTML = '';
-            appendMessage(chat, 'user', cityName);
-            setTimeout(() => {
-                appendMessage(chat, 'bot', `Cidade de <strong>${cityName}</strong> selecionada. Sua solicitação foi transferida com êxito para a fila de agendamento local.`);
-                concluirM2FluxoCompleto();
-            }, 800);
-        }
-        
-        function concluirM2FluxoCompleto() {
-            const chat = document.getElementById('m2-chat-area');
-            const btnNext = document.getElementById('btn-next-m2');
-            const input = document.getElementById('m2-text-input');
-            const btnSend = document.getElementById('btn-m2-send');
-            input.disabled = true; btnSend.disabled = true;
-            setTimeout(() => {
-                appendMessage(chat, 'system', 'Simulação concluída com sucesso!');
-                input.placeholder = 'Fluxo Finalizado.';
-                btnNext.disabled = false;
-                btnNext.classList.remove('bg-neutral-850', 'text-neutral-600', 'cursor-not-allowed');
-                btnNext.classList.add('bg-red-600', 'hover:bg-red-700', 'text-white');
-                btnNext.innerHTML = `<span>Ir para Módulo 3</span> <i class="fas fa-arrow-right"></i>`;
-                btnNext.setAttribute('onclick', 'concluirModulo2()');
-                if(!moduleStatus.m2) { moduleStatus.m2 = true; addXP(150, "Canais de Atendimento Testados"); updateProgress(); }
-            }, 800);
-        }
-        
-        function concluirModulo2() { switchTab('modulo3'); }
-        
-        // INTERAÇÕES DO MÓDULO 3
-        function m3StartFlow() {
-            const chat = document.getElementById('m3-chat-area');
-            const actions = document.getElementById('m3-actions-container');
-            const input = document.getElementById('m3-text-input');
-            const btnSend = document.getElementById('btn-m3-send');
-            actions.innerHTML = '';
-            appendMessage(chat, 'user', 'Iniciar Pedido de Ferramentas');
-            setTimeout(() => {
-                appendMessage(chat, 'bot', 'Olá, bem-vindo! Qual é o seu nome completo e cidade (Colaborador)?');
-                input.disabled = false; btnSend.disabled = false;
-                if (technicianName) { input.value = `${technicianName} - Ampére`; }
-                input.placeholder = 'Digite seu Nome e Cidade...';
-                input.focus();
-                m3CurrentStep = 1;
-            }, 800);
-        }
-        
-        function m3SubmitText() {
-            const input = document.getElementById('m3-text-input');
-            const val = input.value.trim();
-            if(!val) return;
-            const chat = document.getElementById('m3-chat-area');
-            appendMessage(chat, 'user', val);
-            input.value = ''; input.disabled = true;
-            document.getElementById('btn-m3-send').disabled = true;
-            setTimeout(() => { processM3Flow(val); }, 800);
-        }
-        
-        function processM3Flow(inputVal) {
-            const chat = document.getElementById('m3-chat-area');
-            const actions = document.getElementById('m3-actions-container');
-            const input = document.getElementById('m3-text-input');
-            const btnSend = document.getElementById('btn-m3-send');
-            
-            if (m3CurrentStep === 1) {
-                const parts = inputVal.split('-');
-                m3Data.colaborador = parts[0]?.trim() || inputVal;
-                m3Data.cidade = parts[1]?.trim() || "Ampére";
-                appendMessage(chat, 'bot', 'Selecione a regional correspondente ao seu polo de atuação:');
-                actions.innerHTML = `
-                    <div class="grid grid-cols-2 gap-2 w-full px-2">
-                        <button onclick="m3SelectRegional('Ampére')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Ampére</button>
-                        <button onclick="m3SelectRegional('Francisco Beltrão')" class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-xl font-bold text-[9px] transition">Francisco Beltrão</button>
-                    </div>
-                `;
-            } else if (m3CurrentStep === 3) {
-                m3Data.pedido = inputVal;
-                appendMessage(chat, 'bot', 'Qual é a quantidade de cada item solicitado?');
-                input.disabled = false; btnSend.disabled = false; input.focus();
-                m3CurrentStep = 4;
-            } else if (m3CurrentStep === 4) {
-                m3Data.quantidade = inputVal;
-                appendMessage(chat, 'bot', 'Qual é o motivo do pedido de novas ferramentas?');
-                input.disabled = false; btnSend.disabled = false; input.focus();
-                m3CurrentStep = 5;
-            } else if (m3CurrentStep === 5) {
-                m3Data.motivo = inputVal;
-                appendMessage(chat, 'bot', `Confirme os dados do pedido de ferramentas:<br><br><strong>Colaborador:</strong> ${m3Data.colaborador}<br><strong>Cidade:</strong> ${m3Data.cidade}<br><strong>Pedido:</strong> ${m3Data.pedido}<br><strong>Quantidade:</strong> ${m3Data.quantidade}<br><strong>Motivo:</strong> ${m3Data.motivo}<br><br>Confirme a emissão do ticket.`);
-                actions.innerHTML = `
-                    <button onclick="m3Confirm()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded-xl font-bold text-[10px] transition">Confirmar Dados</button>
-                `;
-            }
-        }
-        
-        function m3SelectRegional(regional) {
-            const chat = document.getElementById('m3-chat-area');
-            const actions = document.getElementById('m3-actions-container');
-            const input = document.getElementById('m3-text-input');
-            const btnSend = document.getElementById('btn-m3-send');
-            actions.innerHTML = '';
-            appendMessage(chat, 'user', regional);
-            m3Data.cidade = regional;
-            setTimeout(() => {
-                appendMessage(chat, 'bot', 'Qual é o seu pedido? (Descreva a ferramenta)');
-                input.disabled = false; btnSend.disabled = false; input.focus();
-                m3CurrentStep = 3;
-            }, 800);
-        }
-        
-        function m3Confirm() {
-            const chat = document.getElementById('m3-chat-area');
-            const actions = document.getElementById('m3-actions-container');
-            if (actions) actions.innerHTML = '';
-            appendMessage(chat, 'user', 'Confirmado');
-            setTimeout(() => {
-                appendMessage(chat, 'bot', 'Pedido enviado com sucesso para o setor de suprimentos!');
-                setTimeout(() => {
-                    appendMessage(chat, 'system', 'Simulação concluída!');
-                    const btnNext = document.getElementById('btn-next-m3');
-                    btnNext.disabled = false;
-                    btnNext.classList.remove('bg-neutral-850', 'text-neutral-600', 'cursor-not-allowed');
-                    btnNext.classList.add('bg-red-600', 'hover:bg-red-700', 'text-white');
-                    btnNext.innerHTML = `<span>Ir para Módulo 4</span> <i class="fas fa-arrow-right"></i>`;
-                    btnNext.setAttribute('onclick', 'concluirModulo3()');
-                    if(!moduleStatus.m3) { moduleStatus.m3 = true; addXP(150, "Requisição de Ferramenta Efetuada"); updateProgress(); }
-                }, 800);
-            }, 800);
-        }
-        
-        function concluirModulo3() { switchTab('modulo4'); }
-        
-        function completarModulo4() { if(!moduleStatus.m4) { moduleStatus.m4 = true; addXP(100, "Fluxos de CST lidos"); updateProgress(); } switchTab('quiz'); }
-        
-        // DADOS E REGRAS DO QUIZ
-        const quizData = [
-            { id: 1, question: "1. Qual setor é responsável por direcionar ordens de serviço e realizar o contato direto com clientes?", options: ["A) TAC", "B) Comercial", "C) Agendamento", "D) NOC"], correct: 2 },
-            { id: 2, question: "2. Em qual situação o setor do TAC deve ser acionado por um técnico em campo?", options: ["A) Falhas de funcionamento gerais e bugs exclusivos do aplicativo Inmap.", "B) Quando o técnico necessitar de suporte para liberação de equipamentos ou auxílio em configurações.", "C) Para verificar alterações em planos, faturas ou contratos de clientes.", "D) Solicitações diretas de EPIs e ferramentas ao almoxarifado."], correct: 1 },
-            { id: 3, question: "3. Qual comando inicial deve ser enviado no chat do Telegram para ativar o Ampernet Interno Bot?", options: ["A) /start", "B) /menu", "C) /help", "D) /atendimento"], correct: 0 },
-            { id: 4, question: "4. Qual é a diretriz oficial para o acionamento de suporte avançado no NOC?", options: ["A) O técnico deve acionar diretamente o NOC a qualquer momento sem intermediários.", "B) O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC se necessário.", "C) O acionamento só é permitido via abertura de ticket no SuperAmpbot.", "D) O técnico deve enviar um áudio longo explicando o caso na Central de Soluções (CST)."], correct: 1 },
-            { id: 5, question: "5. Para qual finalidade o canal do setor Comercial deve ser acionado?", options: ["A) Monitoramento preventivo e corretivo da infraestrutura de rede externa.", "B) Configurações complexas de roteadores corporativos de clientes.", "C) Atendimento de falhas operacionais diretamente no aplicativo.", "D) Verificação de informações relacionadas a planos e contratos dos clientes."], correct: 3 }
-        ];
-        
-        function buildQuiz() {
-            const container = document.getElementById('quiz-questions-container');
-            if(!container) return;
-            container.innerHTML = '';
-            quizData.forEach((q) => {
-                const qDiv = document.createElement('div');
-                qDiv.className = "bg-neutral-950 p-5 rounded-2xl border border-neutral-800 space-y-3";
-                qDiv.innerHTML = `
-                    <h4 class="font-bold text-white text-sm">${q.question}</h4>
-                    <div class="grid grid-cols-1 gap-2.5 mt-2">
-                        ${q.options.map((opt, optIndex) => `
-                            <label class="flex items-start gap-3 p-3 rounded-xl border border-neutral-800 hover:border-red-500 bg-neutral-900 cursor-pointer transition select-none">
-                                <input type="radio" name="q-${q.id}" value="${optIndex}" class="mt-1 h-4 w-4 text-red-600 border-neutral-700 focus:ring-red-500 bg-neutral-950">
-                                <span class="text-xs text-neutral-300 font-medium">${opt}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                `;
-                container.appendChild(qDiv);
-            });
-        }
-        
-        function resetarQuiz() { buildQuiz(); document.getElementById('quiz-alert').classList.add('hidden'); showToast("Respostas limpas!", "info"); }
-        
-        function corrigirQuiz() {
-            const alert = document.getElementById('quiz-alert');
-            let answeredCount = 0; let score = 0;
-            quizData.forEach(q => {
-                const selected = document.querySelector(`input[name="q-${q.id}"]:checked`);
-                if(selected) { answeredCount++; if(parseInt(selected.value) === q.correct) { score++; } }
-            });
-            if (answeredCount < quizData.length) { alert.classList.remove('hidden'); showToast("Responda todas as questões para finalizar!", "error"); return; }
-            alert.classList.add('hidden');
-            document.getElementById('quiz-active').classList.add('hidden');
-            document.getElementById('quiz-results').classList.remove('hidden');
-            
-            const iconContainer = document.getElementById('result-icon-container');
-            const resTitle = document.getElementById('result-title');
-            const resSubtitle = document.getElementById('result-subtitle');
-            const scoreText = document.getElementById('result-score-text');
-            const statusText = document.getElementById('result-status-text');
-            const btnRetry = document.getElementById('btn-quiz-retry');
-            const btnCert = document.getElementById('btn-generate-cert');
-            
-            scoreText.innerText = `${score} / 5`;
-            
-            if(score >= 4) {
-                iconContainer.className = "h-20 w-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-md bg-emerald-950/50 border border-emerald-500/30 text-emerald-400";
-                iconContainer.innerHTML = `<i class="fas fa-check"></i>`;
-                resTitle.innerText = "Aprovado com Sucesso!";
-                resSubtitle.innerText = "Você demonstrou pleno conhecimento dos fluxos operacionais e canais de atendimento.";
-                statusText.innerText = "APROVADO";
-                statusText.className = "text-sm font-bold text-emerald-400 block mt-1";
-                btnRetry.classList.add('hidden'); btnCert.classList.remove('hidden');
-                addXP(300, "Avaliação Concluída com Sucesso");
-            } else {
-                iconContainer.className = "h-20 w-20 rounded-full flex items-center justify-center text-4xl mx-auto shadow-md bg-red-950/50 border border-red-500/30 text-red-500";
-                iconContainer.innerHTML = `<i class="fas fa-times"></i>`;
-                resTitle.innerText = "Aproveitamento Insuficiente";
-                resSubtitle.innerText = "É necessário acertar pelo menos 4 questões para liberar o certificado de conclusão.";
-                statusText.innerText = "REPROVADO";
-                statusText.className = "text-sm font-bold text-red-500 block mt-1";
-                btnRetry.classList.remove('hidden'); btnCert.classList.add('hidden');
-                showToast("Estude os fluxos e tente novamente.", "error");
-            }
-        }
-        
-        function reiniciarProva() { document.getElementById('quiz-results').classList.add('hidden'); document.getElementById('quiz-active').classList.remove('hidden'); resetarQuiz(); }
-        
-        function abrirCertificado() {
-            const hoje = new Date();
-            document.getElementById('cert-name-placeholder').innerText = technicianName || "Colaborador em Treinamento";
-            document.getElementById('cert-date').innerText = `${String(hoje.getDate()).padStart(2, '0')}/${String(hoje.getMonth() + 1).padStart(2, '0')}/${hoje.getFullYear()}`;
-            document.getElementById('cert-modal').classList.remove('hidden');
-        }
-        
-        function fecharCertificado() { document.getElementById('cert-modal').classList.add('hidden'); }
-        
-        window.onload = function() {
-            buildQuiz(); updateProgress();
-            const m2Input = document.getElementById('m2-text-input');
-            if(m2Input) { m2Input.addEventListener('keypress', function(e) { if(e.key === 'Enter') m2SubmitText(); }); }
-            const m3Input = document.getElementById('m3-text-input');
-            if(m3Input) { m3Input.addEventListener('keypress', function(e) { if(e.key === 'Enter') m3SubmitText(); }); }
-            showToast("Portal de Treinamento Atualizado!", "info");
-        };
-    </script>
-</body>
-</html>
+    }
+
+    function simNocEscalation() {
+        const actions = document.getElementById('sim-actions-container');
+        simAppend('user', 'Solicito direcionamento ao NOC');
+        actions.innerHTML = '';
+        setTimeout(() => {
+            simAppend('bot', '⚡ <strong>Direcionamento Interno TAC ➔ NOC</strong><br>Suas informações foram validadas pelo atendente nível 1. O NOC assumiu o monitoramento e a tratativa avançada do seu circuito.');
+            simFinish('NOC', 'Suporte Avançado via Escalonamento TAC');
+        }, 700);
+    }
+
+    function simFinish(setor, detalhe) {
+        const actions = document.getElementById('sim-actions-container');
+        setTimeout(() => {
+            simAppend('bot', `✓ <strong>Sucesso!</strong> Sua solicitação foi encaminhada para o setor <strong>${setor}</strong> (${detalhe}).`);
+            document.getElementById('sim-status').innerText = "Finalizado";
+            actions.innerHTML = `<button onclick="simStart()" class="bg-neutral-800 hover:bg-neutral-700 text-white px-4 py-1.5 rounded-xl text-xs font-bold transition">Reiniciar Fluxo Interativo</button>`;
+        }, 500);
+    }
+</script>
