@@ -15,7 +15,7 @@
             <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
             <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-600">
             <p id="name-error" class="text-red-500 text-[11px] hidden">Por favor, insira um nome válido (mínimo 5 caracteres).</p>
-            <button onclick="submitTechnicianName()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Acessar Portal</button>
+            <button onclick="enviarNomeDoTécnico()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
         </div>
     </div>
 
@@ -43,23 +43,23 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Agendamento</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor diária é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">TAC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico precisar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Inmap</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionado ao aplicativo.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Comercial</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos de clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5 md:col-span-2 lg:col-span-1">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">NOC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, o que fará o direcionamento ao NOC quando necessário.</p>
                 </div>
             </div>
         </section>
@@ -80,6 +80,33 @@
             </div>
         </div>
     </div>
+
+    <script>
+        function enviarNomeDoTécnico() {
+            const input = document.getElementById('tech-name-input');
+            const errorElement = document.getElementById('name-error');
+            const modal = document.getElementById('name-entry-modal');
+            
+            if (input.value.trim().length >= 5) {
+                // Oculta erro se houver
+                errorElement.classList.add('hidden');
+                // Salva o nome localmente (opcional)
+                localStorage.setItem('tecnico_nome', input.value.trim());
+                // Esconde o modal para liberar o portal
+                modal.classList.add('hidden');
+            } else {
+                // Mostra a mensagem de erro caso o nome seja muito curto
+                errorElement.classList.remove('hidden');
+            }
+        }
+
+        // Verifica se o técnico já logou antes para não pedir o nome toda hora
+        window.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('tecnico_nome')) {
+                document.getElementById('name-entry-modal').classList.add('hidden');
+            }
+        });
+    </script>
 
 </body>
 </html>
