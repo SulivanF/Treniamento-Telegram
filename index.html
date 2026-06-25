@@ -10,9 +10,13 @@
         .chat-bubble { animation: fadeIn 0.25s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .telegram-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #e61919; }
     </style>
 </head>
-<body class="bg-neutral-950 text-slate-100 min-h-screen font-sans antialiased">
+<body class="bg-neutral-950 text-slate-100 min-h-screen font-sans antialiased overflow-x-hidden">
 
     <div id="login-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center z-50 transition-all duration-300">
         <div class="bg-neutral-900 p-8 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 text-center space-y-6 shadow-2xl">
@@ -81,191 +85,99 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             
-            <aside class="lg:col-span-4 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 space-y-3 shadow-xl">
-                <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 px-2 mb-2"><i class="fas fa-list mr-1"></i> Módulos do Treinamento</h2>
+            <aside class="lg:col-span-4 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 space-y-3 shadow-xl h-fit">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 px-2 mb-2"><i class="fas fa-list mr-1"></i> Módulos</h2>
                 <nav class="space-y-2 flex flex-col">
                     <button id="menu-m1" onclick="switchTab('m1')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-800/50 transition flex flex-col gap-1 border-l-4 border-l-amber-500">
                         <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-white">Módulo 1: Agendamento</span>
+                            <span class="text-xs font-bold text-white uppercase">Módulo 1: Agendamento</span>
                             <span id="status-m1" class="text-[10px] text-amber-500 font-bold"><i class="fas fa-play-circle"></i> Atual</span>
                         </div>
-                        <p class="text-[11px] text-neutral-400 leading-tight">Interação inicial com o bot escolhendo suporte avançado para serviços de agendamento.</p>
                     </button>
 
                     <button id="menu-m2" onclick="switchTab('m2')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 2: TAC</span>
-                            <span id="status-m2" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                        </div>
-                        <p class="text-[11px] text-neutral-500 leading-tight">Abertura de chamados internos para o TAC contendo avisos e descrições obrigatórias.</p>
+                        <span class="text-xs font-bold text-neutral-300 uppercase">Módulo 2: TAC</span>
+                        <span id="status-m2" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                     </button>
 
                     <button id="menu-m3" onclick="switchTab('m3')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 3: Suporte INMAP</span>
-                            <span id="status-m3" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                        </div>
-                        <p class="text-[11px] text-neutral-500 leading-tight">Entendimento e tratativas relacionadas ao aplicativo e erros comuns de acesso.</p>
+                        <span class="text-xs font-bold text-neutral-300 uppercase">Módulo 3: Suporte INMAP</span>
+                        <span id="status-m3" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                     </button>
 
                     <button id="menu-m4" onclick="switchTab('m4')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 4: Comercial</span>
-                            <span id="status-m4" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                        </div>
-                        <p class="text-[11px] text-neutral-500 leading-tight">Direcionamento correto para atendimento com BackOffice e verificação de planos.</p>
+                        <span class="text-xs font-bold text-neutral-300 uppercase">Módulo 4: Comercial</span>
+                        <span id="status-m4" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                     </button>
 
                     <button id="menu-m5" onclick="switchTab('m5')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 5: Bot de Pedidos</span>
-                            <span id="status-m5" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                        </div>
-                        <p class="text-[11px] text-neutral-500 leading-tight">Simulação de requisição de materiais direto pelas regionais da empresa.</p>
+                        <span class="text-xs font-bold text-neutral-300 uppercase">Módulo 5: Bot de Pedidos</span>
+                        <span id="status-m5" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                     </button>
 
                     <button id="menu-m6" onclick="switchTab('m6')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
-                        <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 6: Fluxo e Conduta</span>
-                            <span id="status-m6" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
-                        </div>
-                        <p class="text-[11px] text-neutral-500 leading-tight">Regras fundamentais de uso da plataforma e arquivamento em banco de dados.</p>
+                        <span class="text-xs font-bold text-neutral-300 uppercase">Módulo 6: Fluxo e Conduta</span>
+                        <span id="status-m6" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                     </button>
                 </nav>
             </aside>
 
-            <main class="lg:col-span-8 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 shadow-xl flex flex-col justify-between">
+            <main class="lg:col-span-8 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 shadow-xl flex flex-col min-h-[550px]">
                 
-                <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl flex flex-col">
+                <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl flex flex-col flex-grow">
                     <div class="bg-[#17212b] px-4 py-3 flex items-center gap-3 border-b border-neutral-950">
-                        <div id="chat-avatar" class="w-9 h-9 rounded-full bg-red-600 text-white font-bold text-sm flex items-center justify-center">AI</div>
+                        <div id="chat-avatar" class="w-9 h-9 rounded-full bg-red-600 text-white font-bold text-sm flex items-center justify-center">AG</div>
                         <div>
-                            <p id="chat-title" class="text-xs font-bold text-white">Ampernet Interno</p>
-                            <p class="text-[10px] text-sky-400">bot</p>
+                            <p id="chat-title" class="text-xs font-bold text-white uppercase">Agendamento</p>
+                            <p class="text-[10px] text-sky-400 tracking-wider">bot</p>
                         </div>
                     </div>
                     
-                    <div class="telegram-bg p-4 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                        <div id="msg-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p><p>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.</p></div>
-                        <div id="msg-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu protocolo de atendimento é AMP20252325306</p></div>
-                        <div id="msg-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços</p></div>
-                        <div id="msg-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p><p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>4 - Suporte Inmap</p></div>
-                        <div id="msg-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?<br>Exemplos: Cliente ausente, Não Localizando Endereço...</p></div>
-                        <div id="msg-m1-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m1-text-desc" placeholder="Ex: Cliente ausente" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
-                        <div id="msg-m1-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
-
-                        <div id="msg-m2-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p></div>
-                        <div id="msg-m2-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p></div>
-                        <div id="msg-m2-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><span class="text-red-400 font-bold">🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !</span><br>Liberação de Onu, Alteração de PPOE, Solicitação de VLAN...</p></div>
-                        <div id="msg-m2-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m2-text-desc" placeholder="Ex: Liberação de Onu" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
-                        <div id="msg-m2-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
-
-                        <div id="msg-m3-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p></div>
-                        <div id="msg-m3-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p></div>
-                        <div id="msg-m3-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!<br>Exemplos: Aplicativo Offline, Erro ao colocar as credenciais de acesso.</p></div>
-                        <div id="msg-m3-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m3-text-desc" placeholder="Ex: Aplicativo Offline" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
-                        <div id="msg-m3-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
-
-                        <div id="msg-m4-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p></div>
-                        <div id="msg-m4-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p></div>
-                        <div id="msg-m4-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p></div>
-                        <div id="msg-m4-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
-
-                        <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p>Bem-vindo ao Bot de Pedidos!<br>Qual e o seu nome e cidade (Colaborador)?</p><input type="text" id="order-colab" placeholder="Ex: Sulivan Ampére - Ampére" class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
-                        <div id="order-step-2" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p>Selecione a regional correspondente de destino abaixo nas opções de comando.</p></div>
-                        <div id="order-step-3" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p class="text-sky-400 font-bold">Regional selecionada: <span id="selected-reg-txt" class="text-white"></span></p><div class="space-y-1"><input type="text" id="order-item" placeholder="Qual e o pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"><input type="text" id="order-qty" placeholder="Qual e a quantidade?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"><input type="text" id="order-reason" placeholder="Qual e o motivo do pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"></div></div>
-                        <div id="order-step-4" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p class="font-bold text-sky-400 text-[11px]">Confirme os dados do pedido:</p><p class="font-mono text-[10px] text-neutral-300">Colaborador: <span id="sum-colab"></span><br>Regional: <span id="sum-reg"></span><br>Pedido: <span id="sum-item"></span><br>Quantidade: <span id="sum-qty"></span><br>Motivo: <span id="sum-reason"></span></p><p class="font-bold">Confirme os dados acima nas opções abaixo.</p></div>
-                        <div id="order-success" class="hidden max-w-[85%] bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 p-3 rounded-xl self-start font-bold text-xs chat-bubble">Pedido Registrado com Sucesso!</div>
-
-                        <div id="msg-m6-layout" class="hidden bg-neutral-950/80 p-4 rounded-xl border border-neutral-800 space-y-3 leading-relaxed chat-bubble"><p class="font-bold text-white text-sm">Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p><ul class="list-disc pl-5 space-y-1 text-neutral-400"><li>Acionar o BOT</li><li>Selecionar o número correspondente ao setor desejado</li><li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li></ul><p class="text-neutral-400"><strong class="text-red-500"><i class="fas fa-database"></i> Registro Inalterável:</strong> Todas as interações ficam registradas no banco de dados. Mantenha uma comunicação clara, objetiva e profissional, evitando o uso de gírias.</p></div>
-                    </div>
-
-                    <div class="bg-[#17212b] p-3 border-t border-neutral-950 flex flex-col gap-2">
-                        
-                        <div id="actions-m1" class="tab-actions grid grid-cols-1 gap-2">
-                            <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
-                            <button onclick="advanceModule('m1', 2)" id="btn-m1-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
-                            <button onclick="advanceModule('m1', 3)" id="btn-m1-opt1" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">1 - Agendamento</button>
-                            <button onclick="submitDescription('m1', 'm2', 16)" id="btn-m1-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
+                    <div id="chat-scroller" class="telegram-bg p-4 h-[350px] overflow-y-auto space-y-3 text-xs flex flex-col custom-scrollbar">
                         </div>
 
-                        <div id="actions-m2" class="tab-actions hidden grid grid-cols-1 gap-2">
-                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
-                            <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
-                            <button onclick="advanceModule('m2', 3)" id="btn-m2-opt2" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">2 - TAC</button>
-                            <button onclick="submitDescription('m2', 'm3', 32)" id="btn-m2-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
+                    <div class="bg-[#17212b] p-4 border-t border-neutral-950 flex flex-col gap-3 min-h-[120px] justify-center">
+                        <div id="input-container" class="hidden w-full flex gap-2">
+                             <input type="text" id="chat-input-text" placeholder="Digite sua solicitação..." class="flex-grow bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-white text-xs focus:outline-none focus:border-red-600">
+                             <button onclick="handleSendText()" class="bg-red-600 text-white p-3 rounded-lg"><i class="fas fa-paper-plane"></i></button>
                         </div>
-
-                        <div id="actions-m3" class="tab-actions hidden grid grid-cols-1 gap-2">
-                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
-                            <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
-                            <button onclick="advanceModule('m3', 3)" id="btn-m3-opt4" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">4 - Suporte INMAP</button>
-                            <button onclick="submitDescription('m3', 'm4', 48)" id="btn-m3-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
-                        </div>
-
-                        <div id="actions-m4" class="tab-actions hidden grid grid-cols-1 gap-2">
-                            <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
-                            <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">4 - Comercial</button>
-                            <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">2 - Analista</button>
-                            <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">1 - Edilaine</button>
-                        </div>
-
-                        <div id="actions-m5" class="tab-actions hidden flex flex-col gap-2">
-                            <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Iniciar Conexão</button>
-                            <button onclick="saveOrderColab()" id="btn-m5-colab" class="hidden w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar Identificação</button>
-                            <div id="btn-m5-regionals" class="hidden grid grid-cols-2 gap-1 font-sans">
-                                <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional PG</button>
-                                <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional FB</button>
-                                <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional PB</button>
-                                <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional Ampere</button>
+                        <div id="keyboard-container" class="grid grid-cols-1 md:grid-cols-2 gap-2">
                             </div>
-                            <button onclick="generateSummary()" id="btn-m5-summary" class="hidden w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Confirmar Especificações</button>
-                            <div id="btn-m5-confirm" class="hidden grid grid-cols-2 gap-2">
-                                <button onclick="confirmOrder(true)" class="bg-emerald-600 py-2 rounded-lg font-bold text-white text-xs">Sim</button>
-                                <button onclick="confirmOrder(false)" class="bg-neutral-700 py-2 rounded-lg font-bold text-neutral-300 text Red-xs">Não</button>
-                            </div>
-                        </div>
-
-                        <div id="actions-m6" class="tab-actions hidden grid grid-cols-1 gap-2">
-                            <button onclick="completeM6()" id="btn-m6-read" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition text-xs uppercase tracking-wider">Li e compreendi o Fluxo Padrão</button>
-                        </div>
                     </div>
                 </div>
 
             </main>
         </div>
 
-        <section id="card-quiz" class="hidden bg-neutral-900 p-6 rounded-2xl border border-neutral-800 space-y-5 shadow-2xl transition-all duration-300">
-            <h2 class="text-lg font-bold text-white flex items-center gap-2"><i class="fas fa-graduation-cap text-red-500"></i> Avaliação Completa do Treinamento</h2>
-            <p class="text-xs text-neutral-400">Responda corretamente as questões regulamentares para emitir o seu certificado.</p>
-            
-            <div id="quiz-form" class="space-y-4 text-xs">
-                <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white">1. Como deve ser feito o acionamento inicial ao NOC?</p>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q1" value="err"> Diretamente via canais externos do NOC</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q1" value="correct"> Inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
+        <section id="card-quiz" class="hidden bg-neutral-900 p-8 rounded-2xl border border-neutral-800 space-y-6 shadow-2xl transition-all duration-300 max-w-4xl mx-auto">
+            <h2 class="text-xl font-bold text-white flex items-center gap-2"><i class="fas fa-graduation-cap text-red-500"></i> Avaliação do Treinamento</h2>
+            <div id="quiz-form" class="space-y-6 text-xs">
+                <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
+                    <p class="font-bold text-white text-sm">1. Como deve ser feito o acionamento inicial ao NOC?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="err"> Diretamente via canais externos</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="correct"> Inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
                 </div>
-                <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white">2. O que a diretriz do TAC pede expressamente para EVITAR?</p>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q2" value="correct"> Pedimos que evitem enviar fotos e áudios neste canal</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q2" value="err"> Informar o modelo da ONU e VLAN</label>
+                <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
+                    <p class="font-bold text-white text-sm">2. O que deve ser evitado no canal de atendimento do TAC?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="correct"> Enviar fotos e áudios</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="err"> Enviar o nome completo do cliente</label>
                 </div>
-                <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white">3. Qual setor verifica informações de planos e contratos?</p>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q3" value="err"> Suporte e Serviços</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q3" value="correct"> Comercial</label>
+                <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
+                    <p class="font-bold text-white text-sm">3. No Módulo 3 (Suporte INMAP), quais são os exemplos de falhas e problemas citados para descrição do suporte?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="correct"> Aplicativo Offline, Erro ao colocar as credenciais de acesso</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="err"> Cliente ausente, Não localizando endereço</label>
                 </div>
-                <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white">4. É possível alterar ou excluir mensagens enviadas ao BOT?</p>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q4" value="correct"> Não, todas ficam registradas no banco de dados e não podem ser excluídas ou editadas</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q4" value="err"> Sim, bastando reabrir o chamado técnico</label>
+                <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
+                    <p class="font-bold text-white text-sm">4. O que acontece com as mensagens enviadas no banco de dados?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="err"> Podem ser excluídas pelo técnico a qualquer momento</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="correct"> Ficam registradas, não sendo possível excluir ou editar</label>
                 </div>
-                <div class="space-y-2 bg-neutral-950 p-4 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white">5. No módulo 3 (Inmap), quais exemplos de falhas são reportados?</p>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q5" value="correct"> Aplicativo Offline, Erro ao colocar as credenciais de acesso</label>
-                    <label class="flex items-center gap-2 text-neutral-400 cursor-pointer"><input type="radio" name="q5" value="err"> Cliente ausente, Não localizando endereço</label>
+                <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
+                    <p class="font-bold text-white text-sm">5. No Módulo 4 (Comercial), qual BackOffice é selecionado e quais exemplos de validações devem ser descritos pelo técnico?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="correct"> Atendente Edilaine; Plano e Contrato, Upgrade ou Alteração de Plano</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Atendente Vitor; Liberação de ONU ou Alteração de PPPoE</label>
                 </div>
-                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl text-[11px] uppercase tracking-wider transition shadow-lg">Enviar Respostas e Emitir Certificado</button>
+                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Avaliação e Gerar Certificado</button>
             </div>
         </section>
     </div>
@@ -276,19 +188,22 @@
             <h2 class="text-3xl font-black uppercase tracking-widest text-neutral-950 font-serif">Certificado de Conclusão</h2>
             <p class="text-sm text-neutral-500 italic">Certificamos para os devidos fins que o técnico</p>
             <p id="cert-name" class="text-2xl font-bold text-red-600 underline font-sans tracking-wide">Nome do Técnico</p>
-            <p class="text-sm text-neutral-700 leading-relaxed max-w-md mx-auto">Concluiu com êxito e aproveitamento regulamentar o <strong>Treinamento de Plataforma e Fluxos Internos Ampernet Telecom</strong>, cumprindo todas as tarefas práticas e obtendo aproveitamento na avaliação final.</p>
+            <p class="text-sm text-neutral-700 leading-relaxed max-w-md mx-auto">Concluiu com êxito e aproveitamento regulamentar o <strong>Treinamento de Plataforma e Fluxos Internos Ampernet Telecom</strong>.</p>
             <div class="pt-6 border-t border-neutral-200 flex flex-col md:flex-row justify-between text-left text-xs text-neutral-500 font-mono gap-2">
-                <p>Emissão: 2026</p>
+                <p>Data: 2025</p>
                 <p>Validação: AMP-INTERNAL-OK</p>
             </div>
-            <button onclick="document.getElementById('certificate-modal').classList.add('hidden')" class="absolute top-4 right-4 text-neutral-400 hover:text-neutral-600"><i class="fas fa-times text-lg"></i></button>
+            <button onclick="window.location.reload()" class="bg-neutral-900 text-white px-6 py-2 rounded-lg text-xs uppercase font-bold mt-4">Fechar</button>
         </div>
     </div>
 
     <script>
         let tecnicoNome = "";
-        let progressoTotal = 0;
-        let activeTab = 'm1';
+        let currentTab = "m1";
+        let moduleStates = {
+            m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0
+        };
+        let progresso = 0;
 
         function validaLogin() {
             const input = document.getElementById('tech-name-input').value.trim();
@@ -298,275 +213,229 @@
             }
             tecnicoNome = input;
             document.getElementById('user-display').innerText = tecnicoNome;
-            document.getElementById('login-modal').classList.add('scale-95', 'opacity-0');
-            setTimeout(() => {
-                document.getElementById('login-modal').classList.add('hidden');
-                document.getElementById('main-content').classList.remove('blur-sm', 'pointer-events-none');
-            }, 300);
+            document.getElementById('login-modal').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('blur-sm', 'pointer-events-none');
+            renderChat();
         }
 
         function switchTab(modId) {
-            document.querySelectorAll('.telegram-bg > div').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-actions').forEach(el => el.classList.add('hidden'));
-            
-            document.getElementById(`actions-${modId}`).classList.remove('hidden');
-            activeTab = modId;
+            currentTab = modId;
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('bg-neutral-800/50', 'border-l-amber-500'));
+            document.getElementById(`menu-${modId}`).classList.add('bg-neutral-800/50');
+            renderChat();
+        }
 
+        function addBotMsg(text) {
+            const chat = document.getElementById('chat-scroller');
+            const div = document.createElement('div');
+            div.className = "max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start chat-bubble shadow-md";
+            div.innerHTML = `<p class="font-bold text-sky-400 mb-0.5 text-[10px]">Ampernet Interno</p><p>${text.replace(/\n/g, '<br>')}</p>`;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function addUserMsg(text) {
+            const chat = document.getElementById('chat-scroller');
+            const div = document.createElement('div');
+            div.className = "max-w-[85%] bg-red-600/20 border border-red-600/30 p-3 rounded-xl text-neutral-200 self-end chat-bubble shadow-md";
+            div.innerHTML = `<p>${text}</p>`;
+            chat.appendChild(div);
+            chat.scrollTop = chat.scrollHeight;
+        }
+
+        function renderChat() {
+            document.getElementById('chat-scroller').innerHTML = "";
+            document.getElementById('keyboard-container').innerHTML = "";
+            document.getElementById('input-container').classList.add('hidden');
+            const keyboard = document.getElementById('keyboard-container');
+            const state = moduleStates[currentTab];
+
+            // Título dinâmico do chat
             const title = document.getElementById('chat-title');
             const avatar = document.getElementById('chat-avatar');
-            if(modId === 'm5') {
-                title.innerText = 'Bot de Pedidos';
-                avatar.innerText = 'BP';
-            } else if (modId === 'm3') {
-                title.innerText = 'Suporte INMAP';
-                avatar.innerText = 'SI';
-            } else if (modId === 'm2') {
-                title.innerText = 'TAC';
-                avatar.innerText = 'TC';
-            } else if (modId === 'm1') {
-                title.innerText = 'Agendamento';
-                avatar.innerText = 'AG';
-            } else {
-                title.innerText = 'Ampernet Interno';
-                avatar.innerText = 'AI';
+            if (currentTab === 'm1') { title.innerText = 'AGENDAMENTO'; avatar.innerText = 'AG'; }
+            if (currentTab === 'm2') { title.innerText = 'TAC'; avatar.innerText = 'TC'; }
+            if (currentTab === 'm3') { title.innerText = 'SUPORTE INMAP'; avatar.innerText = 'SI'; }
+            if (currentTab === 'm4') { title.innerText = 'COMERCIAL'; avatar.innerText = 'CM'; }
+            if (currentTab === 'm5') { title.innerText = 'BOT DE PEDIDOS'; avatar.innerText = 'BP'; }
+            if (currentTab === 'm6') { title.innerText = 'FLUXO E CONDUTA'; avatar.innerText = 'FC'; }
+
+            if (currentTab === 'm1' || currentTab === 'm2' || currentTab === 'm3') {
+                const optMap = { m1: '1 - Agendamento', m2: '2 - TAC', m3: '4 - Suporte Inmap' };
+                const nextStepMap = { m1: 'm2', m2: 'm3', m3: 'm4' };
+                const progressMap = { m1: 16, m2: 32, m3: 48 };
+
+                if (state === 0) {
+                    addButton("/start", () => {
+                        addUserMsg("/start");
+                        moduleStates[currentTab] = 1;
+                        setTimeout(renderChat, 500);
+                    });
+                } else if (state === 1) {
+                    addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
+                    addBotMsg("Seu protocolo de atendimento é AMP20252325306");
+                    addBotMsg("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
+                    addButton("5 - Suporte e Serviços", () => {
+                        addUserMsg("Opção 5");
+                        moduleStates[currentTab] = 2;
+                        setTimeout(renderChat, 500);
+                    });
+                } else if (state === 2) {
+                    addBotMsg(`Bem Vindo ao Suporte e Serviços`);
+                    addBotMsg("Escolha o serviço necessario:\n1 - Agendamento\n2 - TAC\n3 - Erro de seleção\n4 - Suporte Inmap\n5 - STFC");
+                    addButton(optMap[currentTab], () => {
+                        addUserMsg(optMap[currentTab]);
+                        moduleStates[currentTab] = 3;
+                        setTimeout(renderChat, 500);
+                    });
+                } else if (state === 3) {
+                    if (currentTab === 'm1') addBotMsg("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\nExemplos: Cliente ausente, Não Localizando Endereço...");
+                    if (currentTab === 'm2') addBotMsg("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !\nLiberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
+                    if (currentTab === 'm3') addBotMsg("Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!\nColoque exemplos como, Aplicativo Offline, Erro ao colocar as credenciais de acesso.");
+                    
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 4) {
+                    addBotMsg("Tarefa Concluída!");
+                    updateProgress(progressMap[currentTab], nextStepMap[currentTab]);
+                }
             }
 
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('bg-neutral-800/50'));
-            document.getElementById(`menu-${modId}`).classList.add('bg-neutral-800/50');
+            if (currentTab === 'm4') {
+                if (state === 0) {
+                    addButton("/start", () => {
+                        addUserMsg("/start");
+                        moduleStates.m4 = 1; setTimeout(renderChat, 500);
+                    });
+                } else if (state === 1) {
+                    addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
+                    addBotMsg("Seu protocolo de atendimento é AMP20252325306");
+                    addBotMsg("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
+                    addButton("4 - Comercial", () => {
+                        addUserMsg("Opção 4");
+                        moduleStates.m4 = 2; setTimeout(renderChat, 500);
+                    });
+                } else if (state === 2) {
+                    addBotMsg("Bem vindo ao Comercial!\nSelecione o serviço necessário:\n1 - BackOffice\n2 - Analista\n3 - Erro de Seleção");
+                    addButton("2 - Analista", () => {
+                        addUserMsg("Opção 2");
+                        moduleStates.m4 = 3; setTimeout(renderChat, 500);
+                    });
+                } else if (state === 3) {
+                    addBotMsg("Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:\n1 - Edilaine\n2 - Marinalda\n3 - Vitor\n4 - Milena\n5 - Felipe");
+                    addButton("1 - Edilaine", () => {
+                        addUserMsg("Edilaine");
+                        moduleStates.m4 = 4; setTimeout(renderChat, 500);
+                    });
+                } else if (state === 4) {
+                    addBotMsg("Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano");
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 5) {
+                    addBotMsg("Tarefa Concluída!");
+                    updateProgress(64, 'm5');
+                }
+            }
 
-            restoreModuleMessages(modId);
-        }
+            if (currentTab === 'm5') {
+                if (state === 0) {
+                    addButton("Clique em Iniciar", () => {
+                        addUserMsg("Iniciar");
+                        moduleStates.m5 = 1; setTimeout(renderChat, 500);
+                    });
+                } else if (state === 1) {
+                    addBotMsg("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 2) {
+                    addBotMsg("Selecione a regional correspondente:\n\nRegional PG\nRegional FB\nRegional PB\nRegional Sao Lourenco\nRegional LJS\nCidade CSC\nRegional Guaira\nRegional Ampere\nRegional Fazenda");
+                    const regs = ["PG", "FB", "PB", "Sao Lourenco", "LJS", "CSC", "Guaira", "Ampere", "Fazenda"];
+                    regs.forEach(r => addButton("Regional " + r, () => {
+                        addUserMsg("Regional " + r);
+                        moduleStates.m5 = 3; setTimeout(renderChat, 500);
+                    }));
+                } else if (state === 3) {
+                    addBotMsg("Regional selecionada: Regional Ampere\n\nQual e o pedido?");
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 4) {
+                    addBotMsg("Qual e a quantidade?");
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 5) {
+                    addBotMsg("Qual e o motivo do pedido?");
+                    document.getElementById('input-container').classList.remove('hidden');
+                } else if (state === 6) {
+                    addBotMsg("Confirme os dados do pedido:\n\nColaborador: Sulivan Ampére\nRegional: Regional Ampere\nPedido: teste\nQuantidade: 01\nMotivo: teste\n\nConfirme os dados acima:");
+                    addButton("Sim", () => {
+                        addUserMsg("Sim");
+                        addBotMsg("Pedido Registrado com Sucesso!");
+                        moduleStates.m5 = 7; setTimeout(renderChat, 1000);
+                    });
+                    addButton("Não", () => {
+                        moduleStates.m5 = 1; renderChat();
+                    });
+                } else if (state === 7) {
+                    updateProgress(80, 'm6');
+                }
+            }
 
-        function restoreModuleMessages(modId) {
-            if(modId === 'm1') {
-                if(document.getElementById('btn-m1-start').classList.contains('hidden')) {
-                    document.getElementById('msg-m1-1').classList.remove('hidden');
-                    document.getElementById('msg-m1-2').classList.remove('hidden');
-                    document.getElementById('msg-m1-3').classList.remove('hidden');
-                }
-                if(document.getElementById('btn-m1-opt5').classList.contains('hidden') && document.getElementById('btn-m1-start').classList.contains('hidden')) {
-                    document.getElementById('msg-m1-4').classList.remove('hidden');
-                }
-                if(document.getElementById('btn-m1-opt1').classList.contains('hidden') && document.getElementById('btn-m1-opt5').classList.contains('hidden')) {
-                    document.getElementById('msg-m1-5').classList.remove('hidden');
-                    document.getElementById('msg-m1-input').classList.remove('hidden');
-                }
-                if(document.getElementById('btn-m1-submit').classList.contains('hidden') && document.getElementById('btn-m1-opt1').classList.contains('hidden') && document.getElementById('btn-m1-start').classList.contains('hidden')) {
-                    document.getElementById('msg-m1-end').classList.remove('hidden');
-                }
-            } else if (modId === 'm2') {
-                if(document.getElementById('btn-m2-start').classList.contains('hidden')) document.getElementById('msg-m2-1').classList.remove('hidden');
-                if(document.getElementById('btn-m2-opt5').classList.contains('hidden') && document.getElementById('btn-m2-start').classList.contains('hidden')) document.getElementById('msg-m2-2').classList.remove('hidden');
-                if(document.getElementById('btn-m2-opt2').classList.contains('hidden')) {
-                    document.getElementById('msg-m2-3').classList.remove('hidden');
-                    document.getElementById('msg-m2-input').classList.remove('hidden');
-                }
-                if(document.getElementById('btn-m2-submit').classList.contains('hidden') && document.getElementById('btn-m2-opt2').classList.contains('hidden')) {
-                    document.getElementById('msg-m2-end').classList.remove('hidden');
-                }
-            } else if (modId === 'm3') {
-                if(document.getElementById('btn-m3-start').classList.contains('hidden')) document.getElementById('msg-m3-1').classList.remove('hidden');
-                if(document.getElementById('btn-m3-opt5').classList.contains('hidden')) document.getElementById('msg-m3-2').classList.remove('hidden');
-                if(document.getElementById('btn-m3-opt4').classList.contains('hidden')) {
-                    document.getElementById('msg-m3-3').classList.remove('hidden');
-                    document.getElementById('msg-m3-input').classList.remove('hidden');
-                }
-                if(document.getElementById('btn-m3-submit').classList.contains('hidden') && document.getElementById('btn-m3-opt4').classList.contains('hidden')) {
-                    document.getElementById('msg-m3-end').classList.remove('hidden');
-                }
-            } else if (modId === 'm4') {
-                if(document.getElementById('btn-m4-start').classList.contains('hidden')) document.getElementById('msg-m4-1').classList.remove('hidden');
-                if(document.getElementById('btn-m4-opt4').classList.contains('hidden')) document.getElementById('msg-m4-2').classList.remove('hidden');
-                if(document.getElementById('btn-m4-opt2').classList.contains('hidden')) document.getElementById('msg-m4-3').classList.remove('hidden');
-                if(document.getElementById('btn-m4-opt1').classList.contains('hidden')) document.getElementById('msg-m4-4').classList.remove('hidden');
-            } else if (modId === 'm5') {
-                if(document.getElementById('btn-m5-start').classList.contains('hidden')) document.getElementById('order-step-1').classList.remove('hidden');
-                if(document.getElementById('btn-m5-colab').classList.contains('hidden') && document.getElementById('btn-m5-start').classList.contains('hidden')) document.getElementById('order-step-2').classList.remove('hidden');
-            } else if (modId === 'm6') {
-                document.getElementById('msg-m6-layout').classList.remove('hidden');
+            if (currentTab === 'm6') {
+                addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento:\nAcionar o BOT\nSelecionar o número correspondente ao setor desejado\nAtentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.\n\nRessalta-se que todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens. Portanto, é fundamental manter uma comunicação clara, objetiva e profissional, evitando o uso de gírias ou termos inadequados.");
+                addButton("Compreendido", () => {
+                    updateProgress(100, null);
+                    document.getElementById('card-quiz').classList.remove('hidden');
+                });
             }
         }
 
-        function updateProgress(porcentagem) {
-            if (porcentagem > progressoTotal) {
-                progressoTotal = porcentagem;
-                document.getElementById('progress-bar').style.width = `${progressoTotal}%`;
-                document.getElementById('progress-text').innerText = `${progressoTotal}% Concluído`;
-            }
+        function addButton(label, action) {
+            const keyboard = document.getElementById('keyboard-container');
+            const b = document.createElement('button');
+            b.className = "bg-[#2b5278] hover:bg-[#34618e] text-white py-2.5 rounded-lg font-bold text-xs transition";
+            b.innerText = label;
+            b.onclick = action;
+            keyboard.appendChild(b);
         }
 
-        function unlockCard(id, proximo) {
-            const card = document.getElementById(`menu-${id}`);
-            if (card) {
-                card.classList.remove('opacity-40', 'pointer-events-none');
-                card.classList.replace('bg-neutral-950/30', 'bg-neutral-950/60');
-                card.classList.replace('border-l-neutral-700', 'border-l-amber-500');
-                const status = document.getElementById(`status-${proximo}`);
-                if (status) {
-                    status.innerHTML = `<i class="fas fa-play-circle"></i> Disponível`;
-                    status.className = "text-xs text-amber-500 font-bold";
-                }
-            }
+        function handleSendText() {
+            const input = document.getElementById('chat-input-text');
+            const val = input.value.trim();
+            if(val === "") return;
+            addUserMsg(val);
+            input.value = "";
+            moduleStates[currentTab]++;
+            setTimeout(renderChat, 500);
         }
 
-        function markAsComplete(mod, nextMod, progress) {
-            const status = document.getElementById(`status-${mod}`);
+        function updateProgress(p, next) {
+            progresso = p;
+            document.getElementById('progress-bar').style.width = p + "%";
+            document.getElementById('progress-text').innerText = p + "% Concluído";
+            if(next) {
+                const btn = document.getElementById(`menu-${next}`);
+                btn.classList.remove('opacity-40', 'pointer-events-none');
+                btn.classList.add('border-l-amber-500');
+            }
+            const status = document.getElementById(`status-${currentTab}`);
             status.innerHTML = `<i class="fas fa-check-circle"></i> Concluído`;
-            status.className = "text-xs text-emerald-500 font-bold";
-            document.getElementById(`menu-${mod}`).classList.replace('border-l-amber-500', 'border-l-emerald-500');
-            updateProgress(progress);
-            if(nextMod) {
-                unlockCard(nextMod, nextMod);
-                switchTab(nextMod);
-            }
-        }
-
-        function submitDescription(currentMod, nextMod, progress) {
-            const textVal = document.getElementById(`${currentMod}-text-desc`).value.trim();
-            if(textVal === "") {
-                alert("Por favor, preencha a descrição do problema antes de enviar!");
-                return;
-            }
-            document.getElementById(`btn-${currentMod}-submit`).classList.add('hidden');
-            document.getElementById(`msg-${currentMod}-end`).classList.remove('hidden');
-            markAsComplete(currentMod, nextMod, progress);
-        }
-
-        function advanceModule(mod, step) {
-            if (mod === 'm1') {
-                if (step === 1) {
-                    document.getElementById('btn-m1-start').classList.add('hidden');
-                    document.getElementById('msg-m1-1').classList.remove('hidden');
-                    document.getElementById('msg-m1-2').classList.remove('hidden');
-                    document.getElementById('msg-m1-3').classList.remove('hidden');
-                    document.getElementById('btn-m1-opt5').classList.remove('hidden');
-                } else if (step === 2) {
-                    document.getElementById('btn-m1-opt5').classList.add('hidden');
-                    document.getElementById('msg-m1-4').classList.remove('hidden');
-                    document.getElementById('btn-m1-opt1').classList.remove('hidden');
-                } else if (step === 3) {
-                    document.getElementById('btn-m1-opt1').classList.add('hidden');
-                    document.getElementById('msg-m1-5').classList.remove('hidden');
-                    document.getElementById('msg-m1-input').classList.remove('hidden');
-                    document.getElementById('btn-m1-submit').classList.remove('hidden');
-                }
-            } else if (mod === 'm2') {
-                if (step === 1) {
-                    document.getElementById('btn-m2-start').classList.add('hidden');
-                    document.getElementById('msg-m2-1').classList.remove('hidden');
-                    document.getElementById('btn-m2-opt5').classList.remove('hidden');
-                } else if (step === 2) {
-                    document.getElementById('btn-m2-opt5').classList.add('hidden');
-                    document.getElementById('msg-m2-2').classList.remove('hidden');
-                    document.getElementById('btn-m2-opt2').classList.remove('hidden');
-                } else if (step === 3) {
-                    document.getElementById('btn-m2-opt2').classList.add('hidden');
-                    document.getElementById('msg-m2-3').classList.remove('hidden');
-                    document.getElementById('msg-m2-input').classList.remove('hidden');
-                    document.getElementById('btn-m2-submit').classList.remove('hidden');
-                }
-            } else if (mod === 'm3') {
-                if (step === 1) {
-                    document.getElementById('btn-m3-start').classList.add('hidden');
-                    document.getElementById('msg-m3-1').classList.remove('hidden');
-                    document.getElementById('btn-m3-opt5').classList.remove('hidden');
-                } else if (step === 2) {
-                    document.getElementById('btn-m3-opt5').classList.add('hidden');
-                    document.getElementById('msg-m3-2').classList.remove('hidden');
-                    document.getElementById('btn-m3-opt4').classList.remove('hidden');
-                } else if (step === 3) {
-                    document.getElementById('btn-m3-opt4').classList.add('hidden');
-                    document.getElementById('msg-m3-3').classList.remove('hidden');
-                    document.getElementById('msg-m3-input').classList.remove('hidden');
-                    document.getElementById('btn-m3-submit').classList.remove('hidden');
-                }
-            } else if (mod === 'm4') {
-                if (step === 1) {
-                    document.getElementById('btn-m4-start').classList.add('hidden');
-                    document.getElementById('msg-m4-1').classList.remove('hidden');
-                    document.getElementById('btn-m4-opt4').classList.remove('hidden');
-                } else if (step === 2) {
-                    document.getElementById('btn-m4-opt4').classList.add('hidden');
-                    document.getElementById('msg-m4-2').classList.remove('hidden');
-                    document.getElementById('btn-m4-opt2').classList.remove('hidden');
-                } else if (step === 3) {
-                    document.getElementById('btn-m4-opt2').classList.add('hidden');
-                    document.getElementById('msg-m4-3').classList.remove('hidden');
-                    document.getElementById('btn-m4-opt1').classList.remove('hidden');
-                } else if (step === 4) {
-                    document.getElementById('btn-m4-opt1').classList.add('hidden');
-                    document.getElementById('msg-m4-4').classList.remove('hidden');
-                    markAsComplete('m4', 'm5', 64);
-                }
-            }
-        }
-
-        function startOrderBot() {
-            document.getElementById('btn-m5-start').classList.add('hidden');
-            document.getElementById('order-step-1').classList.remove('hidden');
-            document.getElementById('btn-m5-colab').classList.remove('hidden');
-        }
-
-        function saveOrderColab() {
-            const val = document.getElementById('order-colab').value.trim();
-            if(val !== "") {
-                document.getElementById('btn-m5-colab').classList.add('hidden');
-                document.getElementById('order-step-2').classList.remove('hidden');
-                document.getElementById('btn-m5-regionals').classList.remove('hidden');
-            }
-        }
-
-        function selectRegional(reg) {
-            document.getElementById('selected-reg-txt').innerText = reg;
-            document.getElementById('btn-m5-regionals').classList.add('hidden');
-            document.getElementById('order-step-3').classList.remove('hidden');
-            document.getElementById('btn-m5-summary').classList.remove('hidden');
-        }
-
-        function generateSummary() {
-            document.getElementById('sum-colab').innerText = document.getElementById('order-colab').value || "Técnico";
-            document.getElementById('sum-reg').innerText = document.getElementById('selected-reg-txt').innerText;
-            document.getElementById('sum-item').innerText = document.getElementById('order-item').value || "teste";
-            document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "01";
-            document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "teste";
-            
-            document.getElementById('btn-m5-summary').classList.add('hidden');
-            document.getElementById('order-step-4').classList.remove('hidden');
-            document.getElementById('btn-m5-confirm').classList.remove('hidden');
-        }
-
-        function confirmOrder(isSim) {
-            document.getElementById('btn-m5-confirm').classList.add('hidden');
-            if(isSim) {
-                document.getElementById('order-success').classList.remove('hidden');
-                markAsComplete('m5', 'm6', 80);
-            } else {
-                document.getElementById('order-step-1').classList.add('hidden');
-                document.getElementById('order-step-2').classList.add('hidden');
-                document.getElementById('order-step-3').classList.add('hidden');
-                document.getElementById('order-step-4').classList.add('hidden');
-                document.getElementById('btn-m5-start').classList.remove('hidden');
-            }
-        }
-
-        function completeM6() {
-            markAsComplete('m6', null, 100);
-            document.getElementById('card-quiz').classList.remove('hidden');
-            document.getElementById('card-quiz').scrollIntoView({ behavior: 'smooth' });
+            status.className = "text-[10px] text-emerald-500 font-bold";
         }
 
         function verificarQuiz() {
-            const answers = ['q1', 'q2', 'q3', 'q4', 'q5'];
+            const q1 = document.querySelector('input[name="q1"]:checked')?.value;
+            const q2 = document.querySelector('input[name="q2"]:checked')?.value;
+            const q3 = document.querySelector('input[name="q3"]:checked')?.value;
+            const q4 = document.querySelector('input[name="q4"]:checked')?.value;
+            const q5 = document.querySelector('input[name="q5"]:checked')?.value;
+
             let acertos = 0;
-            answers.forEach(q => {
-                if (document.querySelector(`input[name="${q}"]:checked`)?.value === 'correct') acertos++;
-            });
+            if(q1 === 'correct') acertos++;
+            if(q2 === 'correct') acertos++;
+            if(q3 === 'correct') acertos++;
+            if(q4 === 'correct') acertos++;
+            if(q5 === 'correct') acertos++;
 
             if(acertos >= 4) {
                 document.getElementById('cert-name').innerText = tecnicoNome.toUpperCase();
                 document.getElementById('certificate-modal').classList.remove('hidden');
             } else {
-                alert(`Você acertou ${acertos} de 5 questões. É necessário pelo menos 4 acertos para liberar o certificado.`);
+                alert(`Você acertou ${acertos} de 5 questões. É necessário pelo menos 4 acertos. Tente novamente!`);
             }
         }
     </script>
