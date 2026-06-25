@@ -6,8 +6,12 @@
     <title>Portal de Capacitação - Ampernet</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .chat-bubble { animation: fadeIn 0.3s ease-in-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
 </head>
-<body class="bg-neutral-900 text-slate-100 min-h-screen font-sans">
+<body class="bg-neutral-900 text-slate-100 min-h-screen font-sans dynamic-view">
 
     <div id="name-entry-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 transition-opacity duration-300">
         <div class="bg-neutral-950 p-6 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 space-y-4">
@@ -15,11 +19,23 @@
             <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
             <input type="text" id="tech-name-input" placeholder="Seu Nome Completo" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-3 text-sm text-white focus:outline-none focus:border-red-600">
             <p id="name-error" class="text-red-500 text-[11px] hidden">Por favor, insira um nome válido (mínimo 5 caracteres).</p>
-            <button onclick="enviarNomeDoTécnico()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
+            <button onclick="enviarNomeDoTecnico()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2.5 rounded-xl text-xs transition">Portal de Acesso</button>
         </div>
     </div>
 
-    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
+    <div id="certificate-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md flex items-center justify-center z-50 hidden">
+        <div class="bg-white p-8 rounded-2xl max-w-2xl w-full mx-4 border-4 border-red-600 text-neutral-900 space-y-6 text-center relative shadow-2xl">
+            <h2 class="text-2xl font-extrabold text-red-600 uppercase tracking-wider">Certificado de Conclusão</h2>
+            <p class="text-sm text-neutral-500">Certificamos que para os devidos fins de capacitação interna da Ampernet Telecom,</p>
+            <p id="cert-name" class="text-2xl font-bold text-neutral-900 underline decoration-red-500 decoration-2 font-serif">Nome do Técnico</p>
+            <p class="text-sm text-neutral-600 max-w-md mx-auto">Concluiu com êxito o **Treinamento Prático de Fluxos e Canais de Comunicação Interna**, atingindo a pontuação necessária na avaliação final.</p>
+            <div class="pt-4 border-t border-neutral-200 flex justify-between text-xs text-neutral-400 font-mono">
+                <span>AMPERNET TELECOM</span>
+                <span id="cert-date">2026</span>
+            </div>
+            <button onclick="document.getElementById('certificate-modal').classList.add('hidden')" class="bg-neutral-900 text-white px-6 py-2 rounded-xl text-xs font-bold hover:bg-neutral-800 transition">Fechar</button>
+        </div>
+    </div>
 
     <div class="max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-neutral-950 p-4 rounded-2xl border border-neutral-800">
@@ -28,7 +44,7 @@
                 <p class="text-xs text-neutral-400">Treinamento de Fluxos e Canais de Comunicação Interna</p>
             </div>
             <div id="user-points" class="bg-red-950/40 text-red-400 border border-red-500/20 px-4 py-2 rounded-xl text-sm font-bold flex items-center">
-                <i class="fas fa-fire mr-1"></i> 0 XP
+                <i class="fas fa-fire mr-1"></i> <span id="xp-counter">0</span> XP
             </div>
         </header>
 
@@ -43,69 +59,493 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Agendamento</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor diária é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">A comunicação com o setor de agendamento é essencial para a execução das atividades diárias, sendo responsável por direcionar as ordens de serviço e realizar o contato com os clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">TAC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico precisar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Deve ser acionado quando o técnico necessitar de suporte, seja para liberação de equipamentos ou auxílio em configurações.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Inmap</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionado ao aplicativo.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Responsável pelo atendimento de falhas e suporte relacionados ao aplicativo.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">Comercial</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos de clientes.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Acionado para verificação de informações relacionadas a planos e contratos dos clientes.</p>
                 </div>
                 <div class="bg-neutral-900 p-4 rounded-xl border border-neutral-800/60 space-y-1.5 md:col-span-2 lg:col-span-1">
                     <h3 class="text-sm font-bold text-red-400 uppercase tracking-wider">NOC</h3>
-                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, o que fará o direcionamento ao NOC quando necessário.</p>
+                    <p class="text-xs text-neutral-300 leading-relaxed">Setor responsável pelo suporte avançado, incluindo configurações mais complexas e monitoramento das operações, garantindo o pleno funcionamento dos serviços. O acionamento deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário.</p>
                 </div>
             </div>
         </section>
 
-        <div class="bg-neutral-950 p-4 rounded-2xl border border-neutral-800 space-y-4">
-            <div class="flex justify-between text-xs font-semibold">
-                <span>Progresso do Treinamento</span>
-                <span id="progress-percentage">0%</span>
-            </div>
-            
-            <div class="w-full bg-neutral-900 h-2 rounded-full overflow-hidden border border-neutral-800">
-                <div id="progress-bar" class="bg-red-600 h-full w-0 transition-all duration-500"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="bg-neutral-950 p-4 rounded-2xl border border-neutral-800 space-y-3 h-fit">
+                <h3 class="text-sm font-bold text-white px-2">Módulos Práticos</h3>
+                <nav class="space-y-1">
+                    <button onclick="carregarModulo(1)" id="btn-mod-1" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center bg-red-600 text-white transition">
+                        <span>Módulo 1: Agendamento</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(2)" id="btn-mod-2" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition">
+                        <span>Módulo 2: Suporte TAC</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(3)" id="btn-mod-3" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition">
+                        <span>Módulo 3: Suporte Inmap</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(4)" id="btn-mod-4" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition">
+                        <span>Módulo 4: Comercial</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(5)" id="btn-mod-5" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition">
+                        <span>Módulo 5: Bot de Pedidos</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(6)" id="btn-mod-6" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition">
+                        <span>Módulo 6: Fluxo e Regras</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                    <button onclick="carregarModulo(7)" id="btn-mod-7" class="w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 border border-neutral-800/40 transition">
+                        <span class="text-red-400"><i class="fas fa-graduation-cap mr-1"></i> Avaliação Final</span> <i class="fas fa-chevron-right"></i>
+                    </button>
+                </nav>
+                <div class="pt-3 border-t border-neutral-800 mt-2 text-[11px] text-neutral-400 flex justify-between px-1">
+                    <span>Progresso Geral:</span> <span id="progress-text" class="text-red-500 font-bold">0%</span>
+                </div>
             </div>
 
-            <div class="mt-6 border-t border-neutral-800 pt-4">
-                <h2 class="text-base font-bold text-white mb-2">Módulo 1: Agendamento</h2>
-                <p class="text-xs text-neutral-400">Inicie os testes e fluxos práticos deste módulo abaixo.</p>
+            <div class="lg:col-span-2 bg-neutral-950 rounded-2xl border border-neutral-800 flex flex-col h-[550px] overflow-hidden">
+                <div class="bg-neutral-900 p-4 border-b border-neutral-800 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-white font-bold text-sm">A</div>
+                        <div>
+                            <h3 id="sim-title" class="text-sm font-bold text-white">Módulo 1: Agendamento</h3>
+                            <p id="sim-subtitle" class="text-[10px] text-neutral-400">Ambiente de Simulação Ampernet Interno</p>
+                        </div>
+                    </div>
+                    <button onclick="reiniciarModuloAtual()" class="text-xs bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 rounded-lg text-neutral-300 transition">
+                        <i class="fas fa-undo mr-1"></i> Reiniciar
+                    </button>
+                </div>
+
+                <div id="sim-content" class="flex-1 p-4 overflow-y-auto space-y-4 bg-neutral-950/50">
+                    </div>
+
+                <div id="sim-actions" class="p-4 bg-neutral-900 border-t border-neutral-800 flex flex-wrap gap-2 justify-center items-center">
+                    </div>
             </div>
         </div>
     </div>
 
     <script>
-        function enviarNomeDoTécnico() {
+        let tecnicoNome = "";
+        let moduloAtual = 1;
+        let progressoModulos = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false };
+        let xpTotal = 0;
+        let chatStep = 0;
+        let respostasPedido = { colaborador: "", regional: "", item: "", qtd: "", motivo: "" };
+
+        function enviarNomeDoTecnico() {
             const input = document.getElementById('tech-name-input');
             const errorElement = document.getElementById('name-error');
             const modal = document.getElementById('name-entry-modal');
             
             if (input.value.trim().length >= 5) {
-                // Oculta erro se houver
+                tecnicoNome = input.value.trim();
                 errorElement.classList.add('hidden');
-                // Salva o nome localmente (opcional)
-                localStorage.setItem('tecnico_nome', input.value.trim());
-                // Esconde o modal para liberar o portal
+                localStorage.setItem('ampernet_tech_nome', tecnicoNome);
                 modal.classList.add('hidden');
+                carregarModulo(1);
             } else {
-                // Mostra a mensagem de erro caso o nome seja muito curto
                 errorElement.classList.remove('hidden');
             }
         }
 
-        // Verifica se o técnico já logou antes para não pedir o nome toda hora
         window.addEventListener('DOMContentLoaded', () => {
-            if (localStorage.getItem('tecnico_nome')) {
+            const salvo = localStorage.getItem('ampernet_tech_nome');
+            if (salvo) {
+                tecnicoNome = salvo;
                 document.getElementById('name-entry-modal').classList.add('hidden');
+                carregarModulo(1);
             }
         });
+
+        function atualizarUIProgresso() {
+            let concluidos = Object.values(progressoModulos).filter(Boolean).length;
+            let porcentagem = Math.round((concluidos / 7) * 100);
+            document.getElementById('progress-text').innerText = `${porcentagem}%`;
+            document.getElementById('progress-bar').style.width = `${porcentagem}%`;
+            document.getElementById('xp-counter').innerText = xpTotal;
+        }
+
+        function marcarModuloConcluido(num) {
+            if (!progressoModulos[num]) {
+                progressoModulos[num] = true;
+                xpTotal += 100;
+                atualizarUIProgresso();
+            }
+        }
+
+        function carregarModulo(num) {
+            moduloAtual = num;
+            chatStep = 0;
+            
+            // Atualiza classe ativa nos botões da barra lateral
+            for(let i=1; i<=7; i++) {
+                const btn = document.getElementById(`btn-mod-${i}`);
+                if(i === num) {
+                    btn.className = "w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center bg-red-600 text-white transition";
+                } else {
+                    btn.className = "w-full text-left p-3 rounded-xl text-xs font-semibold flex justify-between items-center text-neutral-400 hover:bg-neutral-900 transition";
+                }
+            }
+
+            const simContent = document.getElementById('sim-content');
+            const simActions = document.getElementById('sim-actions');
+            simContent.innerHTML = "";
+            simActions.innerHTML = "";
+
+            if (num >= 1 && num <= 4) {
+                document.getElementById('sim-title').innerText = `Módulo ${num}: ` + (num==1?'Agendamento':num==2?'Suporte TAC':num==3?'Suporte Inmap':'Comercial');
+                addBotBubble("/start para iniciar a interação.");
+                addActionButton("/start", () => avancarChatModulosComuns());
+            } else if (num === 5) {
+                document.getElementById('sim-title').innerText = "Módulo 5: Bot de Pedidos";
+                addBotBubble("Clique em Iniciar para começar.");
+                addActionButton("Iniciar", () => iniciarModulo5());
+            } else if (num === 6) {
+                document.getElementById('sim-title').innerText = "Módulo 6: Fluxo e Regras";
+                simContent.innerHTML = `
+                    <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-4 text-xs leading-relaxed max-w-xl mx-auto mt-6">
+                        <h4 class="font-bold text-red-400 text-sm flex items-center gap-2"><i class="fas fa-file-alt"></i> Fluxo Padrão de Atendimento</h4>
+                        <p>Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
+                        <ul class="list-disc list-inside space-y-1 text-neutral-300">
+                            <li>Acionar o BOT</li>
+                            <li>Selecionar o número correspondente ao setor desejado</li>
+                            <li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li>
+                        </ul>
+                        <p class="text-neutral-400 bg-black/40 p-3 rounded-lg border-l-2 border-red-500 italic">
+                            Ressalta-se que todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens. Portanto, é fundamental manter uma comunicação clara, objetiva e profissional, evitando o uso de gírias ou termos inadequados.
+                        </p>
+                    </div>
+                `;
+                addActionButton("Concluir Módulo 6", () => {
+                    marcarModuloConcluido(6);
+                    carregarModulo(7);
+                });
+            } else if (num === 7) {
+                document.getElementById('sim-title').innerText = "Avaliação Final";
+                iniciarAvaliacao();
+            }
+        }
+
+        function reiniciarModuloAtual() {
+            carregarModulo(moduloAtual);
+        }
+
+        // Auxiliares do Chat Simulador
+        function addBotBubble(text) {
+            const container = document.getElementById('sim-content');
+            const bubble = document.createElement('div');
+            bubble.className = "flex flex-col gap-1 chat-bubble max-w-[85%]";
+            bubble.innerHTML = `
+                <span class="text-[10px] text-red-500 font-bold ml-1">Ampernet Interno</span>
+                <div class="bg-neutral-900 border border-neutral-800 p-3 rounded-2xl rounded-tl-none text-xs text-slate-100 whitespace-pre-line leading-relaxed">
+                    ${text}
+                </div>
+            `;
+            container.appendChild(bubble);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addUserBubble(text) {
+            const container = document.getElementById('sim-content');
+            const bubble = document.createElement('div');
+            bubble.className = "flex flex-col gap-1 chat-bubble max-w-[85%] ml-auto items-end";
+            bubble.innerHTML = `
+                <span class="text-[10px] text-neutral-500 font-bold mr-1">Você</span>
+                <div class="bg-red-600 p-3 rounded-2xl rounded-tr-none text-xs text-white">
+                    ${text}
+                </div>
+            `;
+            container.appendChild(bubble);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function addActionButton(label, onClickFn) {
+            const actions = document.getElementById('sim-actions');
+            const btn = document.createElement('button');
+            btn.className = "bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition shadow-md shadow-red-950/20";
+            btn.innerText = label;
+            btn.onclick = () => {
+                actions.innerHTML = "";
+                addUserBubble(label);
+                setTimeout(onClickFn, 400);
+            };
+            actions.appendChild(btn);
+        }
+
+        function addInputField(placeholder, onSubmitFn) {
+            const actions = document.getElementById('sim-actions');
+            actions.innerHTML = `
+                <div class="flex gap-2 w-full max-w-md">
+                    <input type="text" id="chat-text-input" placeholder="${placeholder}" class="flex-1 bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-red-600">
+                    <button id="chat-submit-btn" class="bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition">Enviar</button>
+                </div>
+            `;
+            const input = document.getElementById('chat-text-input');
+            const btn = document.getElementById('chat-submit-btn');
+
+            const submit = () => {
+                if (input.value.trim() !== "") {
+                    const val = input.value.trim();
+                    actions.innerHTML = "";
+                    addUserBubble(val);
+                    setTimeout(() => onSubmitFn(val), 400);
+                }
+            };
+            btn.onclick = submit;
+            input.onkeydown = (e) => { if(e.key === 'Enter') submit(); };
+        }
+
+        // LÓGICA DE TRANSIÇÃO DOS MÓDULOS 1, 2, 3 E 4
+        function avancarChatModulosComuns() {
+            if (chatStep === 0) {
+                addBotBubble("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
+                setTimeout(() => {
+                    addBotBubble("Seu protocolo de atendimento é AMP20252325306");
+                    setTimeout(() => {
+                        addBotBubble("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
+                        
+                        chatStep = 1;
+                        if (moduloAtual === 4) {
+                            addActionButton("4 - Comercial", () => avancarChatModulosComuns());
+                        } else {
+                            addActionButton("5 - Suporte e Serviços", () => avancarChatModulosComuns());
+                        }
+                    }, 400);
+                }, 400);
+            } else if (chatStep === 1) {
+                if (moduloAtual === 4) {
+                    addBotBubble("Bem vindo ao Comercial!\nSelecione o serviço necessário:\n1 - BackOffice\n2 - Analista\n3 - Erro de Seleção");
+                    chatStep = 2;
+                    addActionButton("2 - Analista", () => avancarChatModulosComuns());
+                } else {
+                    addBotBubble("Bem Vindo ao Suporte e Serviços");
+                    setTimeout(() => {
+                        addBotBubble("Escolha o serviço necessario:\n1 - Agendamento\n2 - TAC\n3 - Erro de seleção\n4 - Suporte Inmap\n5 - STFC");
+                        chatStep = 2;
+                        if (moduloAtual === 1) addActionButton("1 - Agendamento", () => avancarChatModulosComuns());
+                        if (moduloAtual === 2) addActionButton("2 - TAC", () => avancarChatModulosComuns());
+                        if (moduloAtual === 3) addActionButton("4 - Suporte Inmap", () => avancarChatModulosComuns());
+                    }, 400);
+                }
+            } else if (chatStep === 2) {
+                if (moduloAtual === 1) {
+                    addBotBubble("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\nExemplos: Liberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
+                    addInputField("Ex: Liberação de Onu...", (val) => concluirTarefaComum());
+                } else if (moduloAtual === 2) {
+                    addBotBubble("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !");
+                    addInputField("Descreva a solicitação aqui...", (val) => concluirTarefaComum());
+                } else if (moduloAtual === 3) {
+                    addBotBubble("Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!\nColoque exemplos como, Aplicativo Offline, Erro ao colocar as credenciais de acesso.");
+                    addInputField("Ex: Aplicativo Offline...", (val) => concluirTarefaComum());
+                } else if (moduloAtual === 4) {
+                    addBotBubble("Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:\n1 - Edilaine\n2 - Marinalda\n3 - Vitor\n4 - Milena\n5 - Felipe");
+                    chatStep = 3;
+                    addActionButton("1 - Edilaine", () => avancarChatModulosComuns());
+                }
+            } else if (chatStep === 3 && moduloAtual === 4) {
+                addBotBubble("Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano");
+                addInputField("Ex: Upgrade de plano...", (val) => concluirTarefaComum());
+            }
+        }
+
+        function concluirTarefaComum() {
+            addBotBubble("✓ Tarefa concluída com sucesso!");
+            marcarModuloConcluido(moduloAtual);
+            
+            const proximo = moduloAtual + 1;
+            addActionButton(`Ir para Módulo ${proximo}`, () => carregarModulo(proximo));
+        }
+
+        // LÓGICA DO MÓDULO 5 (BOT DE PEDIDOS)
+        function iniciarModulo5() {
+            respostasPedido.colaborador = tecnicoNome + " Ampére"; // mock conforme exemplo do prompt
+            addBotBubble("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
+            addInputField("Nome e Cidade", (val) => {
+                respostasPedido.colaborador = val;
+                solicitarRegionalM5();
+            });
+        }
+
+        function solicitarRegionalM5() {
+            addBotBubble("Selecione a regional correspondente:");
+            const regionais = [
+                "Regional PG", "Regional FB", "Regional PB", 
+                "Regional Sao Lourenco", "Regional LJS", "Cidade CSC", 
+                "Regional Guaira", "Regional Ampere", "Regional Fazenda"
+            ];
+            
+            // Renderiza botões para cada regional nas ações
+            const actions = document.getElementById('sim-actions');
+            actions.innerHTML = "";
+            regionais.forEach(reg => {
+                const btn = document.createElement('button');
+                btn.className = "bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 text-white px-3 py-1.5 rounded-lg text-xs transition";
+                btn.innerText = reg;
+                btn.onclick = () => {
+                    actions.innerHTML = "";
+                    addUserBubble(reg);
+                    respostasPedido.regional = reg;
+                    setTimeout(() => perguntarPedidoM5(), 400);
+                };
+                actions.appendChild(btn);
+            });
+        }
+
+        function perguntarPedidoM5() {
+            addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido?`);
+            addInputField("O que corresponde ao pedido", (val) => {
+                respostasPedido.item = val;
+                addBotBubble("Qual e a quantidade?");
+                addInputField("O que corresponde à quantidade", (qtd) => {
+                    respostasPedido.qtd = qtd;
+                    addBotBubble("Qual e o motivo do pedido?");
+                    addInputField("O que corresponde ao motivo", (motivo) => {
+                        respostasPedido.motivo = motivo;
+                        exibirConfirmacaoM5();
+                    });
+                });
+            });
+        }
+
+        function exibirConfirmacaoM5() {
+            addBotBubble(`Confirme os dados do pedido:\n\nColaborador: ${respostasPedido.colaborador}\nRegional: ${respostasPedido.regional}\nPedido: ${respostasPedido.item}\nQuantidade: ${respostasPedido.qtd}\nMotivo: ${respostasPedido.motivo}\n\nConfirme os dados acima:`);
+            
+            const actions = document.getElementById('sim-actions');
+            actions.innerHTML = "";
+            
+            // Botão Sim
+            const btnSim = document.createElement('button');
+            btnSim.className = "bg-green-600 hover:bg-green-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition";
+            btnSim.innerText = "Sim";
+            btnSim.onclick = () => {
+                actions.innerHTML = "";
+                addUserBubble("Sim");
+                setTimeout(() => {
+                    addBotBubble("Pedido Registrado com Sucesso!");
+                    marcarModuloConcluido(5);
+                    addActionButton("Ir para Módulo 6", () => carregarModulo(6));
+                }, 400);
+            };
+
+            // Botão Não
+            const btnNao = document.createElement('button');
+            btnNao.className = "bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition";
+            btnNao.innerText = "Não";
+            btnNao.onclick = () => {
+                actions.innerHTML = "";
+                addUserBubble("Não");
+                setTimeout(() => {
+                    addBotBubble("Pedido cancelado. Vamos reiniciar o fluxo.");
+                    setTimeout(() => iniciarModulo5(), 600);
+                }, 400);
+            };
+
+            actions.appendChild(btnSim);
+            actions.appendChild(btnNao);
+        }
+
+        // LÓGICA DO MÓDULO 7 (AVALIAÇÃO FINAL)
+        let questaoAtual = 0;
+        let acertos = 0;
+        const bancoQuestoes = [
+            {
+                q: "Qual setor deve ser acionado inicialmente quando o técnico necessitar de suporte para liberação de equipamentos?",
+                o: ["NOC", "TAC", "Agendamento", "Comercial"],
+                correct: 1
+            },
+            {
+                q: "Se você precisa verificar informações relacionadas a planos e contratos dos clientes, qual setor aciona?",
+                o: ["Inmap", "TAC", "Comercial", "Suprimentos"],
+                correct: 2
+            },
+            {
+                q: "Qual é a regra correta para o acionamento do setor NOC?",
+                o: ["Deve ser acionado via ligação direta.", "Pode ser acionado a qualquer momento pelo app.", "Deve ser acionado inicialmente via TAC, que fará o direcionamento.", "Não atende chamados de técnicos de campo."],
+                correct: 2
+            },
+            {
+                q: "O que o setor de Agendamento é responsável por gerenciar diretamente?",
+                o: ["Configuração de VLANs e ONU.", "Direcionar ordens de serviço e contato com clientes.", "Problemas e bugs no aplicativo.", "Suporte Avançado."],
+                correct: 1
+            },
+            {
+                q: "É possível editar ou excluir mensagens enviadas nas plataformas internas da Ampernet?",
+                o: ["Sim, em até 5 minutos.", "Não, todas as interações ficam registradas permanentemente no banco de dados.", "Sim, solicitando diretamente ao supervisor.", "Apenas áudios podem ser apagados."],
+                correct: 1
+            }
+        ];
+
+        function iniciarAvaliacao() {
+            questaoAtual = 0;
+            acertos = 0;
+            addBotBubble("Bem-vindo à Avaliação Final!\nVocê precisa responder a 5 perguntas e acertar pelo menos 4 para obter o certificado.");
+            setTimeout(() => renderizarQuestao(), 500);
+        }
+
+        function renderizarQuestao() {
+            const content = document.getElementById('sim-content');
+            const actions = document.getElementById('sim-actions');
+            actions.innerHTML = "";
+
+            if(questaoAtual < bancoQuestoes.length) {
+                const dados = bancoQuestoes[questaoAtual];
+                addBotBubble(`PERGUNTA ${questaoAtual + 1}:\n${dados.q}`);
+                
+                dados.o.forEach((opt, idx) => {
+                    const btn = document.createElement('button');
+                    btn.className = "bg-neutral-900 hover:bg-neutral-800 border border-neutral-800 text-left text-xs p-3 rounded-xl w-full text-slate-200 transition text-left block";
+                    btn.innerText = `${idx + 1} - ${opt}`;
+                    btn.onclick = () => {
+                        actions.innerHTML = "";
+                        addUserBubble(opt);
+                        if(idx === dados.correct) acertos++;
+                        questaoAtual++;
+                        setTimeout(() => renderizarQuestao(), 500);
+                    };
+                    actions.appendChild(btn);
+                });
+            } else {
+                exibirResultadoFinal();
+            }
+        }
+
+        function exibirResultadoFinal() {
+            addBotBubble(`Avaliação Concluída!\n\nVocê acertou ${acertos} de 5 questões.`);
+            if (acertos >= 4) {
+                addBotBubble("🎉 Parabéns! Você atingiu a média exigida e foi aprovado.");
+                marcarModuloConcluido(7);
+                
+                // Exibir botão de certificado
+                const actions = document.getElementById('sim-actions');
+                const btnCert = document.createElement('button');
+                btnCert.className = "bg-green-600 hover:bg-green-500 text-white font-bold px-5 py-2.5 rounded-xl text-xs transition";
+                btnCert.innerHTML = "<i class='fas fa-award mr-1'></i> Emitir Certificado";
+                btnCert.onclick = () => {
+                    document.getElementById('cert-name').innerText = tecnicoNome;
+                    document.getElementById('cert-date').innerText = new Date().toLocaleDateString('pt-BR');
+                    document.getElementById('certificate-modal').classList.remove('hidden');
+                };
+                actions.appendChild(btnCert);
+            } else {
+                addBotBubble("❌ Você não obteve a pontuação mínima de 4 acertos. Estude as diretrizes e tente novamente.");
+                const actions = document.getElementById('sim-actions');
+                const btnRefazer = document.createElement('button');
+                btnRefazer.className = "bg-red-600 hover:bg-red-500 text-white font-bold px-4 py-2 rounded-xl text-xs transition";
+                btnRefazer.innerText = "Refazer Avaliação";
+                btnRefazer.onclick = () => iniciarAvaliacao();
+                actions.appendChild(btnRefazer);
+            }
+        }
     </script>
 
 </body>
