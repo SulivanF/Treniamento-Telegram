@@ -7,8 +7,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .chat-bubble { animation: fadeIn 0.2s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        .chat-bubble { animation: fadeIn 0.25s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
         .telegram-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px; }
     </style>
 </head>
@@ -25,7 +25,7 @@
             </div>
             <div class="space-y-2">
                 <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
-                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome completo.</p>
+                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome completo (mínimo de 2 nomes).</p>
             </div>
             <button onclick="validaLogin()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition">Acessar Plataforma</button>
         </div>
@@ -105,27 +105,27 @@
                         <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
                             <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
                             
-                            <div id="chat-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start relative chat-bubble">
+                            <div id="chat-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p class="font-bold text-sky-400 mb-1">Ampernet Interno</p>
                                 <p>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.</p>
                                 <span class="text-[9px] text-neutral-400 block text-right mt-1">15:00</span>
                             </div>
-                            <div id="chat-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start relative chat-bubble">
+                            <div id="chat-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Seu protocolo de atendimento é AMP20252325306</p>
                                 <span class="text-[9px] text-neutral-400 block text-right mt-1">15:00</span>
                             </div>
-                            <div id="chat-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start relative chat-bubble">
-                                <p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços<br>[...]</p>
+                            <div id="chat-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
+                                <p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços</p>
                                 <span class="text-[9px] text-neutral-400 block text-right mt-1">15:01</span>
                                 <button onclick="advanceModule('m1', 2)" id="btn-m1-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
                             </div>
-                            <div id="chat-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start relative chat-bubble">
+                            <div id="chat-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p class="font-bold text-sky-400 mb-1">Ampernet Interno</p>
-                                <p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>3 - Erro de seleção<br>4 - Suporte Inmap<br>5 - STFC</p>
+                                <p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>4 - Suporte Inmap</p>
                                 <span class="text-[9px] text-neutral-400 block text-right mt-1">15:01</span>
                                 <button onclick="advanceModule('m1', 3)" id="btn-m1-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Agendamento</button>
                             </div>
-                            <div id="chat-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start relative chat-bubble">
+                            <div id="chat-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?<br>Exemplos: Cliente ausente, Não Localizando Endereço...</p>
                                 <span class="text-[9px] text-neutral-400 block text-right mt-1">15:02</span>
                                 <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
@@ -144,7 +144,7 @@
                     <h3 class="text-base font-bold text-white">Suporte & TAC</h3>
                     
                     <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-900">
                             <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
                             <div>
                                 <p class="text-xs font-bold text-white leading-tight">Ampernet Interno</p>
@@ -152,14 +152,14 @@
                             </div>
                         </div>
                         <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] py-2 rounded-lg text-white font-bold">/start</button>
+                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
                             <div id="chat-m2-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
-                                <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">5 - Suporte e Serviços</button>
+                                <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
                             </div>
                             <div id="chat-m2-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p>
-                                <button onclick="advanceModule('m2', 3)" id="btn-m2-opt2" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">2 - TAC</button>
+                                <button onclick="advanceModule('m2', 3)" id="btn-m2-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - TAC</button>
                             </div>
                             <div id="chat-m2-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><span class="text-red-400 font-bold">🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !</span><br>Liberação de Onu, Alteração de PPOE, Solicitação de VLAN...</p>
@@ -179,7 +179,7 @@
                     <h3 class="text-base font-bold text-white">Suporte & Inmap</h3>
                     
                     <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2">
+                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-900">
                             <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
                             <div>
                                 <p class="text-xs font-bold text-white leading-tight">Ampernet Interno</p>
@@ -187,14 +187,14 @@
                             </div>
                         </div>
                         <div class="telegram-bg p-3 h-64 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] py-2 rounded-lg text-white font-bold">/start</button>
+                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
                             <div id="chat-m3-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
-                                <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">5 - Suporte e Serviços</button>
+                                <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
                             </div>
                             <div id="chat-m3-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p>
-                                <button onclick="advanceModule('m3', 3)" id="btn-m3-opt4" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">4 - Suporte Inmap</button>
+                                <button onclick="advanceModule('m3', 3)" id="btn-m3-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Suporte Inmap</button>
                             </div>
                             <div id="chat-m3-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                                 <p>Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!<br>Exemplos: Aplicativo Offline, Erro ao colocar as credenciais de acesso.</p>
@@ -215,7 +215,7 @@
                 <span id="status-m4" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
             </div>
             <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl max-w-2xl mx-auto">
-                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2">
+                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2 border-b border-neutral-900">
                     <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
                     <div>
                         <p class="text-xs font-bold text-white">Ampernet Interno</p>
@@ -223,18 +223,18 @@
                     </div>
                 </div>
                 <div class="telegram-bg p-4 h-72 overflow-y-auto space-y-3 text-xs flex flex-col">
-                    <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] py-2 rounded-lg text-white font-bold">/start</button>
+                    <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-center text-white font-bold transition">/start</button>
                     <div id="chat-m4-1" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                         <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p>
-                        <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">4 - Comercial</button>
+                        <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Comercial</button>
                     </div>
                     <div id="chat-m4-2" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista<br>3 - Erro de Seleção</p>
-                        <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">2 - Analista</button>
+                        <p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p>
+                        <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - Analista</button>
                     </div>
                     <div id="chat-m4-3" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                        <p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda<br>3 - Vitor<br>4 - Milena<br>5 - Felipe</p>
-                        <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="mt-2 w-full bg-[#2b5278] text-white py-1.5 rounded font-bold">1 - Edilaine</button>
+                        <p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p>
+                        <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Edilaine</button>
                     </div>
                     <div id="chat-m4-4" class="hidden max-w-[80%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
                         <p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p>
@@ -253,7 +253,7 @@
                 <span id="status-m5" class="text-xs text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
             </div>
             <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl max-w-2xl mx-auto">
-                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2">
+                <div class="bg-[#17212b] px-4 py-2.5 flex items-center gap-2 border-b border-neutral-900">
                     <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">BP</div>
                     <div>
                         <p class="text-xs font-bold text-white">Bot de Pedidos</p>
@@ -261,7 +261,7 @@
                     </div>
                 </div>
                 <div class="telegram-bg p-4 space-y-4 text-xs flex flex-col min-h-[300px]">
-                    <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] py-2 rounded-lg text-white font-bold">Iniciar</button>
+                    <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">Iniciar</button>
                     
                     <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
                         <p>Bem-vindo ao Bot de Pedidos!</p>
@@ -276,12 +276,7 @@
                             <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional PG</button>
                             <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional FB</button>
                             <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional PB</button>
-                            <button onclick="selectRegional('Regional Sao Lourenco')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional Sao Lourenco</button>
-                            <button onclick="selectRegional('Regional LJS')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional LJS</button>
-                            <button onclick="selectRegional('Cidade CSC')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Cidade CSC</button>
-                            <button onclick="selectRegional('Regional Guaira')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional Guaira</button>
                             <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional Ampere</button>
-                            <button onclick="selectRegional('Regional Fazenda')" class="bg-[#2b5278] p-2 rounded text-[11px] font-semibold text-white">Regional Fazenda</button>
                         </div>
                     </div>
 
@@ -437,8 +432,10 @@
             if (card) {
                 card.classList.remove('opacity-40', 'pointer-events-none');
                 const status = document.getElementById(`status-${proximo}`);
-                if (status) status.innerHTML = `<i class="fas fa-play-circle"></i> Disponível`;
-                if (status) status.className = "text-xs text-amber-500 font-bold";
+                if (status) {
+                    status.innerHTML = `<i class="fas fa-play-circle"></i> Disponível`;
+                    status.className = "text-xs text-amber-500 font-bold";
+                }
             }
         }
 
@@ -530,11 +527,11 @@
         }
 
         function generateSummary() {
-            document.getElementById('sum-colab').innerText = document.getElementById('order-colab').value || "Sulivan Ampére";
-            document.getElementById('sum-reg').innerText = document.getElementById('selected-reg-txt').innerText || "Regional Ampere";
-            document.getElementById('sum-item').innerText = document.getElementById('order-item').value || "teste";
-            document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "01";
-            document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "teste";
+            document.getElementById('sum-colab').innerText = document.getElementById('order-colab').value || "Técnico";
+            document.getElementById('sum-reg').innerText = document.getElementById('selected-reg-txt').innerText;
+            document.getElementById('sum-item').innerText = document.getElementById('order-item').value || "Material";
+            document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "1";
+            document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "Uso em OS";
             
             document.getElementById('order-step-3').classList.add('hidden');
             document.getElementById('order-step-4').classList.remove('hidden');
