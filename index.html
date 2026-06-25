@@ -84,9 +84,9 @@
             <aside class="lg:col-span-4 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 space-y-3 shadow-xl">
                 <h2 class="text-xs font-bold uppercase tracking-wider text-neutral-400 px-2 mb-2"><i class="fas fa-list mr-1"></i> Módulos do Treinamento</h2>
                 <nav class="space-y-2 flex flex-col">
-                    <button id="menu-m1" onclick="switchTab('m1')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/60 hover:bg-neutral-800/50 transition flex flex-col gap-1 border-l-4 border-l-amber-500">
+                    <button id="menu-m1" onclick="switchTab('m1')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-800/50 transition flex flex-col gap-1 border-l-4 border-l-amber-500">
                         <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-white">Módulo 1: Suporte & Agendamento</span>
+                            <span class="text-xs font-bold text-white">Módulo 1: Agendamento</span>
                             <span id="status-m1" class="text-[10px] text-amber-500 font-bold"><i class="fas fa-play-circle"></i> Atual</span>
                         </div>
                         <p class="text-[11px] text-neutral-400 leading-tight">Interação inicial com o bot escolhendo suporte avançado para serviços de agendamento.</p>
@@ -94,7 +94,7 @@
 
                     <button id="menu-m2" onclick="switchTab('m2')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
                         <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 2: Suporte & TAC</span>
+                            <span class="text-xs font-bold text-neutral-300">Módulo 2: TAC</span>
                             <span id="status-m2" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                         </div>
                         <p class="text-[11px] text-neutral-500 leading-tight">Abertura de chamados internos para o TAC contendo avisos e descrições obrigatórias.</p>
@@ -102,7 +102,7 @@
 
                     <button id="menu-m3" onclick="switchTab('m3')" class="w-full text-left p-3 rounded-xl border border-neutral-800 bg-neutral-950/30 opacity-40 pointer-events-none transition flex flex-col gap-1 border-l-4 border-l-neutral-700">
                         <div class="flex justify-between items-center w-full">
-                            <span class="text-xs font-bold text-neutral-300">Módulo 3: Suporte & Inmap</span>
+                            <span class="text-xs font-bold text-neutral-300">Módulo 3: Suporte INMAP</span>
                             <span id="status-m3" class="text-[10px] text-neutral-500 font-bold"><i class="fas fa-lock"></i> Bloqueado</span>
                         </div>
                         <p class="text-[11px] text-neutral-500 leading-tight">Entendimento e tratativas relacionadas ao aplicativo e erros comuns de acesso.</p>
@@ -134,174 +134,101 @@
                 </nav>
             </aside>
 
-            <main class="lg:col-span-8 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 shadow-xl min-h-[460px] flex flex-col justify-between">
+            <main class="lg:col-span-8 bg-neutral-900 rounded-2xl border border-neutral-800 p-4 shadow-xl flex flex-col justify-between">
                 
-                <div id="content-m1" class="tab-content space-y-4">
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
-                        </div>
-                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
-                            <div id="chat-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p>
-                                <p>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.</p>
-                            </div>
-                            <div id="chat-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu protocolo de atendimento é AMP20252325306</p></div>
-                            <div id="chat-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços</p>
-                                <button onclick="advanceModule('m1', 2)" id="btn-m1-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
-                            </div>
-                            <div id="chat-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p>
-                                <p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>4 - Suporte Inmap</p>
-                                <button onclick="advanceModule('m1', 3)" id="btn-m1-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Agendamento</button>
-                            </div>
-                            <div id="chat-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?<br>Exemplos: Cliente ausente, Não Localizando Endereço...</p>
-                                <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
-                            </div>
+                <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl flex flex-col">
+                    <div class="bg-[#17212b] px-4 py-3 flex items-center gap-3 border-b border-neutral-950">
+                        <div id="chat-avatar" class="w-9 h-9 rounded-full bg-red-600 text-white font-bold text-sm flex items-center justify-center">AI</div>
+                        <div>
+                            <p id="chat-title" class="text-xs font-bold text-white">Ampernet Interno</p>
+                            <p class="text-[10px] text-sky-400">bot</p>
                         </div>
                     </div>
-                </div>
+                    
+                    <div class="telegram-bg p-4 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
+                        <div id="msg-m1-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p><p>Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.</p></div>
+                        <div id="msg-m1-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu protocolo de atendimento é AMP20252325306</p></div>
+                        <div id="msg-m1-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Selecione, por favor, o setor responsável:<br>1 - Financeiro<br>2 - Suprimentos<br>3 - Administrativo<br>4 - Comercial<br>5 - Suporte e Serviços</p></div>
+                        <div id="msg-m1-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p class="font-bold text-sky-400 mb-0.5">Ampernet Interno</p><p>Bem Vindo ao Suporte e Serviços<br><br>Escolha o serviço necessario:<br>1 - Agendamento<br>2 - TAC<br>4 - Suporte Inmap</p></div>
+                        <div id="msg-m1-5" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?<br>Exemplos: Cliente ausente, Não Localizando Endereço...</p></div>
+                        <div id="msg-m1-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m1-text-desc" placeholder="Ex: Cliente ausente" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
+                        <div id="msg-m1-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
 
-                <div id="content-m2" class="tab-content hidden space-y-4">
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
-                        </div>
-                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
-                            <div id="chat-m2-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
-                                <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
-                            </div>
-                            <div id="chat-m2-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p>
-                                <button onclick="advanceModule('m2', 3)" id="btn-m2-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - TAC</button>
-                            </div>
-                            <div id="chat-m2-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><span class="text-red-400 font-bold">🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !</span><br>Liberação de Onu, Alteração de PPOE, Solicitação de VLAN...</p>
-                                <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
-                            </div>
-                        </div>
+                        <div id="msg-m2-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p></div>
+                        <div id="msg-m2-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p></div>
+                        <div id="msg-m2-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:<br><span class="text-red-400 font-bold">🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !</span><br>Liberação de Onu, Alteração de PPOE, Solicitação de VLAN...</p></div>
+                        <div id="msg-m2-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m2-text-desc" placeholder="Ex: Liberação de Onu" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
+                        <div id="msg-m2-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
+
+                        <div id="msg-m3-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p></div>
+                        <div id="msg-m3-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p></div>
+                        <div id="msg-m3-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!<br>Exemplos: Aplicativo Offline, Erro ao colocar as credenciais de acesso.</p></div>
+                        <div id="msg-m3-input" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble w-full"><p class="text-[11px] text-neutral-400">Descreva sua solicitação:</p><input type="text" id="m3-text-desc" placeholder="Ex: Aplicativo Offline" class="bg-neutral-950 border border-neutral-800 rounded p-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
+                        <div id="msg-m3-end" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
+
+                        <div id="msg-m4-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p></div>
+                        <div id="msg-m4-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p></div>
+                        <div id="msg-m4-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p></div>
+                        <div id="msg-m4-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble"><p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p><div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div></div>
+
+                        <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p>Bem-vindo ao Bot de Pedidos!<br>Qual e o seu nome e cidade (Colaborador)?</p><input type="text" id="order-colab" placeholder="Ex: Sulivan Ampére - Ampére" class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-xs text-white w-full focus:outline-none focus:border-sky-500"></div>
+                        <div id="order-step-2" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p>Selecione a regional correspondente de destino abaixo nas opções de comando.</p></div>
+                        <div id="order-step-3" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p class="text-sky-400 font-bold">Regional selecionada: <span id="selected-reg-txt" class="text-white"></span></p><div class="space-y-1"><input type="text" id="order-item" placeholder="Qual e o pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"><input type="text" id="order-qty" placeholder="Qual e a quantidade?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"><input type="text" id="order-reason" placeholder="Qual e o motivo do pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white"></div></div>
+                        <div id="order-step-4" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble"><p class="font-bold text-sky-400 text-[11px]">Confirme os dados do pedido:</p><p class="font-mono text-[10px] text-neutral-300">Colaborador: <span id="sum-colab"></span><br>Regional: <span id="sum-reg"></span><br>Pedido: <span id="sum-item"></span><br>Quantidade: <span id="sum-qty"></span><br>Motivo: <span id="sum-reason"></span></p><p class="font-bold">Confirme os dados acima nas opções abaixo.</p></div>
+                        <div id="order-success" class="hidden max-w-[85%] bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 p-3 rounded-xl self-start font-bold text-xs chat-bubble">Pedido Registrado com Sucesso!</div>
+
+                        <div id="msg-m6-layout" class="hidden bg-neutral-950/80 p-4 rounded-xl border border-neutral-800 space-y-3 leading-relaxed chat-bubble"><p class="font-bold text-white text-sm">Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p><ul class="list-disc pl-5 space-y-1 text-neutral-400"><li>Acionar o BOT</li><li>Selecionar o número correspondente ao setor desejado</li><li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li></ul><p class="text-neutral-400"><strong class="text-red-500"><i class="fas fa-database"></i> Registro Inalterável:</strong> Todas as interações ficam registradas no banco de dados. Mantenha uma comunicação clara, objetiva e profissional, evitando o uso de gírias.</p></div>
                     </div>
-                </div>
 
-                <div id="content-m3" class="tab-content hidden space-y-4">
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
+                    <div class="bg-[#17212b] p-3 border-t border-neutral-950 flex flex-col gap-2">
+                        
+                        <div id="actions-m1" class="tab-actions grid grid-cols-1 gap-2">
+                            <button onclick="advanceModule('m1', 1)" id="btn-m1-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
+                            <button onclick="advanceModule('m1', 2)" id="btn-m1-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
+                            <button onclick="advanceModule('m1', 3)" id="btn-m1-opt1" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">1 - Agendamento</button>
+                            <button onclick="submitDescription('m1', 'm2', 16)" id="btn-m1-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
                         </div>
-                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
-                            <div id="chat-m3-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306</p>
-                                <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">5 - Suporte e Serviços</button>
-                            </div>
-                            <div id="chat-m3-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Bem Vindo ao Suporte e Serviços. Escolha o serviço necessario:</p>
-                                <button onclick="advanceModule('m3', 3)" id="btn-m3-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Suporte Inmap</button>
-                            </div>
-                            <div id="chat-m3-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Seu atendimento inicia agora, para que seu atendimento seja mais rápido, por favor descreva a sua solicitação!<br>Exemplos: Aplicativo Offline, Erro ao colocar as credenciais de acesso.</p>
-                                <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div id="content-m4" class="tab-content hidden space-y-4">
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">AI</div>
-                            <div><p class="text-xs font-bold text-white">Ampernet Interno</p><p class="text-[10px] text-sky-400">bot</p></div>
+                        <div id="actions-m2" class="tab-actions hidden grid grid-cols-1 gap-2">
+                            <button onclick="advanceModule('m2', 1)" id="btn-m2-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
+                            <button onclick="advanceModule('m2', 2)" id="btn-m2-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
+                            <button onclick="advanceModule('m2', 3)" id="btn-m2-opt2" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">2 - TAC</button>
+                            <button onclick="submitDescription('m2', 'm3', 32)" id="btn-m2-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
                         </div>
-                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">/start</button>
-                            <div id="chat-m4-1" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Olá, Bem vindo à Ampernet Telecom. Protocolo: AMP20252325306. Selecione o setor:</p>
-                                <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">4 - Comercial</button>
+
+                        <div id="actions-m3" class="tab-actions hidden grid grid-cols-1 gap-2">
+                            <button onclick="advanceModule('m3', 1)" id="btn-m3-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
+                            <button onclick="advanceModule('m3', 2)" id="btn-m3-opt5" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">5 - Suporte e Serviços</button>
+                            <button onclick="advanceModule('m3', 3)" id="btn-m3-opt4" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">4 - Suporte INMAP</button>
+                            <button onclick="submitDescription('m3', 'm4', 48)" id="btn-m3-submit" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white py-2 rounded-lg font-bold text-xs transition">Enviar Descrição</button>
+                        </div>
+
+                        <div id="actions-m4" class="tab-actions hidden grid grid-cols-1 gap-2">
+                            <button onclick="advanceModule('m4', 1)" id="btn-m4-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar /start</button>
+                            <button onclick="advanceModule('m4', 2)" id="btn-m4-opt4" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">4 - Comercial</button>
+                            <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">2 - Analista</button>
+                            <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="hidden w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-2 rounded-lg font-bold text-xs transition">1 - Edilaine</button>
+                        </div>
+
+                        <div id="actions-m5" class="tab-actions hidden flex flex-col gap-2">
+                            <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Iniciar Conexão</button>
+                            <button onclick="saveOrderColab()" id="btn-m5-colab" class="hidden w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Enviar Identificação</button>
+                            <div id="btn-m5-regionals" class="hidden grid grid-cols-2 gap-1 font-sans">
+                                <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional PG</button>
+                                <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional FB</button>
+                                <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional PB</button>
+                                <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-2 rounded text-[11px] text-white font-bold">Regional Ampere</button>
                             </div>
-                            <div id="chat-m4-2" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Bem vindo ao Comercial!<br>Selecione o serviço necessário:<br>1 - BackOffice<br>2 - Analista</p>
-                                <button onclick="advanceModule('m4', 3)" id="btn-m4-opt2" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">2 - Analista</button>
-                            </div>
-                            <div id="chat-m4-3" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:<br>1 - Edilaine<br>2 - Marinalda</p>
-                                <button onclick="advanceModule('m4', 4)" id="btn-m4-opt1" class="mt-2 w-full bg-[#2b5278] hover:bg-[#34618e] text-white py-1.5 rounded font-bold transition">1 - Edilaine</button>
-                            </div>
-                            <div id="chat-m4-4" class="hidden max-w-[85%] bg-[#182533] p-2.5 rounded-xl text-neutral-200 self-start chat-bubble">
-                                <p>Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano</p>
-                                <div class="mt-2 bg-emerald-500/20 text-emerald-400 text-center py-1 rounded font-bold text-[10px]">MÓDULO CONCLUÍDO</div>
+                            <button onclick="generateSummary()" id="btn-m5-summary" class="hidden w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold text-xs transition">Confirmar Especificações</button>
+                            <div id="btn-m5-confirm" class="hidden grid grid-cols-2 gap-2">
+                                <button onclick="confirmOrder(true)" class="bg-emerald-600 py-2 rounded-lg font-bold text-white text-xs">Sim</button>
+                                <button onclick="confirmOrder(false)" class="bg-neutral-700 py-2 rounded-lg font-bold text-neutral-300 text Red-xs">Não</button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div id="content-m5" class="tab-content hidden space-y-4">
-                    <div class="rounded-xl overflow-hidden border border-neutral-800 shadow-xl">
-                        <div class="bg-[#17212b] px-3 py-2 flex items-center gap-2 border-b border-neutral-950">
-                            <div class="w-8 h-8 rounded-full bg-red-600 text-white font-bold text-xs flex items-center justify-center">BP</div>
-                            <div><p class="text-xs font-bold text-white">Bot de Pedidos</p><p class="text-[10px] text-sky-400">bot</p></div>
+                        <div id="actions-m6" class="tab-actions hidden grid grid-cols-1 gap-2">
+                            <button onclick="completeM6()" id="btn-m6-read" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition text-xs uppercase tracking-wider">Li e compreendi o Fluxo Padrão</button>
                         </div>
-                        <div class="telegram-bg p-3 h-80 overflow-y-auto space-y-3 text-xs flex flex-col">
-                            <button onclick="startOrderBot()" id="btn-m5-start" class="w-full bg-[#2481cc] hover:bg-[#288ece] py-2 rounded-lg text-white font-bold transition">Iniciar</button>
-                            
-                            <div id="order-step-1" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                                <p>Bem-vindo ao Bot de Pedidos!<br>Qual e o seu nome e cidade (Colaborador)?</p>
-                                <input type="text" id="order-colab" placeholder="Ex: Sulivan Ampére - Ampére" class="bg-neutral-950 border border-neutral-800 rounded-lg p-2 text-xs text-white w-full focus:outline-none focus:border-sky-500">
-                                <button onclick="saveOrderColab()" class="bg-[#2481cc] text-white px-3 py-1 rounded font-bold text-[10px]">Enviar</button>
-                            </div>
-
-                            <div id="order-step-2" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                                <p>Selecione a regional correspondente:</p>
-                                <div class="grid grid-cols-2 gap-1.5 font-sans">
-                                    <button onclick="selectRegional('Regional PG')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional PG</button>
-                                    <button onclick="selectRegional('Regional FB')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional FB</button>
-                                    <button onclick="selectRegional('Regional PB')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional PB</button>
-                                    <button onclick="selectRegional('Regional Ampere')" class="bg-[#2b5278] p-1.5 rounded text-[10px] text-white font-bold">Regional Ampere</button>
-                                </div>
-                            </div>
-
-                            <div id="order-step-3" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                                <p class="text-sky-400 font-bold">Regional selecionada: <span id="selected-reg-txt" class="text-white"></span></p>
-                                <div class="space-y-1">
-                                    <input type="text" id="order-item" placeholder="Qual e o pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
-                                    <input type="text" id="order-qty" placeholder="Qual e a quantidade?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
-                                    <input type="text" id="order-reason" placeholder="Qual e o motivo do pedido?" class="w-full bg-neutral-950 border border-neutral-800 rounded p-1.5 text-white">
-                                </div>
-                                <button onclick="generateSummary()" class="bg-[#2481cc] text-white px-3 py-1 rounded font-bold text-[10px]">Enviar Dados</button>
-                            </div>
-
-                            <div id="order-step-4" class="hidden max-w-[85%] bg-[#182533] p-3 rounded-xl text-neutral-200 self-start space-y-2 chat-bubble">
-                                <p class="font-bold text-sky-400 text-[11px]">Confirme os dados do pedido:</p>
-                                <p class="font-mono text-[10px] text-neutral-300">Colaborador: <span id="sum-colab"></span><br>Regional: <span id="sum-reg"></span><br>Pedido: <span id="sum-item"></span><br>Quantidade: <span id="sum-qty"></span><br>Motivo: <span id="sum-reason"></span></p>
-                                <p class="font-bold">Confirme os dados acima:</p>
-                                <div class="flex gap-2">
-                                    <button onclick="confirmOrder(true)" class="bg-emerald-600 px-3 py-1 rounded font-bold text-white text-[10px]">Sim</button>
-                                    <button onclick="confirmOrder(false)" class="bg-neutral-700 px-3 py-1 rounded font-bold text-neutral-300 text-[10px]">Não</button>
-                                </div>
-                            </div>
-
-                            <div id="order-success" class="hidden max-w-[85%] bg-emerald-950/50 border border-emerald-500/30 text-emerald-400 p-3 rounded-xl self-start font-bold text-xs chat-bubble">Pedido Registrado com Sucesso!</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div id="content-m6" class="tab-content hidden space-y-4">
-                    <div class="bg-neutral-950 p-5 rounded-xl border border-neutral-800 space-y-3 text-xs leading-relaxed">
-                        <p class="font-bold text-white text-sm">Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
-                        <ul class="list-disc pl-5 space-y-1 text-neutral-400">
-                            <li>Acionar o BOT</li>
-                            <li>Selecionar o número correspondente ao setor desejado</li>
-                            <li>Atentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.</li>
-                        </ul>
-                        <p class="text-neutral-400"><strong class="text-red-500"><i class="fas fa-database"></i> Registro Inalterável:</strong> Todas as interações ficam registradas no banco de dados. Mantenha uma comunicação clara, objetiva e profissional, evitando o uso de gírias.</p>
-                        <button onclick="completeM6()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-2 rounded-lg transition uppercase tracking-wider text-[10px]">Li e compreendi o Fluxo Padrão</button>
                     </div>
                 </div>
 
@@ -379,15 +306,85 @@
         }
 
         function switchTab(modId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`content-${modId}`).classList.remove('hidden');
+            document.querySelectorAll('.telegram-bg > div').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-actions').forEach(el => el.classList.add('hidden'));
             
-            document.querySelectorAll('nav button').forEach(btn => {
-                btn.classList.remove('bg-neutral-800/50');
-                btn.classList.add('bg-neutral-950/60');
-            });
-            document.getElementById(`menu-${modId}`).classList.add('bg-neutral-800/50');
+            document.getElementById(`actions-${modId}`).classList.remove('hidden');
             activeTab = modId;
+
+            const title = document.getElementById('chat-title');
+            const avatar = document.getElementById('chat-avatar');
+            if(modId === 'm5') {
+                title.innerText = 'Bot de Pedidos';
+                avatar.innerText = 'BP';
+            } else if (modId === 'm3') {
+                title.innerText = 'Suporte INMAP';
+                avatar.innerText = 'SI';
+            } else if (modId === 'm2') {
+                title.innerText = 'TAC';
+                avatar.innerText = 'TC';
+            } else if (modId === 'm1') {
+                title.innerText = 'Agendamento';
+                avatar.innerText = 'AG';
+            } else {
+                title.innerText = 'Ampernet Interno';
+                avatar.innerText = 'AI';
+            }
+
+            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('bg-neutral-800/50'));
+            document.getElementById(`menu-${modId}`).classList.add('bg-neutral-800/50');
+
+            restoreModuleMessages(modId);
+        }
+
+        function restoreModuleMessages(modId) {
+            if(modId === 'm1') {
+                if(document.getElementById('btn-m1-start').classList.contains('hidden')) {
+                    document.getElementById('msg-m1-1').classList.remove('hidden');
+                    document.getElementById('msg-m1-2').classList.remove('hidden');
+                    document.getElementById('msg-m1-3').classList.remove('hidden');
+                }
+                if(document.getElementById('btn-m1-opt5').classList.contains('hidden') && document.getElementById('btn-m1-start').classList.contains('hidden')) {
+                    document.getElementById('msg-m1-4').classList.remove('hidden');
+                }
+                if(document.getElementById('btn-m1-opt1').classList.contains('hidden') && document.getElementById('btn-m1-opt5').classList.contains('hidden')) {
+                    document.getElementById('msg-m1-5').classList.remove('hidden');
+                    document.getElementById('msg-m1-input').classList.remove('hidden');
+                }
+                if(document.getElementById('btn-m1-submit').classList.contains('hidden') && document.getElementById('btn-m1-opt1').classList.contains('hidden') && document.getElementById('btn-m1-start').classList.contains('hidden')) {
+                    document.getElementById('msg-m1-end').classList.remove('hidden');
+                }
+            } else if (modId === 'm2') {
+                if(document.getElementById('btn-m2-start').classList.contains('hidden')) document.getElementById('msg-m2-1').classList.remove('hidden');
+                if(document.getElementById('btn-m2-opt5').classList.contains('hidden') && document.getElementById('btn-m2-start').classList.contains('hidden')) document.getElementById('msg-m2-2').classList.remove('hidden');
+                if(document.getElementById('btn-m2-opt2').classList.contains('hidden')) {
+                    document.getElementById('msg-m2-3').classList.remove('hidden');
+                    document.getElementById('msg-m2-input').classList.remove('hidden');
+                }
+                if(document.getElementById('btn-m2-submit').classList.contains('hidden') && document.getElementById('btn-m2-opt2').classList.contains('hidden')) {
+                    document.getElementById('msg-m2-end').classList.remove('hidden');
+                }
+            } else if (modId === 'm3') {
+                if(document.getElementById('btn-m3-start').classList.contains('hidden')) document.getElementById('msg-m3-1').classList.remove('hidden');
+                if(document.getElementById('btn-m3-opt5').classList.contains('hidden')) document.getElementById('msg-m3-2').classList.remove('hidden');
+                if(document.getElementById('btn-m3-opt4').classList.contains('hidden')) {
+                    document.getElementById('msg-m3-3').classList.remove('hidden');
+                    document.getElementById('msg-m3-input').classList.remove('hidden');
+                }
+                if(document.getElementById('btn-m3-submit').classList.contains('hidden') && document.getElementById('btn-m3-opt4').classList.contains('hidden')) {
+                    document.getElementById('msg-m3-end').classList.remove('hidden');
+                }
+            } else if (modId === 'm4') {
+                if(document.getElementById('btn-m4-start').classList.contains('hidden')) document.getElementById('msg-m4-1').classList.remove('hidden');
+                if(document.getElementById('btn-m4-opt4').classList.contains('hidden')) document.getElementById('msg-m4-2').classList.remove('hidden');
+                if(document.getElementById('btn-m4-opt2').classList.contains('hidden')) document.getElementById('msg-m4-3').classList.remove('hidden');
+                if(document.getElementById('btn-m4-opt1').classList.contains('hidden')) document.getElementById('msg-m4-4').classList.remove('hidden');
+            } else if (modId === 'm5') {
+                if(document.getElementById('btn-m5-start').classList.contains('hidden')) document.getElementById('order-step-1').classList.remove('hidden');
+                if(document.getElementById('btn-m5-colab').classList.contains('hidden') && document.getElementById('btn-m5-start').classList.contains('hidden')) document.getElementById('order-step-2').classList.remove('hidden');
+            } else if (modId === 'm6') {
+                document.getElementById('msg-m6-layout').classList.remove('hidden');
+            }
         }
 
         function updateProgress(porcentagem) {
@@ -424,58 +421,81 @@
             }
         }
 
+        function submitDescription(currentMod, nextMod, progress) {
+            const textVal = document.getElementById(`${currentMod}-text-desc`).value.trim();
+            if(textVal === "") {
+                alert("Por favor, preencha a descrição do problema antes de enviar!");
+                return;
+            }
+            document.getElementById(`btn-${currentMod}-submit`).classList.add('hidden');
+            document.getElementById(`msg-${currentMod}-end`).classList.remove('hidden');
+            markAsComplete(currentMod, nextMod, progress);
+        }
+
         function advanceModule(mod, step) {
             if (mod === 'm1') {
                 if (step === 1) {
                     document.getElementById('btn-m1-start').classList.add('hidden');
-                    document.getElementById('chat-m1-1').classList.remove('hidden');
-                    document.getElementById('chat-m1-2').classList.remove('hidden');
-                    document.getElementById('chat-m1-3').classList.remove('hidden');
+                    document.getElementById('msg-m1-1').classList.remove('hidden');
+                    document.getElementById('msg-m1-2').classList.remove('hidden');
+                    document.getElementById('msg-m1-3').classList.remove('hidden');
+                    document.getElementById('btn-m1-opt5').classList.remove('hidden');
                 } else if (step === 2) {
                     document.getElementById('btn-m1-opt5').classList.add('hidden');
-                    document.getElementById('chat-m1-4').classList.remove('hidden');
+                    document.getElementById('msg-m1-4').classList.remove('hidden');
+                    document.getElementById('btn-m1-opt1').classList.remove('hidden');
                 } else if (step === 3) {
                     document.getElementById('btn-m1-opt1').classList.add('hidden');
-                    document.getElementById('chat-m1-5').classList.remove('hidden');
-                    markAsComplete('m1', 'm2', 16);
+                    document.getElementById('msg-m1-5').classList.remove('hidden');
+                    document.getElementById('msg-m1-input').classList.remove('hidden');
+                    document.getElementById('btn-m1-submit').classList.remove('hidden');
                 }
             } else if (mod === 'm2') {
                 if (step === 1) {
                     document.getElementById('btn-m2-start').classList.add('hidden');
-                    document.getElementById('chat-m2-1').classList.remove('hidden');
+                    document.getElementById('msg-m2-1').classList.remove('hidden');
+                    document.getElementById('btn-m2-opt5').classList.remove('hidden');
                 } else if (step === 2) {
                     document.getElementById('btn-m2-opt5').classList.add('hidden');
-                    document.getElementById('chat-m2-2').classList.remove('hidden');
+                    document.getElementById('msg-m2-2').classList.remove('hidden');
+                    document.getElementById('btn-m2-opt2').classList.remove('hidden');
                 } else if (step === 3) {
                     document.getElementById('btn-m2-opt2').classList.add('hidden');
-                    document.getElementById('chat-m2-3').classList.remove('hidden');
-                    markAsComplete('m2', 'm3', 32);
+                    document.getElementById('msg-m2-3').classList.remove('hidden');
+                    document.getElementById('msg-m2-input').classList.remove('hidden');
+                    document.getElementById('btn-m2-submit').classList.remove('hidden');
                 }
             } else if (mod === 'm3') {
                 if (step === 1) {
                     document.getElementById('btn-m3-start').classList.add('hidden');
-                    document.getElementById('chat-m3-1').classList.remove('hidden');
+                    document.getElementById('msg-m3-1').classList.remove('hidden');
+                    document.getElementById('btn-m3-opt5').classList.remove('hidden');
                 } else if (step === 2) {
                     document.getElementById('btn-m3-opt5').classList.add('hidden');
-                    document.getElementById('chat-m3-2').classList.remove('hidden');
+                    document.getElementById('msg-m3-2').classList.remove('hidden');
+                    document.getElementById('btn-m3-opt4').classList.remove('hidden');
                 } else if (step === 3) {
                     document.getElementById('btn-m3-opt4').classList.add('hidden');
-                    document.getElementById('chat-m3-3').classList.remove('hidden');
-                    markAsComplete('m3', 'm4', 48);
+                    document.getElementById('msg-m3-3').classList.remove('hidden');
+                    document.getElementById('msg-m3-input').classList.remove('hidden');
+                    document.getElementById('btn-m3-submit').classList.remove('hidden');
                 }
             } else if (mod === 'm4') {
                 if (step === 1) {
                     document.getElementById('btn-m4-start').classList.add('hidden');
-                    document.getElementById('chat-m4-1').classList.remove('hidden');
+                    document.getElementById('msg-m4-1').classList.remove('hidden');
+                    document.getElementById('btn-m4-opt4').classList.remove('hidden');
                 } else if (step === 2) {
                     document.getElementById('btn-m4-opt4').classList.add('hidden');
-                    document.getElementById('chat-m4-2').classList.remove('hidden');
+                    document.getElementById('msg-m4-2').classList.remove('hidden');
+                    document.getElementById('btn-m4-opt2').classList.remove('hidden');
                 } else if (step === 3) {
                     document.getElementById('btn-m4-opt2').classList.add('hidden');
-                    document.getElementById('chat-m4-3').classList.remove('hidden');
+                    document.getElementById('msg-m4-3').classList.remove('hidden');
+                    document.getElementById('btn-m4-opt1').classList.remove('hidden');
                 } else if (step === 4) {
                     document.getElementById('btn-m4-opt1').classList.add('hidden');
-                    document.getElementById('chat-m4-4').classList.remove('hidden');
+                    document.getElementById('msg-m4-4').classList.remove('hidden');
                     markAsComplete('m4', 'm5', 64);
                 }
             }
@@ -484,17 +504,23 @@
         function startOrderBot() {
             document.getElementById('btn-m5-start').classList.add('hidden');
             document.getElementById('order-step-1').classList.remove('hidden');
+            document.getElementById('btn-m5-colab').classList.remove('hidden');
         }
 
         function saveOrderColab() {
             const val = document.getElementById('order-colab').value.trim();
-            if(val !== "") document.getElementById('order-step-2').classList.remove('hidden');
+            if(val !== "") {
+                document.getElementById('btn-m5-colab').classList.add('hidden');
+                document.getElementById('order-step-2').classList.remove('hidden');
+                document.getElementById('btn-m5-regionals').classList.remove('hidden');
+            }
         }
 
         function selectRegional(reg) {
             document.getElementById('selected-reg-txt').innerText = reg;
-            document.getElementById('order-step-2').classList.add('hidden');
+            document.getElementById('btn-m5-regionals').classList.add('hidden');
             document.getElementById('order-step-3').classList.remove('hidden');
+            document.getElementById('btn-m5-summary').classList.remove('hidden');
         }
 
         function generateSummary() {
@@ -504,17 +530,22 @@
             document.getElementById('sum-qty').innerText = document.getElementById('order-qty').value || "01";
             document.getElementById('sum-reason').innerText = document.getElementById('order-reason').value || "teste";
             
-            document.getElementById('order-step-3').classList.add('hidden');
+            document.getElementById('btn-m5-summary').classList.add('hidden');
             document.getElementById('order-step-4').classList.remove('hidden');
+            document.getElementById('btn-m5-confirm').classList.remove('hidden');
         }
 
         function confirmOrder(isSim) {
-            document.getElementById('order-step-4').classList.add('hidden');
+            document.getElementById('btn-m5-confirm').classList.add('hidden');
             if(isSim) {
                 document.getElementById('order-success').classList.remove('hidden');
                 markAsComplete('m5', 'm6', 80);
             } else {
-                document.getElementById('order-step-1').classList.remove('hidden');
+                document.getElementById('order-step-1').classList.add('hidden');
+                document.getElementById('order-step-2').classList.add('hidden');
+                document.getElementById('order-step-3').classList.add('hidden');
+                document.getElementById('order-step-4').classList.add('hidden');
+                document.getElementById('btn-m5-start').classList.remove('hidden');
             }
         }
 
