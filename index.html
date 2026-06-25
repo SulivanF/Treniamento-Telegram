@@ -210,7 +210,7 @@
                 simContent.innerHTML = `
                     <div class="bg-neutral-900 p-5 rounded-xl border border-neutral-800 space-y-4 text-xs leading-relaxed max-w-xl mx-auto mt-4">
                         <h4 class="font-bold text-red-400 text-sm flex items-center gap-2"><i class="fas fa-file-alt"></i> Fluxo Padrão de Atendimento</h4>
-                        <p>Dessa forma, deve-se seguir o fluxo padrão de atendimento:</p>
+                        <p>Dessa forma, deve-se seguir the fluxo padrão de atendimento:</p>
                         <ul class="list-disc list-inside space-y-1 text-neutral-300 pl-2">
                             <li>Acionar o BOT</li>
                             <li>Selecionar o número correspondente ao setor desejado</li>
@@ -310,9 +310,9 @@
                         addBotBubble("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
                         chatStep = 1;
                         if(moduloAtual === 4) {
-                            addActionButton("5 - Disponibilize um botão para acionamento da opção 4", () => executarFluxoComum());
+                            addActionButton("4 - Comercial", () => executarFluxoComum());
                         } else {
-                            addActionButton("5 - Disponibilize um botão para acionamento da opção 5", () => executarFluxoComum());
+                            addActionButton("5 - Suporte e Serviços", () => executarFluxoComum());
                         }
                     }, 300);
                 }, 300);
@@ -335,7 +335,7 @@
             } 
             else if(chatStep === 2) {
                 if(moduloAtual === 1) {
-                    addBotBubble("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\n\nExemplos: Cliente ausente, Não Localizando Endereço...");
+                    addBotBubble("Por favor, poderiaFlorescer descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\n\nExemplos: Cliente ausente, Não Localizando Endereço...");
                     addInputField("Excreva seu assunto prático...", (val) => fecharTarefaModulos());
                 } else if(moduloAtual === 2) {
                     addBotBubble("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !\nLiberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
@@ -356,7 +356,7 @@
         }
 
         function fecharTarefaModulos() {
-            addBotBubble("✓ Conclua a tarefa.");
+            addBotBubble("✓ Tarefa concluída.");
             marcarModuloConcluido(moduloAtual);
             let prox = moduloAtual + 1;
             addActionButton(`Avançar para Módulo ${prox}`, () => carregarModulo(prox));
@@ -397,13 +397,13 @@
 
         function prosseguirComPerguntasM5() {
             addBotBubble(`Regional selecionada: ${respostasPedido.regional}\n\nQual e o pedido? (deixe o técnico preencher o que corresponde a pergunta)`);
-            addInputField("Item solicitado", (pedido) => {
+            addInputField("Qual é o pedido...", (pedido) => {
                 respostasPedido.item = pedido;
                 addBotBubble("Qual e a quantidade? (deixe o técnico preencher o que corresponde a pergunta)");
-                addInputField("Quantidade do item", (qtd) => {
+                addInputField("Qual é a quantidade...", (qtd) => {
                     respostasPedido.qtd = qtd;
                     addBotBubble("Qual e o motivo do pedido? (deixe o técnico preencher o que corresponde a pergunta)");
-                    addInputField("Motivo do pedido", (motivo) => {
+                    addInputField("Qual é o motivo...", (motivo) => {
                         respostasPedido.motivo = motivo;
                         exibirConfirmacaoFinalM5();
                     });
@@ -437,7 +437,7 @@
                 actions.innerHTML = "";
                 addUserBubble("Não");
                 setTimeout(() => {
-                    addBotBubble("Pedido cancelado. Retornando ao início.");
+                    addBotBubble("Retornando ao preenchimento...");
                     setTimeout(() => iniciarModulo5(), 500);
                 }, 300);
             };
@@ -446,7 +446,7 @@
             actions.appendChild(btnNao);
         }
 
-        // LÓGICA DO PROVÃO E AVALIAÇÃO FINAL (MÓDULO 7)
+        // LÓGICA DA AVALIAÇÃO FINAL (MÓDULO 7)
         let questaoIndex = 0;
         let acertosProva = 0;
         const constQuestoes = [
@@ -461,18 +461,18 @@
                 c: 2
             },
             {
-                q: "Qual a regra correta sobre o acionamento direto do suporte avançado (NOC)?",
-                o: ["Deve ser acionado diretamente via chat individual", "Deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário", "Deve ser feito via e-mail corporativo", "O NOC não atende chamados de campo"],
+                q: "Qual a regra correta sobre o acionamento do suporte avançado (NOC)?",
+                o: ["Deve ser acionado diretamente a qualquer momento", "Deve ser realizado inicialmente via TAC, que fará o direcionamento ao NOC quando necessário", "Deve ser feito abrindo chamado comercial", "O NOC não atende chamados de campo"],
                 c: 1
             },
             {
                 q: "Se houver a necessidade de validar informações relacionadas a Planos e Contratos, qual a opção correta?",
-                o: ["Comercial (Analista)", "Suporte Inmap", "Agendamento", "Financeiro"],
+                o: ["Comercial", "Suporte Inmap", "Agendamento", "Financeiro"],
                 c: 0
             },
             {
-                q: "A respeito do histórico de mensagens enviadas nos canais automáticos da Ampernet, assinale o correto:",
-                o: ["Mensagens podem ser excluídas a qualquer momento pelo técnico", "É possível editar os dados se houver erro de digitação", "Todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens", "É permitido o uso moderado de gírias e jargões informais"],
+                q: "A respeito do histórico de mensagens enviadas nos canais operacionais da Ampernet, assinale o correto:",
+                o: ["Mensagens podem ser excluídas a qualquer momento pelo técnico", "É possível editar os dados se houver erro de digitação", "Todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens", "É permitido o uso irrestrito de gírias por ser um canal informal"],
                 c: 2
             }
         ];
@@ -480,7 +480,7 @@
         function iniciarAvaliacao() {
             questaoIndex = 0;
             acertosProva = 0;
-            addBotBubble("Iniciando avaliação final. Responda com atenção às próximas 5 perguntas.");
+            addBotBubble("Iniciando avaliação final. Responda com atenção às 5 perguntas seguintes.");
             setTimeout(() => carregarQuestaoProva(), 600);
         }
 
