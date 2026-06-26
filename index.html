@@ -7,42 +7,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .chat-bubble { animation: fadeIn 0.25s ease-out forwards; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-        .telegram-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px; }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #111; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #e61919; }
+        .chat-bubble {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .telegram-bg {
+            background-color: #0f172a;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #111;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #e61919;
+        }
     </style>
 </head>
 <body class="bg-neutral-950 text-slate-100 min-h-screen font-sans antialiased overflow-x-hidden">
 
-    <!-- MODAL DE LOGIN -->
-    <div id="login-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center z-50 transition-all duration-300">
-        <div class="bg-neutral-900 p-8 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 text-center space-y-6 shadow-2xl">
-            <div class="w-20 h-20 bg-red-600/10 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto border border-red-500/20">
-                <i class="fas fa-user-tie"></i>
-            </div>
-            <div>
-                <h2 class="text-2xl font-bold text-white tracking-tight">Acesso ao Treinamento</h2>
-            </div>
-            <div class="space-y-2">
-                <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
-                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome para acessar.</p>
-            </div>
-            <button onclick="validaLogin()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition">Acessar Plataforma</button>
-        </div>
-    </div>
-
     <!-- CONTEÚDO PRINCIPAL -->
-    <div id="main-content" class="blur-sm pointer-events-none transition-all duration-500 max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <div id="main-content" class="max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex justify-between items-center bg-neutral-900 p-5 rounded-2xl border border-neutral-800 shadow-xl">
             <div class="flex items-center gap-4">
                 <div class="bg-red-600 text-white px-4 py-2 rounded-xl font-black text-xl tracking-wider">AMPERNET</div>
                 <div>
                     <h1 class="text-lg font-bold text-white">Manual e Ambiente de Treinamento</h1>
-                    <p class="text-xs text-neutral-400">Técnico Autenticado: <span id="user-display" class="text-red-500 font-bold">---</span></p>
+                    <p class="text-xs text-neutral-400">Técnico Autenticado: <span id="user-display" class="text-red-500 font-bold">Técnico Ampernet</span></p>
                 </div>
             </div>
         </header>
@@ -125,7 +126,9 @@
                             <p class="text-[10px] text-sky-400 tracking-wider">bot</p>
                         </div>
                     </div>
+
                     <div id="chat-scroller" class="telegram-bg p-4 h-[350px] overflow-y-auto space-y-3 text-xs flex flex-col custom-scrollbar"></div>
+
                     <div class="bg-[#17212b] p-4 border-t border-neutral-950 flex flex-col gap-3 min-h-[120px] justify-center">
                         <div id="input-container" class="hidden w-full flex gap-2">
                             <input type="text" id="chat-input-text" placeholder="Digite sua solicitação..." class="flex-grow bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-white text-xs focus:outline-none focus:border-red-600">
@@ -145,27 +148,32 @@
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="err"> Diretamente via canais externos</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="correct"> Inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
                 </div>
+
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">2. O que deve ser evitado no canal de atendimento do TAC?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="correct"> Enviar fotos e áudios</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="err"> Enviar o nome completo do cliente</label>
                 </div>
+
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">3. No Módulo 3 (Suporte INMAP), quais são os exemplos de falhas e problemas citados para descrição do suporte?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="correct"> Aplicativo Offline, Erro ao colocar as credenciais de acesso</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="err"> Cliente ausente, Não localizando endereço</label>
                 </div>
+
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">4. O que acontece com as mensagens enviadas no banco de dados?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="err"> Podem ser excluídas pelo técnico a qualquer momento</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="correct"> Ficam registradas, não sendo possível excluir ou editar</label>
                 </div>
+
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">5. No Módulo 4 (Comercial), qual BackOffice é selecionado e quais exemplos de validações devem ser descritos pelo técnico?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="correct"> Atendente Edilaine; Plano e Contrato, Upgrade ou Alteração de Plano</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Atendente Vitor; Liberação de ONU ou Alteração de PPPoE</label>
                 </div>
-                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Avaliação e Gerar Certificado</button>
+
+                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Evalução e Gerar Certificado</button>
             </div>
         </section>
     </div>
@@ -175,7 +183,7 @@
             <div class="text-red-600 text-4xl"><i class="fas fa-award"></i></div>
             <h2 class="text-3xl font-black uppercase tracking-widest text-neutral-950 font-serif">Certificado de Conclusão</h2>
             <p class="text-sm text-neutral-500 italic">Certificamos para os devidos fins que o técnico</p>
-            <p id="cert-name" class="text-2xl font-bold text-red-600 underline font-sans tracking-wide">Nome do Técnico</p>
+            <p id="cert-name" class="text-2xl font-bold text-red-600 underline font-sans tracking-wide">Técnico Ampernet</p>
             <p class="text-sm text-neutral-700 leading-relaxed max-w-md mx-auto">Concluiu com êxito e aproveitamento regulamentar o <strong>Treinamento de Plataforma e Fluxos Internos Ampernet Telecom</strong>.</p>
             <div class="pt-6 border-t border-neutral-200 flex flex-col md:flex-row justify-between text-left text-xs text-neutral-500 font-mono gap-2">
                 <p>Data: 2026</p>
@@ -186,26 +194,15 @@
     </div>
 
     <script>
-        let tecnicoNome = "";
+        let tecnicoNome = "Técnico Ampernet";
         let currentTab = "m1";
         let moduleStates = { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 };
         let progresso = 0;
 
-        function validaLogin() {
-            const input = document.getElementById('tech-name-input').value.trim();
-            
-            // Aceita qualquer nome digitado (mínimo 2 letras) e libera o acesso diretamente
-            if (input.length < 2) {
-                document.getElementById('login-error').classList.remove('hidden');
-                return;
-            }
-            
-            tecnicoNome = input;
-            document.getElementById('user-display').innerText = tecnicoNome;
-            document.getElementById('login-modal').classList.add('hidden');
-            document.getElementById('main-content').classList.remove('blur-sm', 'pointer-events-none');
+        // Inicia o chat automaticamente assim que a página carrega
+        window.onload = function() {
             renderChat();
-        }
+        };
 
         function switchTab(modId) {
             currentTab = modId;
@@ -236,7 +233,6 @@
             document.getElementById('chat-scroller').innerHTML = "";
             document.getElementById('keyboard-container').innerHTML = "";
             document.getElementById('input-container').classList.add('hidden');
-            
             const keyboard = document.getElementById('keyboard-container');
             const state = moduleStates[currentTab];
             const title = document.getElementById('chat-title');
@@ -330,7 +326,12 @@
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 6) {
                     addBotMsg("Confirme os dados do pedido...");
-                    addButton("Sim", () => { addUserMsg("Sim"); addBotMsg("Pedido Registrado com Sucesso!"); moduleStates.m5 = 7; setTimeout(renderChat, 1000); });
+                    addButton("Sim", () => {
+                        addUserMsg("Sim");
+                        addBotMsg("Pedido Registrado com Sucesso!");
+                        moduleStates[currentTab] = 7;
+                        setTimeout(renderChat, 1000);
+                    });
                     addButton("Não", () => { moduleStates.m5 = 1; renderChat(); });
                 } else if (state === 7) {
                     updateProgress(80, 'm6');
@@ -339,7 +340,10 @@
 
             if (currentTab === 'm6') {
                 addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento...");
-                addButton("Compreendido", () => { updateProgress(100, null); document.getElementById('card-quiz').classList.remove('hidden'); });
+                addButton("Compreendido", () => {
+                    updateProgress(100, null);
+                    document.getElementById('card-quiz').classList.remove('hidden');
+                });
             }
         }
 
@@ -352,65 +356,7 @@
             keyboard.appendChild(b);
         }
 
-        function handleSendText() {
-            const txtInput = document.getElementById('chat-input-text');
-            const val = txtInput.value.trim();
-            if(!val) return;
-            addUserMsg(val);
-            txtInput.value = "";
-            
-            const state = moduleStates[currentTab];
-            if (currentTab === 'm1' || currentTab === 'm2' || currentTab === 'm3') {
-                if(state === 3) { moduleStates[currentTab] = 4; setTimeout(renderChat, 800); }
-            } else if (currentTab === 'm4') {
-                if(state === 4) { moduleStates.m4 = 5; setTimeout(renderChat, 800); }
-            } else if (currentTab === 'm5') {
-                if(state === 1) { moduleStates.m5 = 2; }
-                else if(state === 3) { moduleStates.m5 = 4; }
-                else if(state === 4) { moduleStates.m5 = 5; }
-                else if(state === 5) { moduleStates.m5 = 6; }
-                setTimeout(renderChat, 800);
-            }
-        }
-
-        function updateProgress(p, nextTab) {
-            progresso = p;
-            document.getElementById('progress-bar').style.width = p + "%";
-            document.getElementById('progress-text').innerText = p + "% Concluído";
-            
-            if(nextTab) {
-                const nextBtn = document.getElementById(`menu-${nextTab}`);
-                if(nextBtn) {
-                    nextBtn.classList.remove('opacity-40', 'pointer-events-none');
-                    nextBtn.classList.add('bg-neutral-950/30');
-                    const statusSpan = document.getElementById(`status-${nextTab}`);
-                    if(statusSpan) statusSpan.innerHTML = `<i class="fas fa-unlock text-green-500"></i> Disponível`;
-                }
-            }
-            
-            const currentStatus = document.getElementById(`status-${currentTab}`);
-            if(currentStatus && p > 0) currentStatus.innerHTML = `<i class="fas fa-check-circle text-green-500"></i> Concluído`;
-        }
-
-        function verificarQuiz() {
-            const r1 = document.querySelector('input[name="q1"]:checked');
-            const r2 = document.querySelector('input[name="q2"]:checked');
-            const r3 = document.querySelector('input[name="q3"]:checked');
-            const r4 = document.querySelector('input[name="q4"]:checked');
-            const r5 = document.querySelector('input[name="q5"]:checked');
-
-            if(!r1 || !r2 || !r3 || !r4 || !r5) {
-                alert("Por favor, responda todas as perguntas antes de finalizar.");
-                return;
-            }
-
-            if(r1.value === 'correct' && r2.value === 'correct' && r3.value === 'correct' && r4.value === 'correct' && r5.value === 'correct') {
-                document.getElementById('cert-name').innerText = tecnicoNome;
-                document.getElementById('certificate-modal').classList.remove('hidden');
-            } else {
-                alert("Algumas respostas estão incorretas. Revise as diretrizes dos módulos e tente novamente!");
-            }
-        }
+        ...
     </script>
 </body>
 </html>
