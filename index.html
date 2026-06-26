@@ -28,6 +28,7 @@
                 <h2 class="text-2xl font-bold text-white tracking-tight">Acesso ao Treinamento</h2>
             </div>
             <div class="space-y-2">
+                <!-- CORREÇÃO AQUI: Adicionado estritamente o id="tech-name-input" -->
                 <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
                 <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome para acessar.</p>
             </div>
@@ -192,9 +193,12 @@
         let progresso = 0;
 
         function validaLogin() {
-            const input = document.getElementById('tech-name-input').value.trim();
+            const inputElement = document.getElementById('tech-name-input');
+            if (!inputElement) return; // Segurança extra caso o elemento suma
             
-            // CORREÇÃO: Validação simplificada que aceita qualquer nome com pelo menos 2 caracteres
+            const input = inputElement.value.trim();
+            
+            // CORREÇÃO DEFINITIVA: Validação direta que remove regras complexas e aceita qualquer nome/sobrenome preenchido (mínimo 2 letras)
             if (input.length < 2) {
                 document.getElementById('login-error').classList.remove('hidden');
                 return;
@@ -395,5 +399,4 @@
         function verificarQuiz() {
             const r1 = document.querySelector('input[name="q1"]:checked');
             const r2 = document.querySelector('input[name="q2"]:checked');
-            const r3 = document.querySelector('input[name="q3"]:checked');
-            const r4 = document.querySelector('Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+            const r3 = document.querySelector('inputNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
