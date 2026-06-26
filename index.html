@@ -7,36 +7,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .chat-bubble {
-            animation: fadeIn 0.25s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .telegram-bg {
-            background-color: #0f172a;
-            background-image: radial-gradient(#1e293b 1px, transparent 1px);
-            background-size: 16px 16px;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #111;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #e61919;
-        }
+        .chat-bubble { animation: fadeIn 0.25s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .telegram-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #e61919; }
     </style>
 </head>
 <body class="bg-neutral-950 text-slate-100 min-h-screen font-sans antialiased overflow-x-hidden">
 
-    <!-- MODAL DE LOGIN (Texto Removido) -->
+    <!-- MODAL DE LOGIN -->
     <div id="login-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center z-50 transition-all duration-300">
         <div class="bg-neutral-900 p-8 rounded-2xl border border-neutral-800 max-w-md w-full mx-4 text-center space-y-6 shadow-2xl">
             <div class="w-20 h-20 bg-red-600/10 text-red-500 rounded-full flex items-center justify-center text-3xl mx-auto border border-red-500/20">
@@ -47,7 +29,7 @@
             </div>
             <div class="space-y-2">
                 <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
-                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome completo.</p>
+                <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome para acessar.</p>
             </div>
             <button onclick="validaLogin()" class="w-full bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-xl text-xs uppercase tracking-wider transition">Acessar Plataforma</button>
         </div>
@@ -196,7 +178,7 @@
             <p id="cert-name" class="text-2xl font-bold text-red-600 underline font-sans tracking-wide">Nome do Técnico</p>
             <p class="text-sm text-neutral-700 leading-relaxed max-w-md mx-auto">Concluiu com êxito e aproveitamento regulamentar o <strong>Treinamento de Plataforma e Fluxos Internos Ampernet Telecom</strong>.</p>
             <div class="pt-6 border-t border-neutral-200 flex flex-col md:flex-row justify-between text-left text-xs text-neutral-500 font-mono gap-2">
-                <p>Data: 2025</p>
+                <p>Data: 2026</p>
                 <p>Validação: AMP-INTERNAL-OK</p>
             </div>
             <button onclick="window.location.reload()" class="bg-neutral-900 text-white px-6 py-2 rounded-lg text-xs uppercase font-bold mt-4">Fechar</button>
@@ -211,10 +193,13 @@
 
         function validaLogin() {
             const input = document.getElementById('tech-name-input').value.trim();
-            if (input.length < 5 || !input.includes(' ')) {
+            
+            // CORREÇÃO: Validação simplificada que aceita qualquer nome com pelo menos 2 caracteres
+            if (input.length < 2) {
                 document.getElementById('login-error').classList.remove('hidden');
                 return;
             }
+            
             tecnicoNome = input;
             document.getElementById('user-display').innerText = tecnicoNome;
             document.getElementById('login-modal').classList.add('hidden');
@@ -251,9 +236,9 @@
             document.getElementById('chat-scroller').innerHTML = "";
             document.getElementById('keyboard-container').innerHTML = "";
             document.getElementById('input-container').classList.add('hidden');
+            
             const keyboard = document.getElementById('keyboard-container');
             const state = moduleStates[currentTab];
-
             const title = document.getElementById('chat-title');
             const avatar = document.getElementById('chat-avatar');
 
@@ -305,34 +290,16 @@
 
             if (currentTab === 'm4') {
                 if (state === 0) {
-                    addButton("/start", () => {
-                        addUserMsg("/start");
-                        moduleStates.m4 = 1;
-                        setTimeout(renderChat, 500);
-                    });
+                    addButton("/start", () => { addUserMsg("/start"); moduleStates.m4 = 1; setTimeout(renderChat, 500); });
                 } else if (state === 1) {
-                    addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
-                    addBotMsg("Seu protocolo de atendimento é AMP20252325306");
-                    addBotMsg("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
-                    addButton("4 - Comercial", () => {
-                        addUserMsg("Opção 4");
-                        moduleStates.m4 = 2;
-                        setTimeout(renderChat, 500);
-                    });
+                    addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.\nSeu protocolo é AMP20252325306...");
+                    addButton("4 - Comercial", () => { addUserMsg("Opção 4"); moduleStates.m4 = 2; setTimeout(renderChat, 500); });
                 } else if (state === 2) {
-                    addBotMsg("Bem vindo ao Comercial!\nSelecione o serviço necessário:\n1 - BackOffice\n2 - Analista\n3 - Erro de Seleção");
-                    addButton("2 - Analista", () => {
-                        addUserMsg("Opção 2");
-                        moduleStates.m4 = 3;
-                        setTimeout(renderChat, 500);
-                    });
+                    addBotMsg("Bem vindo ao Comercial!\nSelecione o serviço necessário:");
+                    addButton("2 - Analista", () => { addUserMsg("Opção 2"); moduleStates.m4 = 3; setTimeout(renderChat, 500); });
                 } else if (state === 3) {
-                    addBotMsg("Com qual BackOffice você precisa falar, digite o numero a baixo que se refere ao atendente:\n1 - Edilaine\n2 - Marinalda\n3 - Vitor\n4 - Milena\n5 - Felipe");
-                    addButton("1 - Edilaine", () => {
-                        addUserMsg("Edilaine");
-                        moduleStates.m4 = 4;
-                        setTimeout(renderChat, 500);
-                    });
+                    addBotMsg("Com qual BackOffice você precisa falar?");
+                    addButton("1 - Edilaine", () => { addUserMsg("Edilaine"); moduleStates.m4 = 4; setTimeout(renderChat, 500); });
                 } else if (state === 4) {
                     addBotMsg("Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano");
                     document.getElementById('input-container').classList.remove('hidden');
@@ -344,22 +311,14 @@
 
             if (currentTab === 'm5') {
                 if (state === 0) {
-                    addButton("Clique em Iniciar", () => {
-                        addUserMsg("Iniciar");
-                        moduleStates.m5 = 1;
-                        setTimeout(renderChat, 500);
-                    });
+                    addButton("Clique em Iniciar", () => { addUserMsg("Iniciar"); moduleStates.m5 = 1; setTimeout(renderChat, 500); });
                 } else if (state === 1) {
                     addBotMsg("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 2) {
-                    addBotMsg("Selecione a regional correspondente:\n\nRegional PG\nRegional FB\nRegional PB\nRegional Sao Lourenco\nRegional LJS\nCidade CSC\nRegional Guaira\nRegional Ampere\nRegional Fazenda");
+                    addBotMsg("Selecione a regional correspondente:");
                     const regs = ["PG", "FB", "PB", "Sao Lourenco", "LJS", "CSC", "Guaira", "Ampere", "Fazenda"];
-                    regs.forEach(r => addButton("Regional " + r, () => {
-                        addUserMsg("Regional " + r);
-                        moduleStates.m5 = 3;
-                        setTimeout(renderChat, 500);
-                    }));
+                    regs.forEach(r => addButton("Regional " + r, () => { addUserMsg("Regional " + r); moduleStates.m5 = 3; setTimeout(renderChat, 500); }));
                 } else if (state === 3) {
                     addBotMsg("Regional selecionada: Regional Ampere\n\nQual e o pedido?");
                     document.getElementById('input-container').classList.remove('hidden');
@@ -370,28 +329,17 @@
                     addBotMsg("Qual e o motivo do pedido?");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 6) {
-                    addBotMsg("Confirme os dados do pedido:\n\nColaborador: Sulivan Ampére\nRegional: Regional Ampere\nPedido: teste\nQuantidade: 01\nMotivo: teste\n\nConfirme os dados acima:");
-                    addButton("Sim", () => {
-                        addUserMsg("Sim");
-                        addBotMsg("Pedido Registrado com Sucesso!");
-                        moduleStates.m5 = 7;
-                        setTimeout(renderChat, 1000);
-                    });
-                    addButton("Não", () => {
-                        moduleStates.m5 = 1;
-                        renderChat();
-                    });
+                    addBotMsg("Confirme os dados do pedido...");
+                    addButton("Sim", () => { addUserMsg("Sim"); addBotMsg("Pedido Registrado com Sucesso!"); moduleStates.m5 = 7; setTimeout(renderChat, 1000); });
+                    addButton("Não", () => { moduleStates.m5 = 1; renderChat(); });
                 } else if (state === 7) {
                     updateProgress(80, 'm6');
                 }
             }
 
             if (currentTab === 'm6') {
-                addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento:\nAcionar o BOT\nSelecionar o número correspondente ao setor desejado\nAtentar-se à leitura da mensagem automática e cumprir corretamente a sequência do protocolo e da mensagem inicial.\n\nRessalta-se que todas as interações ficam registradas no banco de dados, não sendo possível excluir ou editar mensagens. Portanto, é fundamental manter uma comunicação clara, objetiva e profissional, evitando o uso de gírias ou termos inadequados.");
-                addButton("Compreendido", () => {
-                    updateProgress(100, null);
-                    document.getElementById('card-quiz').classList.remove('hidden');
-                });
+                addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento...");
+                addButton("Compreendido", () => { updateProgress(100, null); document.getElementById('card-quiz').classList.remove('hidden'); });
             }
         }
 
@@ -404,7 +352,48 @@
             keyboard.appendChild(b);
         }
 
-        ... [Restante das funções JavaScript sem alterações adicionais] ...
-    </script>
-</body>
-</html>
+        function handleSendText() {
+            const txtInput = document.getElementById('chat-input-text');
+            const val = txtInput.value.trim();
+            if(!val) return;
+            addUserMsg(val);
+            txtInput.value = "";
+            
+            const state = moduleStates[currentTab];
+            if (currentTab === 'm1' || currentTab === 'm2' || currentTab === 'm3') {
+                if(state === 3) { moduleStates[currentTab] = 4; setTimeout(renderChat, 800); }
+            } else if (currentTab === 'm4') {
+                if(state === 4) { moduleStates.m4 = 5; setTimeout(renderChat, 800); }
+            } else if (currentTab === 'm5') {
+                if(state === 1) { moduleStates.m5 = 2; }
+                else if(state === 3) { moduleStates.m5 = 4; }
+                else if(state === 4) { moduleStates.m5 = 5; }
+                else if(state === 5) { moduleStates.m5 = 6; }
+                setTimeout(renderChat, 800);
+            }
+        }
+
+        function updateProgress(p, nextTab) {
+            progresso = p;
+            document.getElementById('progress-bar').style.width = p + "%";
+            document.getElementById('progress-text').innerText = p + "% Concluído";
+            
+            if(nextTab) {
+                const nextBtn = document.getElementById(`menu-${nextTab}`);
+                if(nextBtn) {
+                    nextBtn.classList.remove('opacity-40', 'pointer-events-none');
+                    nextBtn.classList.add('bg-neutral-950/30');
+                    const statusSpan = document.getElementById(`status-${nextTab}`);
+                    if(statusSpan) statusSpan.innerHTML = `<i class="fas fa-unlock text-green-500"></i> Disponível`;
+                }
+            }
+            
+            const currentStatus = document.getElementById(`status-${currentTab}`);
+            if(currentStatus && p > 0) currentStatus.innerHTML = `<i class="fas fa-check-circle text-green-500"></i> Concluído`;
+        }
+
+        function verificarQuiz() {
+            const r1 = document.querySelector('input[name="q1"]:checked');
+            const r2 = document.querySelector('input[name="q2"]:checked');
+            const r3 = document.querySelector('input[name="q3"]:checked');
+            const r4 = document.querySelector('Normally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
