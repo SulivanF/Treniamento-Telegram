@@ -28,7 +28,6 @@
                 <h2 class="text-2xl font-bold text-white tracking-tight">Acesso ao Treinamento</h2>
             </div>
             <div class="space-y-2">
-                <!-- CORREÇÃO AQUI: Adicionado estritamente o id="tech-name-input" -->
                 <input type="text" id="tech-name-input" placeholder="Digite seu Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-xl p-4 text-sm text-white focus:outline-none focus:border-red-600 transition">
                 <p id="login-error" class="text-red-500 text-xs text-left hidden"><i class="fas fa-exclamation-circle mr-1"></i> Por favor, insira seu nome para acessar.</p>
             </div>
@@ -193,12 +192,9 @@
         let progresso = 0;
 
         function validaLogin() {
-            const inputElement = document.getElementById('tech-name-input');
-            if (!inputElement) return; // Segurança extra caso o elemento suma
+            const input = document.getElementById('tech-name-input').value.trim();
             
-            const input = inputElement.value.trim();
-            
-            // CORREÇÃO DEFINITIVA: Validação direta que remove regras complexas e aceita qualquer nome/sobrenome preenchido (mínimo 2 letras)
+            // Aceita qualquer nome digitado (mínimo 2 letras) e libera o acesso diretamente
             if (input.length < 2) {
                 document.getElementById('login-error').classList.remove('hidden');
                 return;
@@ -399,4 +395,22 @@
         function verificarQuiz() {
             const r1 = document.querySelector('input[name="q1"]:checked');
             const r2 = document.querySelector('input[name="q2"]:checked');
-            const r3 = document.querySelector('inputNormally I can help with things like this, but I don't seem to have access to that content. You can try again or ask me for something else.
+            const r3 = document.querySelector('input[name="q3"]:checked');
+            const r4 = document.querySelector('input[name="q4"]:checked');
+            const r5 = document.querySelector('input[name="q5"]:checked');
+
+            if(!r1 || !r2 || !r3 || !r4 || !r5) {
+                alert("Por favor, responda todas as perguntas antes de finalizar.");
+                return;
+            }
+
+            if(r1.value === 'correct' && r2.value === 'correct' && r3.value === 'correct' && r4.value === 'correct' && r5.value === 'correct') {
+                document.getElementById('cert-name').innerText = tecnicoNome;
+                document.getElementById('certificate-modal').classList.remove('hidden');
+            } else {
+                alert("Algumas respostas estão incorretas. Revise as diretrizes dos módulos e tente novamente!");
+            }
+        }
+    </script>
+</body>
+</html>
