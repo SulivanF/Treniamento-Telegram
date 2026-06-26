@@ -173,11 +173,12 @@
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Atendente Vitor; Liberação de ONU ou Alteração de PPPoE</label>
                 </div>
 
-                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Evalução e Gerar Certificado</button>
+                <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Avaliação e Gerar Certificado</button>
             </div>
         </section>
     </div>
 
+    <!-- CERTIFICADO MODAL -->
     <div id="certificate-modal" class="fixed inset-0 bg-black/95 flex items-center justify-center z-50 hidden p-4">
         <div class="bg-white p-8 md:p-12 rounded-2xl max-w-2xl w-full border-8 border-red-600 text-neutral-900 space-y-6 text-center relative shadow-2xl">
             <div class="text-red-600 text-4xl"><i class="fas fa-award"></i></div>
@@ -199,7 +200,7 @@
         let moduleStates = { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 };
         let progresso = 0;
 
-        // Inicia o chat automaticamente assim que a página carrega
+        // Inicia o ambiente assim que a janela carregar totalmente
         window.onload = function() {
             renderChat();
         };
@@ -227,6 +228,52 @@
             div.innerHTML = `<p>${text}</p>`;
             chat.appendChild(div);
             chat.scrollTop = chat.scrollHeight;
+        }
+
+        function handleSendText() {
+            const input = document.getElementById('chat-input-text');
+            const val = input.value.trim();
+            if(!val) return;
+
+            addUserMsg(val);
+            input.value = "";
+
+            const state = moduleStates[currentTab];
+            if ((currentTab==='m1'||currentTab==='m2'||currentTab==='m3') && state===3) {
+                moduleStates[currentTab] = 4;
+            } else if (currentTab==='m4' && state===4) {
+                moduleStates.m4 = 5;
+            } else if (currentTab==='m5') {
+                if(state===1) moduleStates.m5 = 2;
+                else if(state===3) moduleStates.m5 = 4;
+                else if(state===4) moduleStates.m5 = 5;
+                else if(state===5) moduleStates.m5 = 6;
+            }
+
+            setTimeout(renderChat, 600);
+        }
+
+        function updateProgress(valor, nextTab) {
+            if(valor > progresso) {
+                progresso = valor;
+                document.getElementById('progress-bar').style.width = progresso + "%";
+                document.getElementById('progress-text').innerText = progresso + "% Concluído";
+            }
+            if(nextTab) {
+                const btn = document.getElementById(`menu-${nextTab}`);
+                btn.classList.remove('opacity-40', 'pointer-events-none');
+                btn.className = btn.className.replace('bg-neutral-950/30', 'bg-neutral-900');
+                btn.className = btn.className.replace('border-l-neutral-700', 'border-l-amber-500');
+                
+                const statusSpan = document.getElementById(`status-${nextTab}`);
+                statusSpan.innerHTML = '<i class="fas fa-play-circle"></i> Liberado';
+                statusSpan.className = "text-[10px] text-amber-500 font-bold";
+            }
+            
+            const currentStatus = document.getElementById(`status-${currentTab}`);
+            currentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Concluído';
+            currentStatus.className = "text-[10px] text-green-500 font-bold";
+            document.getElementById(`menu-${currentTab}`).className = document.getElementById(`menu-${currentTab}`).className.replace('border-l-amber-500', 'border-l-green-500');
         }
 
         function renderChat() {
@@ -356,7 +403,25 @@
             keyboard.appendChild(b);
         }
 
-        ...
+        function verificarQuiz() {
+            const q1 = document.querySelector('input[name="q1"]:checked');
+            const q2 = document.querySelector('input[name="q2"]:checked');
+            const q3 = document.querySelector('input[name="q3"]:checked');
+            const q4 = document.querySelector('input[name="q4"]:checked');
+            const q5 = document.querySelector('input[name="q5"]:checked');
+
+            if(!q1 || !q2 || !q3 || !q4 || !q5) {
+                alert("Por favor, responda a todas as questões da avaliação antes de prosseguir.");
+                return;
+            }
+
+            if(q1.value === "correct" && q2.value === "correct" && q3.value === "correct" && q4.value === "correct" && q5.value === "correct") {
+                document.getElementById('cert-name').innerText = tecnicoNome;
+                document.getElementById('certificate-modal').classList.remove('hidden');
+            } else {
+                alert("Alguma resposta está incorreta. Revise as diretrizes e tente novamente!");
+            }
+        }
     </script>
 </body>
 </html>
