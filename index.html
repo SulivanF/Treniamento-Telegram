@@ -45,6 +45,7 @@
             </div>
         </header>
 
+        <!-- DIRETRIZES INICIAIS -->
         <section class="space-y-4">
             <h2 class="text-base font-bold text-white flex items-center gap-2"><i class="fas fa-info-circle text-red-500"></i> Diretrizes Iniciais da Plataforma</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
@@ -68,6 +69,12 @@
                     <h3 class="font-bold text-red-500 text-xs uppercase tracking-wide">NOC</h3>
                     <p class="text-[11px] text-neutral-400 leading-relaxed">Suporte avançado. O acionamento deve ser realizado inicialmente via TAC.</p>
                 </div>
+            </div>
+
+            <!-- ATUALIZADO: MENSAGEM ADICIONADA ABAIXO DAS DIRETRIZES -->
+            <div class="bg-neutral-900/60 border border-neutral-800 p-4 rounded-xl text-xs text-neutral-300 leading-relaxed space-y-2">
+                <p>Todos os colaboradores do nosso setor estão incluídos neste grupo, usado para avisos e comunicações direta.</p>
+                <p>Na descrição do grupo, como no print, podemos observar <strong class="text-red-500">LINKS cruciais</strong> que direciona para o Telegram, pedidos de ferramentas, etc...</p>
             </div>
         </section>
 
@@ -156,12 +163,13 @@
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">4. O que acontece com as mensagens enviadas no banco de dados?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="err"> Podem ser excluídas pelo técnico a qualquer momento</label>
-                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="correct"> Ficam registradas, não sendo possível excluir ou editar</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="correct"> Ficam registradas, não sendo possível excluir ou editar mensagens</label>
                 </div>
+                <!-- ATUALIZADO: PERGUNTA 5 ALTERADA CONFORME SOLICITADO -->
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
-                    <p class="font-bold text-white text-sm">5. No Módulo 4 (Comercial), qual BackOffice é selecionado e quais exemplos de validações devem ser descritos pelo técnico?</p>
-                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="correct"> Atendente Edilaine; Plano e Contrato, Upgrade ou Alteração de Plano</label>
-                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Atendente Vitor; Liberação de ONU ou Alteração de PPPoE</label>
+                    <p class="font-bold text-white text-sm">5. Onde podemos observar LINKS cruciais que direciona para o Telegram, pedidos de ferramentas, etc..?</p>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="correct"> Na descrição do grupo</label>
+                    <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Nas mensagens fixadas do chat</label>
                 </div>
                 <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Avaliação e Gerar Certificado</button>
             </div>
@@ -190,7 +198,6 @@
         let moduleStates = { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 };
         let progresso = 0;
 
-        // Variáveis temporárias para armazenar dados do Bot de Pedidos (Módulo 5)
         let pedidoDados = { colaborador: "", cidade: "", pedido: "", quantidade: "", motivo: "" };
 
         window.onload = function() {
@@ -249,11 +256,8 @@
             } else if (currentTab==='m4' && state===4) {
                 moduleStates.m4 = 5;
             } else if (currentTab==='m5') {
-                // Fluxo dinâmico de coleta de dados do Módulo 5
                 if (state === 1) {
-                    // Técnico digitou Nome e Cidade. Vamos tentar extrair ou salvar direto.
                     pedidoDados.colaborador = val; 
-                    // Separando de maneira simples caso ele use vírgula ou hífen, senão preenche em ambos para garantir
                     if(val.includes(",")) {
                         let parts = val.split(",");
                         pedidoDados.colaborador = parts[0].trim();
@@ -279,7 +283,7 @@
                     if(val.toLowerCase() === 'sim') {
                         moduleStates.m5 = 6;
                     } else if(val.toLowerCase() === 'não' || val.toLowerCase() === 'nao') {
-                        moduleStates.m5 = 0; // Reinicia o fluxo
+                        moduleStates.m5 = 0;
                     }
                 }
             }
@@ -372,7 +376,6 @@
                 }
             }
 
-            // ATUALIZADO: FLUXO DO MÓDULO 5 BOT DE PEDIDOS
             if (currentTab === 'm5') {
                 if (state === 0) {
                     addButton("/start", () => { addUserMsg("/start"); moduleStates.m5 = 1; setTimeout(renderChat, 500); });
@@ -399,7 +402,7 @@
             }
 
             if (currentTab === 'm6') {
-                addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento...");
+                addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de\natendimento:\nAcionar o BOT\nSelecionar o número correspondente ao\nsetor desejado\nAtentar-se à leitura da mensagem\nautomática e cumprir corretamente a\nsequência do protocolo e da mensagem\ninicial.\nRessalta-se que todas as interações ficam\nregistradas no banco de dados, não sendo\npossível excluir ou editar mensagens. Portanto,\né fundamental manter uma comunicação clara,\nobjetiva e profissional, evitando o uso de gírias\nou termos inadequados.");
                 addButton("Compreendido", () => { updateProgress(100, null); document.getElementById('card-quiz').classList.remove('hidden'); });
             }
         }
