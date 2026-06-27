@@ -33,7 +33,7 @@
         </div>
     </div>
 
-    <!-- CONTEÚDO PRINCIPAL (OCULTO ATÉ O LOGIN) -->
+    <!-- CONTEÚDO PRINCIPAL -->
     <div id="main-content" class="hidden max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex justify-between items-center bg-neutral-900 p-5 rounded-2xl border border-neutral-800 shadow-xl">
             <div class="flex items-center gap-4">
@@ -190,7 +190,9 @@
         let moduleStates = { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 };
         let progresso = 0;
 
-        // Modificado para não carregar a interface diretamente no onload
+        // Variáveis temporárias para armazenar dados do Bot de Pedidos (Módulo 5)
+        let pedidoDados = { colaborador: "", cidade: "", pedido: "", quantidade: "", motivo: "" };
+
         window.onload = function() {
             document.getElementById('login-name').focus();
         };
@@ -241,15 +243,45 @@
             input.value = "";
             
             const state = moduleStates[currentTab];
+            
             if ((currentTab==='m1'||currentTab==='m2'||currentTab==='m3') && state===3) {
                 moduleStates[currentTab] = 4;
             } else if (currentTab==='m4' && state===4) {
                 moduleStates.m4 = 5;
             } else if (currentTab==='m5') {
-                if(state===1) moduleStates.m5 = 2;
-                else if(state===3) moduleStates.m5 = 4;
-                else if(state===4) moduleStates.m5 = 5;
-                else if(state===5) moduleStates.m5 = 6;
+                // Fluxo dinâmico de coleta de dados do Módulo 5
+                if (state === 1) {
+                    // Técnico digitou Nome e Cidade. Vamos tentar extrair ou salvar direto.
+                    pedidoDados.colaborador = val; 
+                    // Separando de maneira simples caso ele use vírgula ou hífen, senão preenche em ambos para garantir
+                    if(val.includes(",")) {
+                        let parts = val.split(",");
+                        pedidoDados.colaborador = parts[0].trim();
+                        pedidoDados.cidade = parts[1].trim();
+                    } else if(val.includes("-")) {
+                        let parts = val.split("-");
+                        pedidoDados.colaborador = parts[0].trim();
+                        pedidoDados.cidade = parts[1].trim();
+                    } else {
+                        pedidoDados.cidade = val; 
+                    }
+                    moduleStates.m5 = 2;
+                } else if (state === 2) {
+                    pedidoDados.pedido = val;
+                    moduleStates.m5 = 3;
+                } else if (state === 3) {
+                    pedidoDados.quantidade = val;
+                    moduleStates.m5 = 4;
+                } else if (state === 4) {
+                    pedidoDados.motivo = val;
+                    moduleStates.m5 = 5;
+                } else if (state === 5) {
+                    if(val.toLowerCase() === 'sim') {
+                        moduleStates.m5 = 6;
+                    } else if(val.toLowerCase() === 'não' || val.toLowerCase() === 'nao') {
+                        moduleStates.m5 = 0; // Reinicia o fluxo
+                    }
+                }
             }
             setTimeout(renderChat, 600);
         }
@@ -323,16 +355,16 @@
                 if (state === 0) {
                     addButton("/start", () => { addUserMsg("/start"); moduleStates.m4 = 1; setTimeout(renderChat, 500); });
                 } else if (state === 1) {
-                    addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.\nSeu protocolo é AMP20252325306...");
-                    addButton("4 - Comercial", () => { addUserMsg("Opção 4"); moduleStates.m4 = 2; setTimeout(renderChat, 500); });
+                    addBotMsg("Olá, Bem Vindo a Ampenernet Telecom, irei ajudar no seu atendimento.\nSeu protocolo de atendimento é AMP20264194517\nSelecione, por favor, o setor responsável:\n1-Financeiro\n2-Suprimentos\n3-Administrativo\n4-Comercial\n5-Suporte e Serviços\n6-Recursos Humanos\n7-Serviços e tecnologia\n8-Noc\n9-Marketing\n10-Relacionamento\n11-Infraestrutura");
+                    addButton("4 Comercial", () => { addUserMsg("4 Comercial"); moduleStates.m4 = 2; setTimeout(renderChat, 500); });
                 } else if (state === 2) {
-                    addBotMsg("Bem vindo ao Comercial!\nSelecione o serviço necessário:");
-                    addButton("2 - Analista", () => { addUserMsg("Opção 2"); moduleStates.m4 = 3; setTimeout(renderChat, 500); });
+                    addBotMsg("Bem Vindo ao Comercial!\nSelecione o serviço necessário:\n1-BackOffice\n2-Analista\n3-Erro de Seleção");
+                    addButton("1", () => { addUserMsg("1"); moduleStates.m4 = 3; setTimeout(renderChat, 500); });
                 } else if (state === 3) {
-                    addBotMsg("Com qual BackOffice você precisa falar?");
-                    addButton("1 - Edilaine", () => { addUserMsg("Edilaine"); moduleStates.m4 = 4; setTimeout(renderChat, 500); });
+                    addBotMsg("Com qual BackOffice você precisa falar, digite o número a baixo que se refere ao atendente:\n1-Edilaine\n2-Marinalda\n3-Vitor\n4-Milena\n5-Felipe");
+                    addButton("3 Vitor", () => { addUserMsg("3 Vitor"); moduleStates.m4 = 4; setTimeout(renderChat, 500); });
                 } else if (state === 4) {
-                    addBotMsg("Aqui descreva a solicitação que deseja validar, Plano e Contrato, Upgrade ou Alteração de Plano");
+                    addBotMsg("Aqui descreva a solicitação que deseja validar, Ex: Upgrade, Conferir Contrato/Plano.");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 5) {
                     addBotMsg("Tarefa Concluída!");
@@ -340,30 +372,28 @@
                 }
             }
 
+            // ATUALIZADO: FLUXO DO MÓDULO 5 BOT DE PEDIDOS
             if (currentTab === 'm5') {
                 if (state === 0) {
-                    addButton("Clique em Iniciar", () => { addUserMsg("Iniciar"); moduleStates.m5 = 1; setTimeout(renderChat, 500); });
+                    addButton("/start", () => { addUserMsg("/start"); moduleStates.m5 = 1; setTimeout(renderChat, 500); });
                 } else if (state === 1) {
-                    addBotMsg("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade (Colaborador)?");
+                    addBotMsg("Bem-vindo ao Bot de Pedidos!\nQual e o seu nome e cidade \n(Colaborador)?");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 2) {
-                    addBotMsg("Selecione a regional correspondente:");
-                    const regs = ["PG", "FB", "PB", "Sao Lourenco", "LJS", "CSC", "Guaira", "Ampere", "Fazenda"];
-                    regs.forEach(r => addButton("Regional " + r, () => { addUserMsg("Regional " + r); moduleStates.m5 = 3; setTimeout(renderChat, 500); }));
+                    addBotMsg(`Regional selecionada: \n(${pedidoDados.cidade})\nQual o pedido?`);
+                    document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 3) {
-                    addBotMsg("Regional selecionada: Regional Ampere\n\nQual e o pedido?");
+                    addBotMsg("Qual a quantidade?");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 4) {
-                    addBotMsg("Qual e a quantidade?");
+                    addBotMsg("Qual o motivo do pedido?");
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 5) {
-                    addBotMsg("Qual e o motivo do pedido?");
-                    document.getElementById('input-container').classList.remove('hidden');
+                    addBotMsg(`Confirme os dados do pedido:\nColaborador: ${pedidoDados.colaborador}\nCidade: ${pedidoDados.cidade}\nPedido: ${pedidoDados.pedido}\nQuantidade: ${pedidoDados.quantidade}\nMotivo: ${pedidoDados.motivo}\n\nDigite 'sim' para confirmar ou 'não' para refazer.`);
+                    addButton("sim", () => { addUserMsg("sim"); moduleStates.m5 = 6; setTimeout(renderChat, 500); });
+                    addButton("não", () => { addUserMsg("não"); moduleStates.m5 = 0; setTimeout(renderChat, 500); });
                 } else if (state === 6) {
-                    addBotMsg("Confirme os dados do pedido...");
-                    addButton("Sim", () => { addUserMsg("Sim"); addBotMsg("Pedido Registrado com Sucesso!"); moduleStates[currentTab] = 7; setTimeout(renderChat, 1000); });
-                    addButton("Não", () => { moduleStates.m5 = 1; renderChat(); });
-                } else if (state === 7) {
+                    addBotMsg("Pedido Confirmado com Sucesso!");
                     updateProgress(80, 'm6');
                 }
             }
