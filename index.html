@@ -7,37 +7,34 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        .chat-bubble {
-            animation: fadeIn 0.25s ease-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .telegram-bg {
-            background-color: #0f172a;
-            background-image: radial-gradient(#1e293b 1px, transparent 1px);
-            background-size: 16px 16px;
-        }
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-            background: #111;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #e61919;
-        }
+        .chat-bubble { animation: fadeIn 0.25s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .telegram-bg { background-color: #0f172a; background-image: radial-gradient(#1e293b 1px, transparent 1px); background-size: 16px 16px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #e61919; }
     </style>
 </head>
 <body class="bg-neutral-950 text-slate-100 min-h-screen font-sans antialiased overflow-x-hidden">
 
-    <!-- CONTEÚDO PRINCIPAL -->
-    <div id="main-content" class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+    <!-- TELA DE LOGIN (INICIAL) -->
+    <div id="login-screen" class="fixed inset-0 bg-neutral-950 flex items-center justify-center z-50 p-4">
+        <div class="bg-neutral-900 p-8 rounded-2xl border border-neutral-800 max-w-md w-full space-y-6 text-center shadow-2xl">
+            <div class="bg-red-600 text-white px-4 py-2 rounded-xl font-black text-2xl tracking-wider inline-block">AMPERNET</div>
+            <div class="space-y-2">
+                <h2 class="text-xl font-bold text-white">Acesso à Plataforma</h2>
+                <p class="text-xs text-neutral-400">Por favor, insira seu nome completo para iniciar o treinamento.</p>
+            </div>
+            <div class="space-y-4">
+                <input type="text" id="login-name" placeholder="Nome Completo" class="w-full bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-white text-xs focus:outline-none focus:border-red-600">
+                <button onclick="realizarLogin()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-3 px-6 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Entrar no Treinamento</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL (OCULTO ATÉ O LOGIN) -->
+    <div id="main-content" class="hidden max-w-7xl mx-auto px-4 py-6 space-y-6">
         <header class="flex justify-between items-center bg-neutral-900 p-5 rounded-2xl border border-neutral-800 shadow-xl">
             <div class="flex items-center gap-4">
                 <div class="bg-red-600 text-white px-4 py-2 rounded-xl font-black text-xl tracking-wider">AMPERNET</div>
@@ -126,9 +123,7 @@
                             <p class="text-[10px] text-sky-400 tracking-wider">bot</p>
                         </div>
                     </div>
-
                     <div id="chat-scroller" class="telegram-bg p-4 h-[350px] overflow-y-auto space-y-3 text-xs flex flex-col custom-scrollbar"></div>
-
                     <div class="bg-[#17212b] p-4 border-t border-neutral-950 flex flex-col gap-3 min-h-[120px] justify-center">
                         <div id="input-container" class="hidden w-full flex gap-2">
                             <input type="text" id="chat-input-text" placeholder="Digite sua solicitação..." class="flex-grow bg-neutral-950 border border-neutral-800 rounded-lg p-3 text-white text-xs focus:outline-none focus:border-red-600">
@@ -148,31 +143,26 @@
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="err"> Diretamente via canais externos</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q1" value="correct"> Inicialmente via TAC, que fará o direcionamento ao NOC quando necessário</label>
                 </div>
-
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">2. O que deve ser evitado no canal de atendimento do TAC?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="correct"> Enviar fotos e áudios</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q2" value="err"> Enviar o nome completo do cliente</label>
                 </div>
-
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">3. No Módulo 3 (Suporte INMAP), quais são os exemplos de falhas e problemas citados para descrição do suporte?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="correct"> Aplicativo Offline, Erro ao colocar as credenciais de acesso</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q3" value="err"> Cliente ausente, Não localizando endereço</label>
                 </div>
-
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">4. O que acontece com as mensagens enviadas no banco de dados?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="err"> Podem ser excluídas pelo técnico a qualquer momento</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q4" value="correct"> Ficam registradas, não sendo possível excluir ou editar</label>
                 </div>
-
                 <div class="space-y-3 bg-neutral-950 p-5 rounded-xl border border-neutral-800">
                     <p class="font-bold text-white text-sm">5. No Módulo 4 (Comercial), qual BackOffice é selecionado e quais exemplos de validações devem ser descritos pelo técnico?</p>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="correct"> Atendente Edilaine; Plano e Contrato, Upgrade ou Alteração de Plano</label>
                     <label class="flex items-center gap-3 p-2 hover:bg-neutral-900 rounded cursor-pointer"><input type="radio" name="q5" value="err"> Atendente Vitor; Liberação de ONU ou Alteração de PPPoE</label>
                 </div>
-
                 <button onclick="verificarQuiz()" class="bg-red-600 hover:bg-red-500 text-white font-bold py-4 px-8 rounded-xl text-[11px] uppercase tracking-widest transition shadow-lg w-full">Finalizar Avaliação e Gerar Certificado</button>
             </div>
         </section>
@@ -200,10 +190,23 @@
         let moduleStates = { m1: 0, m2: 0, m3: 0, m4: 0, m5: 0, m6: 0 };
         let progresso = 0;
 
-        // Inicia o ambiente assim que a janela carregar totalmente
+        // Modificado para não carregar a interface diretamente no onload
         window.onload = function() {
-            renderChat();
+            document.getElementById('login-name').focus();
         };
+
+        function realizarLogin() {
+            const nomeInput = document.getElementById('login-name').value.trim();
+            if (!nomeInput) {
+                alert("Por favor, digite seu nome completo para acessar.");
+                return;
+            }
+            tecnicoNome = nomeInput;
+            document.getElementById('user-display').innerText = tecnicoNome;
+            document.getElementById('login-screen').classList.add('hidden');
+            document.getElementById('main-content').classList.remove('hidden');
+            renderChat();
+        }
 
         function switchTab(modId) {
             currentTab = modId;
@@ -234,10 +237,9 @@
             const input = document.getElementById('chat-input-text');
             const val = input.value.trim();
             if(!val) return;
-
             addUserMsg(val);
             input.value = "";
-
+            
             const state = moduleStates[currentTab];
             if ((currentTab==='m1'||currentTab==='m2'||currentTab==='m3') && state===3) {
                 moduleStates[currentTab] = 4;
@@ -249,7 +251,6 @@
                 else if(state===4) moduleStates.m5 = 5;
                 else if(state===5) moduleStates.m5 = 6;
             }
-
             setTimeout(renderChat, 600);
         }
 
@@ -264,12 +265,10 @@
                 btn.classList.remove('opacity-40', 'pointer-events-none');
                 btn.className = btn.className.replace('bg-neutral-950/30', 'bg-neutral-900');
                 btn.className = btn.className.replace('border-l-neutral-700', 'border-l-amber-500');
-                
                 const statusSpan = document.getElementById(`status-${nextTab}`);
                 statusSpan.innerHTML = '<i class="fas fa-play-circle"></i> Liberado';
                 statusSpan.className = "text-[10px] text-amber-500 font-bold";
             }
-            
             const currentStatus = document.getElementById(`status-${currentTab}`);
             currentStatus.innerHTML = '<i class="fas fa-check-circle"></i> Concluído';
             currentStatus.className = "text-[10px] text-green-500 font-bold";
@@ -280,6 +279,7 @@
             document.getElementById('chat-scroller').innerHTML = "";
             document.getElementById('keyboard-container').innerHTML = "";
             document.getElementById('input-container').classList.add('hidden');
+            
             const keyboard = document.getElementById('keyboard-container');
             const state = moduleStates[currentTab];
             const title = document.getElementById('chat-title');
@@ -298,28 +298,16 @@
                 const progressMap = { m1: 16, m2: 32, m3: 48 };
 
                 if (state === 0) {
-                    addButton("/start", () => {
-                        addUserMsg("/start");
-                        moduleStates[currentTab] = 1;
-                        setTimeout(renderChat, 500);
-                    });
+                    addButton("/start", () => { addUserMsg("/start"); moduleStates[currentTab] = 1; setTimeout(renderChat, 500); });
                 } else if (state === 1) {
                     addBotMsg("Olá, Bem vindo à Ampernet Telecom, irei ajudar no seu atendimento.");
                     addBotMsg("Seu protocolo de atendimento é AMP20252325306");
                     addBotMsg("Selecione, por favor, o setor responsável:\n1 - Financeiro\n2 - Suprimentos\n3 - Administrativo\n4 - Comercial\n5 - Suporte e Serviços\n6 - Recursos Humanos\n7 - Serviços e Tecnologia\n8 - Noc\n9 - Marketing\n10 - Relacionamento\n11 - Infraestrutura");
-                    addButton("5 - Suporte e Serviços", () => {
-                        addUserMsg("Opção 5");
-                        moduleStates[currentTab] = 2;
-                        setTimeout(renderChat, 500);
-                    });
+                    addButton("5 - Suporte e Serviços", () => { addUserMsg("Opção 5"); moduleStates[currentTab] = 2; setTimeout(renderChat, 500); });
                 } else if (state === 2) {
                     addBotMsg(`Bem Vindo ao Suporte e Serviços`);
                     addBotMsg("Escolha o serviço necessario:\n1 - Agendamento\n2 - TAC\n3 - Erro de seleção\n4 - Suporte Inmap\n5 - STFC");
-                    addButton(optMap[currentTab], () => {
-                        addUserMsg(optMap[currentTab]);
-                        moduleStates[currentTab] = 3;
-                        setTimeout(renderChat, 500);
-                    });
+                    addButton(optMap[currentTab], () => { addUserMsg(optMap[currentTab]); moduleStates[currentTab] = 3; setTimeout(renderChat, 500); });
                 } else if (state === 3) {
                     if (currentTab === 'm1') addBotMsg("Por favor, poderia descrever brevemente o assunto para que possamos direcionar seu atendimento com mais agilidade?\nExemplos: Cliente ausente, Não Localizando Endereço...");
                     if (currentTab === 'm2') addBotMsg("Para AGILIZAR seu atendimento, DESCREVA a sua solicitação:\n🚨PEDIMOS QUE EVITEM ENVIAR FOTOS E ÁUDIOS NESTE CANAL🚨 !\nLiberação de Onu, Alteração de PPOE, Solicitação de VLAN...");
@@ -373,12 +361,7 @@
                     document.getElementById('input-container').classList.remove('hidden');
                 } else if (state === 6) {
                     addBotMsg("Confirme os dados do pedido...");
-                    addButton("Sim", () => {
-                        addUserMsg("Sim");
-                        addBotMsg("Pedido Registrado com Sucesso!");
-                        moduleStates[currentTab] = 7;
-                        setTimeout(renderChat, 1000);
-                    });
+                    addButton("Sim", () => { addUserMsg("Sim"); addBotMsg("Pedido Registrado com Sucesso!"); moduleStates[currentTab] = 7; setTimeout(renderChat, 1000); });
                     addButton("Não", () => { moduleStates.m5 = 1; renderChat(); });
                 } else if (state === 7) {
                     updateProgress(80, 'm6');
@@ -387,10 +370,7 @@
 
             if (currentTab === 'm6') {
                 addBotMsg("Dessa forma, deve-se seguir o fluxo padrão de atendimento...");
-                addButton("Compreendido", () => {
-                    updateProgress(100, null);
-                    document.getElementById('card-quiz').classList.remove('hidden');
-                });
+                addButton("Compreendido", () => { updateProgress(100, null); document.getElementById('card-quiz').classList.remove('hidden'); });
             }
         }
 
